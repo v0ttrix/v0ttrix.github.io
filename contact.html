@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Jaden Mardini</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        .contact-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+        }
+        .contact-container {
+            max-width: 600px;
+            width: 100%;
+            background: var(--bg-card);
+            padding: 50px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .contact-container h1 {
+            color: var(--accent-cyan);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .email-item {
+            background: var(--bg-dark);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        .email-item:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+        .email-label {
+            color: var(--accent-green);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .email-address {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            word-break: break-all;
+        }
+        .email-address a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .email-address a:hover {
+            color: var(--accent-green);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    
+    <a href="index.html" class="btn btn-outline back-btn">← Back</a>
+
+    <div class="contact-page">
+        <div class="contact-container">
+            <h1>Contact Information</h1>
+            
+            <div class="email-item">
+                <div class="email-label">Personal Email</div>
+                <div class="email-address">
+                    <a href="mailto:jaden.mardini@proton.me">jaden.mardini@proton.me</a>
+                </div>
+            </div>
+
+            <div class="email-item">
+                <div class="email-label">School Email</div>
+                <div class="email-address">
+                    <a href="mailto:jmardini2993@conestogac.on.ca">jmardini2993@conestogac.on.ca</a>
+                </div>
+            </div>
+
+            <div class="email-item">
+                <div class="email-label">GitHub</div>
+                <div class="email-address">
+                    <a href="https://github.com/v0ttrix" target="_blank" rel="noopener noreferrer">@v0ttrix</a>
+                </div>
+            </div>
+
+            <div class="email-item">
+                <div class="email-label">LinkedIn</div>
+                <div class="email-address">
+                    <a href="https://www.linkedin.com/in/jaden-mardini/" target="_blank" rel="noopener noreferrer">@jaden-mardini</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
