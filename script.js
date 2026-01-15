@@ -68,9 +68,12 @@ document.querySelectorAll('section').forEach(section => {
     observer.observe(section);
 });
 
-// Hero section always visible
-document.querySelector('#hero').style.opacity = '1';
-document.querySelector('#hero').style.transform = 'translateY(0)';
+// Hero section always visible (if it exists)
+const heroSection = document.querySelector('#hero');
+if (heroSection) {
+    heroSection.style.opacity = '1';
+    heroSection.style.transform = 'translateY(0)';
+}
 
 // Toggle menu
 function toggleMenu() {
