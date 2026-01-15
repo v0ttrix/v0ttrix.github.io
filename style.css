@@ -384,6 +384,7 @@ section {
     border-radius: 8px;
     border-left: 4px solid var(--accent-cyan);
     transition: all 0.3s;
+    cursor: pointer;
 }
 
 .experience-card:hover {
