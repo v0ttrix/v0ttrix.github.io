@@ -35,14 +35,31 @@
         }
         .project-content {
             background: var(--bg-card);
-            padding: 40px;
+            padding: 12px 20px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
         .project-content h2 {
             color: var(--accent-cyan);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        .project-content h2:hover {
+            color: var(--accent-green);
+        }
+        .project-content h2::after {
+            content: "▼";
+            font-size: 0.8em;
+            transition: transform 0.3s;
+        }
+        .project-content h2.collapsed::after {
+            transform: rotate(-90deg);
         }
         .project-content p, .project-content li {
             color: var(--text-secondary);
@@ -57,6 +74,14 @@
             content: "▹";
             color: var(--accent-green);
             margin-right: 10px;
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .collapsible-content.expanded {
+            max-height: 5000px;
         }
     </style>
 </head>
@@ -78,51 +103,80 @@
             </div>
 
             <div class="project-content">
-                <h2>Overview</h2>
-                <p>Industrial control system for monitoring and managing greenhouse environments. Features real-time sensor data collection, time-series analysis, and automated control systems with a modern desktop interface.</p>
+                <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>GardenTracker is a comprehensive greenhouse monitoring and control system that enables real-time environmental sensor monitoring with customizable alert thresholds for temperature, humidity, and actuators like water pumps. The system features local automation rules and a fully customizable display interface tailored to user needs.</p>
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Key Features</h2>
-                <ul>
-                    <li>Real-time temperature, humidity, and soil moisture monitoring</li>
-                    <li>Time-series data storage and historical analysis</li>
-                    <li>Automated irrigation and climate control systems</li>
-                    <li>Alert system for threshold violations</li>
-                    <li>Cross-platform desktop UI built with Avalonia</li>
-                    <li>RESTful API for remote monitoring and control</li>
-                </ul>
+                <h2 class="collapsed" onclick="toggleSection(this)">Key Features</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Real-time sensor data visualization with dynamic card rendering and status indicators</li>
+                        <li>Local automation with database-synced thresholds and automated scheduling</li>
+                        <li>Historical data graphing and CSV export capabilities</li>
+                        <li>Full hardware integration with Windows stubbing fallback for development</li>
+                        <li>Fully customizable card-based interface with drag-and-drop editor</li>
+                        <li>Persistent settings between sessions with error recovery</li>
+                        <li>Strong accessibility and user experience design</li>
+                        <li>Client-level automation rules that submit requests on behalf of users</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Technical Implementation</h2>
-                <p>Backend built with FastAPI for high-performance async operations, MySQL for time-series data persistence, and Avalonia UI framework for cross-platform desktop application. Implements MQTT protocol for IoT sensor communication and WebSocket for real-time updates.</p>
+                <h2 class="collapsed" onclick="toggleSection(this)">Technical Implementation</h2>
+                <div class="collapsible-content">
+                    <p>Frontend built with .NET 9 and Avalonia UI framework for cross-platform desktop support, featuring ScottPlot for data visualization. Backend powered by FastAPI with Python for high-performance async operations and MySQL for time-series data persistence.</p>
+                    <p>The system implements intelligent hardware detection with automatic stubbing - when physical hardware is connected, it runs on actual sensors; otherwise, it fully recreates the environment for development and testing. Hardware setup includes Raspberry Pi GPIO integration with ADS1115 ADC for analog sensor readings.</p>
+                    <p>Architecture supports RESTful API communication, automated threshold monitoring at the database layer, and persistent configuration management across sessions.</p>
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Results & Impact</h2>
-                <p>Demonstrated practical application of industrial control systems and IoT security principles. Successfully managed environmental conditions with automated responses and provided comprehensive monitoring capabilities for agricultural operations.</p>
+                <h2 class="collapsed" onclick="toggleSection(this)">Contributors</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>JgreyScales</li>
+                        <li>V0ttrix (Jaden Mardini)</li>
+                        <li>Angelchild00</li>
+                        <li>Cole-Johnson1</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Project Demos</h2>
-                <div style="display: grid; gap: 30px; margin-top: 20px;">
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/Hv8HGW6jdb8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                        <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/TfWioeiJG2A" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h2 class="collapsed" onclick="toggleSection(this)">Results & Impact</h2>
+                <div class="collapsible-content">
+                    <p>Successfully demonstrated practical application of industrial control systems and IoT security principles in agricultural automation. The system provides comprehensive environmental monitoring with automated responses, customizable interfaces, and robust error handling for real-world greenhouse operations.</p>
+                    <p>Features full hardware-software integration with intelligent fallback mechanisms, making it suitable for both production deployment and development environments. Licensed under GPL-3.0 for open-source collaboration.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 class="collapsed" onclick="toggleSection(this)">Project Demos</h2>
+                <div class="collapsible-content">
+                    <div style="display: grid; gap: 30px; margin-top: 20px;">
+                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/Hv8HGW6jdb8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/TfWioeiJG2A" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="project-content" style="padding: 20px 40px;">
-                <h2>Visuals</h2>
-                <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 10px;">
-                    <img src="images/1765509631515.jpeg" alt="SCADA Greenhouse Monitor Screenshot 1" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
-                    <img src="images/1765509631968.jpeg" alt="SCADA Greenhouse Monitor Screenshot 2" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
-                    <img src="images/1765509632554.jpeg" alt="SCADA Greenhouse Monitor Screenshot 4" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
-                    <img src="images/1765509632359.jpeg" alt="SCADA Greenhouse Monitor Screenshot 3" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
+                <h2 class="collapsed" onclick="toggleSection(this)">Visuals</h2>
+                <div class="collapsible-content">
+                    <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 10px;">
+                        <img src="images/1765509631515.jpeg" alt="SCADA Greenhouse Monitor Screenshot 1" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
+                        <img src="images/1765509631968.jpeg" alt="SCADA Greenhouse Monitor Screenshot 2" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
+                        <img src="images/1765509632554.jpeg" alt="SCADA Greenhouse Monitor Screenshot 4" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
+                        <img src="images/1765509632359.jpeg" alt="SCADA Greenhouse Monitor Screenshot 3" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
+                    </div>
                 </div>
             </div>
 
@@ -132,5 +186,12 @@
     </section>
 
     <script src="script.js"></script>
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            header.classList.toggle('collapsed');
+            content.classList.toggle('expanded');
+        }
+    </script>
 </body>
 </html>

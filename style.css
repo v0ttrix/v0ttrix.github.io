@@ -321,7 +321,7 @@ section {
 .cert-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    gap: 40px;
 }
 
 .cert-card {
@@ -331,6 +331,10 @@ section {
     border: 1px solid var(--border-color);
     text-align: center;
     transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 240px;
 }
 
 .cert-card:hover {
@@ -347,6 +351,10 @@ section {
 .cert-card h3 {
     color: var(--text-primary);
     font-size: 1.2rem;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Contact Section */
