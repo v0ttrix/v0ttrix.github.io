@@ -109,6 +109,12 @@ body {
     padding-left: 20px;
 }
 
+.toc-menu a.active {
+    color: var(--accent-green);
+    border-left-color: var(--accent-green);
+    padding-left: 20px;
+}
+
 #matrix {
     position: fixed;
     top: 0;

@@ -94,4 +94,15 @@ window.addEventListener('load', function() {
     collapsibleSections.forEach(section => {
         section.classList.add('collapsed');
     });
+    
+    // Highlight current page in menu
+    let currentPage = window.location.pathname.split('/').pop();
+    if (!currentPage || currentPage === '') currentPage = 'index.html';
+    
+    document.querySelectorAll('.toc-menu a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === 'index.html' && href === 'index.html')) {
+            link.classList.add('active');
+        }
+    });
 });
