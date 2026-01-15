@@ -41,25 +41,12 @@
             <p class="subtitle">Focused on malware analysis, threat detection, secure software engineering, and adversarial techniques.</p>
             <div class="cta-buttons">
                 <a href="https://github.com/v0ttrix" class="btn btn-primary" rel="noopener noreferrer">View GitHub</a>
-                <a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+                <a href="#contact" class="btn btn-secondary">Get in Touch</a>
             </div>
         </div>
     </section>
 
-    <footer>
-        <p>&copy; 2026 Jaden Mardini. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
-    <script>
-        // Toggle menu function
-        function toggleMenu() {
-            const menu = document.getElementById('tocMenu');
-            menu.classList.toggle('active');
-        }
-    </script>
-</body>
-</html>
+    <!-- About Section -->
     <section id="about">
         <div class="container">
             <h2 class="section-title"><span class="accent">//</span> About Me</h2>

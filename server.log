@@ -188,3 +188,13 @@
 127.0.0.1 - - [15/Jan/2026 05:53:59] "GET /style.css HTTP/1.1" 304 -
 127.0.0.1 - - [15/Jan/2026 05:53:59] "GET /images/mohammad-heidari.jpeg HTTP/1.1" 304 -
 127.0.0.1 - - [15/Jan/2026 05:53:59] "GET /images/krishan-gomes.jpeg HTTP/1.1" 304 -
+127.0.0.1 - - [15/Jan/2026 05:56:27] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [15/Jan/2026 05:56:27] "GET /style.css HTTP/1.1" 304 -
+127.0.0.1 - - [15/Jan/2026 05:56:27] "GET /images/mohammad-heidari.jpeg HTTP/1.1" 304 -
+127.0.0.1 - - [15/Jan/2026 05:56:27] "GET /images/krishan-gomes.jpeg HTTP/1.1" 304 -
+127.0.0.1 - - [15/Jan/2026 05:57:05] "GET /index.html HTTP/1.1" 304 -
+127.0.0.1 - - [15/Jan/2026 05:57:05] "GET /style.css HTTP/1.1" 304 -
+127.0.0.1 - - [15/Jan/2026 05:57:11] code 404, message File not found
+127.0.0.1 - - [15/Jan/2026 05:57:11] "GET /about.html HTTP/1.1" 404 -
+127.0.0.1 - - [15/Jan/2026 05:57:16] code 404, message File not found
+127.0.0.1 - - [15/Jan/2026 05:57:16] "GET /experience.html HTTP/1.1" 404 -

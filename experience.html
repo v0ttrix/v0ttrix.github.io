@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience - Jaden Mardini</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    
+    <!-- Menu Button -->
+    <button class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Table of Contents Menu -->
+    <div class="toc-menu" id="tocMenu">
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="index.html" onclick="toggleMenu()">Home</a></li>
+            <li><a href="about.html" onclick="toggleMenu()">About Me</a></li>
+            <li><a href="skills.html" onclick="toggleMenu()">Skills</a></li>
+            <li><a href="projects.html" onclick="toggleMenu()">Projects</a></li>
+            <li><a href="experience.html" onclick="toggleMenu()">Experience</a></li>
+            <li><a href="certifications.html" onclick="toggleMenu()">Certifications</a></li>
+            <li><a href="references.html" onclick="toggleMenu()">References</a></li>
+            <li><a href="contact.html" onclick="toggleMenu()">Contact</a></li>
+        </ul>
+    </div>
+    
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title"><span class="accent">//</span> Experience</h2>
+            <div class="experience-grid">
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <h3>Penetration Tester</h3>
+                        <span class="year">2025</span>
+                    </div>
+                    <h4>LinePal</h4>
+                    <ul>
+                        <li>Conducted iOS and API security testing</li>
+                        <li>Identified 14 confirmed vulnerabilities</li>
+                        <li>Produced comprehensive remediation reports</li>
+                    </ul>
+                </div>
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <h3>Full Stack Developer</h3>
+                        <span class="year">2025</span>
+                    </div>
+                    <h4>ClariNexus</h4>
+                    <ul>
+                        <li>Built data pipelines with Apache Airflow</li>
+                        <li>Developed backend services using Django/FastAPI</li>
+                        <li>Implemented ETL/ELT pipelines for large-scale data</li>
+                        <li>Optimized data validation and processing workflows</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jaden Mardini. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Toggle menu function
+        function toggleMenu() {
+            const menu = document.getElementById('tocMenu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

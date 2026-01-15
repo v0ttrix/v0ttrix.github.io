@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills - Jaden Mardini</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    
+    <!-- Menu Button -->
+    <button class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Table of Contents Menu -->
+    <div class="toc-menu" id="tocMenu">
+        <h3>Contents</h3>
+        <ul>
+            <li><a href="index.html" onclick="toggleMenu()">Home</a></li>
+            <li><a href="about.html" onclick="toggleMenu()">About Me</a></li>
+            <li><a href="skills.html" onclick="toggleMenu()">Skills</a></li>
+            <li><a href="projects.html" onclick="toggleMenu()">Projects</a></li>
+            <li><a href="experience.html" onclick="toggleMenu()">Experience</a></li>
+            <li><a href="certifications.html" onclick="toggleMenu()">Certifications</a></li>
+            <li><a href="references.html" onclick="toggleMenu()">References</a></li>
+            <li><a href="contact.html" onclick="toggleMenu()">Contact</a></li>
+        </ul>
+    </div>
+    
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title"><span class="accent">//</span> Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Cybersecurity</h3>
+                    <div class="skill-tags">
+                        <span>Splunk</span>
+                        <span>Wireshark</span>
+                        <span>Suricata</span>
+                        <span>OSINT</span>
+                        <span>Firewalls</span>
+                        <span>NIST CSF</span>
+                        <span>CVE Analysis</span>
+                        <span>iOS Security</span>
+                        <span>VPN</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-tags">
+                        <span>C</span>
+                        <span>C#</span>
+                        <span>C++</span>
+                        <span>Python</span>
+                        <span>Java</span>
+                        <span>JavaScript</span>
+                        <span>PHP</span>
+                        <span>SQL</span>
+                        <span>Assembly</span>
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>Rust</span>
+                        <span>Bash</span>
+                        <span>PowerShell</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Frameworks & Libraries</h3>
+                    <div class="skill-tags">
+                        <span>FastAPI</span>
+                        <span>Django</span>
+                        <span>Flask</span>
+                        <span>React</span>
+                        <span>Flutter</span>
+                        <span>.NET</span>
+                        <span>Qt</span>
+                        <span>Unity</span>
+                        <span>Streamlit</span>
+                        <span>Pandas</span>
+                        <span>NumPy</span>
+                        <span>Plotly</span>
+                        <span>Scikit-learn</span>
+                        <span>Node.js</span>
+                        <span>Apache Airflow</span>
+                        <span>REST APIs</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Databases & Cloud</h3>
+                    <div class="skill-tags">
+                        <span>MySQL</span>
+                        <span>SQLite</span>
+                        <span>PostgreSQL</span>
+                        <span>Amazon Redshift</span>
+                        <span>BigQuery</span>
+                        <span>AWS</span>
+                        <span>Azure</span>
+                        <span>Docker</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Development Tools</h3>
+                    <div class="skill-tags">
+                        <span>Git</span>
+                        <span>GitHub</span>
+                        <span>Visual Studio</span>
+                        <span>VS Code</span>
+                        <span>Eclipse</span>
+                        <span>CLion</span>
+                        <span>Postman</span>
+                        <span>Figma</span>
+                        <span>Regex</span>
+                        <span>JMeter</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Platforms & Hardware</h3>
+                    <div class="skill-tags">
+                        <span>Linux</span>
+                        <span>Windows</span>
+                        <span>Raspberry Pi</span>
+                        <span>Arduino</span>
+                        <span>WordPress</span>
+                        <span>Packet Tracer</span>
+                        <span>JMeter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Jaden Mardini. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Toggle menu function
+        function toggleMenu() {
+            const menu = document.getElementById('tocMenu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
