@@ -597,6 +597,10 @@ footer p {
         padding: 60px 0;
     }
 
+    .container {
+        padding: 0 15px;
+    }
+
     #hero h1 {
         font-size: 1.4rem !important;
         white-space: normal;
@@ -606,10 +610,17 @@ footer p {
 
     #hero h2 {
         font-size: 1rem;
+        line-height: 1.4;
     }
 
     .subtitle {
         font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
     }
 
     .cta-buttons {
@@ -620,17 +631,94 @@ footer p {
     .btn {
         width: 100%;
         max-width: 300px;
+        font-size: 0.9rem;
+        padding: 12px 25px;
     }
 
     .skills-grid,
     .projects-grid,
-    .cert-grid {
+    .cert-grid,
+    .references-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .skill-category,
+    .project-card,
+    .experience-card,
+    .cert-card,
+    .reference-card {
+        padding: 20px;
+    }
+
+    .skill-category h3,
+    .project-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .about-content p,
+    .project-card p,
+    .reference-quote {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .menu-btn {
+        width: 45px;
+        height: 45px;
+    }
+
+    .toc-menu {
+        width: 250px;
+    }
+
+    .reference-photo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .exp-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
     }
 }
 
 @media (max-width: 480px) {
     #hero h1 {
         font-size: 1.2rem !important;
+    }
+
+    #hero h2 {
+        font-size: 0.9rem;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+        padding: 10px 20px;
+    }
+
+    .skill-tags span {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    .toc-menu {
+        width: 220px;
+    }
+
+    .menu-btn {
+        width: 40px;
+        height: 40px;
+        top: 15px;
+        left: 15px;
     }
 }
