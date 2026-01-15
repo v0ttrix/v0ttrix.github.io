@@ -71,3 +71,24 @@ document.querySelectorAll('section').forEach(section => {
 // Hero section always visible
 document.querySelector('#hero').style.opacity = '1';
 document.querySelector('#hero').style.transform = 'translateY(0)';
+
+// Toggle menu
+function toggleMenu() {
+    const menu = document.getElementById('tocMenu');
+    menu.classList.toggle('active');
+}
+
+// Toggle main section collapse/expand
+function toggleMainSection(header) {
+    const content = header.nextElementSibling;
+    header.classList.toggle('collapsed');
+    content.classList.toggle('expanded');
+}
+
+// Initialize all sections as collapsed on page load
+window.addEventListener('load', function() {
+    const collapsibleSections = document.querySelectorAll('.collapsible-section');
+    collapsibleSections.forEach(section => {
+        section.classList.add('collapsed');
+    });
+});

@@ -22,6 +22,93 @@ body {
     overflow-x: hidden;
 }
 
+/* Menu Button */
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: var(--bg-card);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 4px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+.menu-btn:hover {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.menu-btn span {
+    width: 30px;
+    height: 3px;
+    background: var(--accent-cyan);
+    transition: all 0.3s;
+}
+
+.menu-btn:hover span {
+    background: var(--accent-green);
+}
+
+/* Table of Contents Menu */
+.toc-menu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background: var(--bg-card);
+    border-right: 2px solid var(--accent-cyan);
+    z-index: 999;
+    padding: 80px 30px 30px;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+}
+
+.toc-menu.active {
+    left: 0;
+}
+
+.toc-menu h3 {
+    color: var(--accent-cyan);
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.toc-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.toc-menu li {
+    margin-bottom: 15px;
+}
+
+.toc-menu a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    display: block;
+    padding: 10px;
+    border-left: 3px solid transparent;
+}
+
+.toc-menu a:hover {
+    color: var(--accent-green);
+    border-left-color: var(--accent-green);
+    padding-left: 20px;
+}
+
 #matrix {
     position: fixed;
     top: 0;
@@ -62,13 +149,21 @@ section {
 
 .glitch {
     position: relative;
-    animation: glitch 3s infinite;
 }
 
-@keyframes glitch {
+.glitch span {
+    display: inline-block;
+    animation: glitch-letter 2s infinite;
+    animation-delay: var(--delay);
+}
+
+@keyframes glitch-letter {
     0%, 90%, 100% { transform: translate(0); }
-    91% { transform: translate(-2px, 2px); }
-    92% { transform: translate(2px, -2px); }
+    91% { transform: translate(-3px, 3px); }
+    92% { transform: translate(3px, -3px); }
+    93% { transform: translate(-2px, 2px); }
+    94% { transform: translate(2px, -2px); }
+    95% { transform: translate(-3px, 1px); }
 }
 
 #hero h2 {
@@ -138,6 +233,39 @@ section {
     font-size: clamp(2rem, 5vw, 3rem);
     margin-bottom: 50px;
     color: var(--text-primary);
+}
+
+.collapsible-section {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.collapsible-section:hover {
+    color: var(--accent-green);
+}
+
+.section-arrow {
+    font-size: 0.6em;
+    transition: transform 0.3s;
+    margin-left: 20px;
+}
+
+.collapsible-section.collapsed .section-arrow {
+    transform: rotate(-90deg);
+}
+
+.section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.section-content.expanded {
+    max-height: 20000px;
 }
 
 .accent {
@@ -355,6 +483,64 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* References Section */
+.references-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.reference-card {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s;
+    position: relative;
+}
+
+.reference-card:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.quote-icon {
+    font-size: 4rem;
+    color: var(--accent-green);
+    line-height: 1;
+    margin-bottom: 15px;
+    opacity: 0.3;
+}
+
+.reference-quote {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.reference-author h4 {
+    color: var(--accent-cyan);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.reference-author p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.reference-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-cyan);
+    margin-bottom: 15px;
 }
 
 /* Contact Section */
