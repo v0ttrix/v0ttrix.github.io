@@ -96,12 +96,12 @@ window.addEventListener('load', function() {
     });
     
     // Highlight current page in menu
-    let currentPage = window.location.pathname.split('/').pop();
-    if (!currentPage || currentPage === '') currentPage = 'index.html';
+    const path = window.location.pathname;
+    const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
     
     document.querySelectorAll('.toc-menu a').forEach(link => {
         const href = link.getAttribute('href');
-        if (href === currentPage || (currentPage === 'index.html' && href === 'index.html')) {
+        if (href === currentPage) {
             link.classList.add('active');
         }
     });
