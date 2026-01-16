@@ -182,7 +182,7 @@
                     <a href="network-security-utility.html" class="project-link">Learn More →</a>
                 </div>
                 <div class="project-card">
-                    <h3>SCADA Greenhouse Monitor</h3>
+                    <h3>Raspberry Pi Monitoring System</h3>
                     <p>Industrial control system with FastAPI backend, MySQL time-series data, and Avalonia UI.</p>
                     <a href="scada-greenhouse-monitor.html" class="project-link">Learn More →</a>
                 </div>
