@@ -35,14 +35,31 @@
         }
         .project-content {
             background: var(--bg-card);
-            padding: 40px;
+            padding: 12px 20px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
         .project-content h2 {
             color: var(--accent-cyan);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        .project-content h2:hover {
+            color: var(--accent-green);
+        }
+        .project-content h2::after {
+            content: "▼";
+            font-size: 0.8em;
+            transition: transform 0.3s;
+        }
+        .project-content h2.collapsed::after {
+            transform: rotate(-90deg);
         }
         .project-content p, .project-content li {
             color: var(--text-secondary);
@@ -57,6 +74,14 @@
             content: "▹";
             color: var(--accent-green);
             margin-right: 10px;
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .collapsible-content.expanded {
+            max-height: 5000px;
         }
     </style>
 </head>
@@ -77,52 +102,64 @@
             </div>
 
             <div class="project-content">
-                <h2>Overview</h2>
-                <p>A cross-platform terminal tool for scanning websites and generating vulnerability reports. This tool helps identify security weaknesses in web applications through comprehensive automated testing.</p>
-                <img src="images/demo.jpg" alt="Web Vulnerability Scanner Demo" style="width: 100%; border-radius: 4px; margin-top: 20px;">
+                <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>A cross-platform terminal tool for scanning websites and generating vulnerability reports. This tool helps identify security weaknesses in web applications through comprehensive automated testing.</p>
+                    <img src="images/demo.jpg" alt="Web Vulnerability Scanner Demo" style="width: 100%; border-radius: 4px; margin-top: 20px;">
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Download</h2>
-                <p><strong>Latest Release (v2.0):</strong> <a href="https://github.com/v0ttrix/Virus-Detection-Tool/releases/latest/download/webscan" style="color: var(--accent-green);">Download webscan</a></p>
-                <p>After downloading:</p>
-                <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">chmod +x webscan
+                <h2 class="collapsed" onclick="toggleSection(this)">Download</h2>
+                <div class="collapsible-content">
+                    <p><strong>Latest Release (v2.0):</strong> <a href="https://github.com/v0ttrix/Virus-Detection-Tool/releases/latest/download/webscan" style="color: var(--accent-green);">Download webscan</a></p>
+                    <p>After downloading:</p>
+                    <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">chmod +x webscan
 ./webscan &lt;website-url&gt;</pre>
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Usage</h2>
-                <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">./webscan example.com
+                <h2 class="collapsed" onclick="toggleSection(this)">Usage</h2>
+                <div class="collapsible-content">
+                    <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">./webscan example.com
 ./webscan https://mywebsite.com</pre>
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Features</h2>
-                <ul>
-                    <li>SQL Injection Detection - Error-based and time-based SQLi testing</li>
-                    <li>Memory Leak Detection - Identifies potential memory issues and resource leaks</li>
-                    <li>Code Quality Analysis - Detects debug mode, exposed errors, dangerous functions</li>
-                    <li>Security Headers - Analyzes X-Frame-Options, CSP, HSTS, etc.</li>
-                    <li>Form Security - Checks for CSRF tokens and insecure methods</li>
-                    <li>SSL/HTTPS Verification - Ensures encrypted communication</li>
-                    <li>Exposed Files Detection - Scans for .env, config files, backups</li>
-                    <li>Risk Scoring Algorithm - Calculates overall security risk (0-100)</li>
-                    <li>Color-coded Severity - CRITICAL, HIGH, MEDIUM, LOW levels</li>
-                    <li>Actionable Recommendations - Specific fixes for detected issues</li>
-                </ul>
+                <h2 class="collapsed" onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>SQL Injection Detection - Error-based and time-based SQLi testing</li>
+                        <li>Memory Leak Detection - Identifies potential memory issues and resource leaks</li>
+                        <li>Code Quality Analysis - Detects debug mode, exposed errors, dangerous functions</li>
+                        <li>Security Headers - Analyzes X-Frame-Options, CSP, HSTS, etc.</li>
+                        <li>Form Security - Checks for CSRF tokens and insecure methods</li>
+                        <li>SSL/HTTPS Verification - Ensures encrypted communication</li>
+                        <li>Exposed Files Detection - Scans for .env, config files, backups</li>
+                        <li>Risk Scoring Algorithm - Calculates overall security risk (0-100)</li>
+                        <li>Color-coded Severity - CRITICAL, HIGH, MEDIUM, LOW levels</li>
+                        <li>Actionable Recommendations - Specific fixes for detected issues</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Build from Source</h2>
-                <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">git clone https://github.com/v0ttrix/Virus-Detection-Tool.git
+                <h2 class="collapsed" onclick="toggleSection(this)">Build from Source</h2>
+                <div class="collapsible-content">
+                    <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">git clone https://github.com/v0ttrix/Virus-Detection-Tool.git
 cd Virus-Detection-Tool
 pip install -r requirements.txt
 python scanner.py &lt;website-url&gt;</pre>
+                </div>
             </div>
 
             <div class="project-content">
-                <h2>Compatibility</h2>
-                <p>Works on Linux, Windows, and macOS</p>
+                <h2 class="collapsed" onclick="toggleSection(this)">Compatibility</h2>
+                <div class="collapsible-content">
+                    <p>Works on Linux, Windows, and macOS</p>
+                </div>
             </div>
 
             <a href="https://github.com/v0ttrix/Virus-Detection-Tool" class="btn btn-primary">View on GitHub →</a>
@@ -130,5 +167,12 @@ python scanner.py &lt;website-url&gt;</pre>
     </section>
 
     <script src="script.js"></script>
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            header.classList.toggle('collapsed');
+            content.classList.toggle('expanded');
+        }
+    </script>
 </body>
 </html>
