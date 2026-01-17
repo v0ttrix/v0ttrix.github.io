@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virus Detection Tool - Jaden Mardini</title>
+    <title>Web Vulnerability Scanner - Jaden Mardini</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .back-btn {
@@ -68,42 +68,64 @@
     <section class="project-detail">
         <div class="container">
             <div class="project-header">
-                <h1>Virus Detection Tool</h1>
+                <h1>Web Vulnerability Scanner</h1>
                 <div class="project-meta">
                     <span class="meta-tag">Python</span>
-                    <span class="meta-tag">Malware Analysis</span>
                     <span class="meta-tag">Security</span>
+                    <span class="meta-tag">Cross-platform</span>
                 </div>
             </div>
 
             <div class="project-content">
                 <h2>Overview</h2>
-                <p>Advanced malware detection system combining signature-based and heuristic analysis techniques to identify and classify malicious software. Built to detect known threats while also identifying suspicious behavioral patterns in unknown files.</p>
+                <p>A cross-platform terminal tool for scanning websites and generating vulnerability reports. This tool helps identify security weaknesses in web applications through comprehensive automated testing.</p>
+                <img src="images/demo.jpg" alt="Web Vulnerability Scanner Demo" style="width: 100%; border-radius: 4px; margin-top: 20px;">
             </div>
 
             <div class="project-content">
-                <h2>Key Features</h2>
+                <h2>Download</h2>
+                <p><strong>Latest Release (v2.0):</strong> <a href="https://github.com/v0ttrix/Virus-Detection-Tool/releases/latest/download/webscan" style="color: var(--accent-green);">Download webscan</a></p>
+                <p>After downloading:</p>
+                <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">chmod +x webscan
+./webscan &lt;website-url&gt;</pre>
+            </div>
+
+            <div class="project-content">
+                <h2>Usage</h2>
+                <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">./webscan example.com
+./webscan https://mywebsite.com</pre>
+            </div>
+
+            <div class="project-content">
+                <h2>Features</h2>
                 <ul>
-                    <li>Signature-based detection using hash comparison against malware databases</li>
-                    <li>Heuristic analysis for identifying zero-day threats</li>
-                    <li>Static file analysis including PE header inspection</li>
-                    <li>Behavioral monitoring and anomaly detection</li>
-                    <li>Real-time scanning with low system overhead</li>
-                    <li>Detailed threat reports with remediation recommendations</li>
+                    <li>SQL Injection Detection - Error-based and time-based SQLi testing</li>
+                    <li>Memory Leak Detection - Identifies potential memory issues and resource leaks</li>
+                    <li>Code Quality Analysis - Detects debug mode, exposed errors, dangerous functions</li>
+                    <li>Security Headers - Analyzes X-Frame-Options, CSP, HSTS, etc.</li>
+                    <li>Form Security - Checks for CSRF tokens and insecure methods</li>
+                    <li>SSL/HTTPS Verification - Ensures encrypted communication</li>
+                    <li>Exposed Files Detection - Scans for .env, config files, backups</li>
+                    <li>Risk Scoring Algorithm - Calculates overall security risk (0-100)</li>
+                    <li>Color-coded Severity - CRITICAL, HIGH, MEDIUM, LOW levels</li>
+                    <li>Actionable Recommendations - Specific fixes for detected issues</li>
                 </ul>
             </div>
 
             <div class="project-content">
-                <h2>Technical Implementation</h2>
-                <p>The tool leverages Python's powerful libraries for file analysis, including pefile for PE structure parsing, yara for pattern matching, and custom algorithms for behavioral analysis. The detection engine uses a multi-layered approach to minimize false positives while maintaining high detection rates.</p>
+                <h2>Build from Source</h2>
+                <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">git clone https://github.com/v0ttrix/Virus-Detection-Tool.git
+cd Virus-Detection-Tool
+pip install -r requirements.txt
+python scanner.py &lt;website-url&gt;</pre>
             </div>
 
             <div class="project-content">
-                <h2>Results & Impact</h2>
-                <p>Successfully detected 95%+ of known malware samples in testing environments. The heuristic engine identified several previously unknown variants through behavioral pattern analysis, demonstrating effectiveness against evolving threats.</p>
+                <h2>Compatibility</h2>
+                <p>Works on Linux, Windows, and macOS</p>
             </div>
 
-            <a href="https://github.com/v0ttrix" class="btn btn-primary">View on GitHub →</a>
+            <a href="https://github.com/v0ttrix/Virus-Detection-Tool" class="btn btn-primary">View on GitHub →</a>
         </div>
     </section>
 
