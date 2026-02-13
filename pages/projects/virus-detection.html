@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Vulnerability Scanner - Jaden Mardini</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
     <style>
         .back-btn {
             position: fixed;
@@ -88,7 +88,7 @@
 <body>
     <canvas id="matrix"></canvas>
     
-    <a href="projects.html" class="btn btn-outline back-btn">← Back</a>
+    <a href="/pages/projects.html" class="btn btn-outline back-btn">← Back</a>
 
     <section class="project-detail">
         <div class="container">
@@ -105,7 +105,7 @@
                 <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
                 <div class="collapsible-content">
                     <p>A cross-platform terminal tool for scanning websites and generating vulnerability reports. This tool helps identify security weaknesses in web applications through comprehensive automated testing.</p>
-                    <img src="images/demo.jpg" alt="Web Vulnerability Scanner Demo" style="width: 100%; border-radius: 4px; margin-top: 20px;">
+                    <img src="../../images/demo.jpg" alt="Web Vulnerability Scanner Demo" style="width: 100%; border-radius: 4px; margin-top: 20px;">
                 </div>
             </div>
 
@@ -167,6 +167,7 @@ python scanner.py &lt;website-url&gt;</pre>
     </section>
 
     <script src="script.js"></script>
+    <script src="../../script.js"></script>
     <script>
         function toggleSection(header) {
             const content = header.nextElementSibling;

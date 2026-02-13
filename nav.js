@@ -2,14 +2,14 @@
 const navigationHTML = `
     <div class="toc-menu" id="tocMenu">
         <ul>
-            <li><a href="index.html" onclick="toggleMenu()">Home</a></li>
-            <li><a href="about.html" onclick="toggleMenu()">About Me</a></li>
-            <li><a href="skills.html" onclick="toggleMenu()">Skills</a></li>
-            <li><a href="projects.html" onclick="toggleMenu()">Projects</a></li>
-            <li><a href="experience.html" onclick="toggleMenu()">Experience</a></li>
-            <li><a href="certifications.html" onclick="toggleMenu()">Certifications</a></li>
-            <li><a href="references.html" onclick="toggleMenu()">References</a></li>
-            <li><a href="contact.html" onclick="toggleMenu()">Contact</a></li>
+            <li><a href="/index.html" onclick="toggleMenu()">Home</a></li>
+            <li><a href="/pages/about.html" onclick="toggleMenu()">About Me</a></li>
+            <li><a href="/pages/skills.html" onclick="toggleMenu()">Skills</a></li>
+            <li><a href="/pages/projects.html" onclick="toggleMenu()">Projects</a></li>
+            <li><a href="/pages/experience.html" onclick="toggleMenu()">Experience</a></li>
+            <li><a href="/pages/certifications.html" onclick="toggleMenu()">Certifications</a></li>
+            <li><a href="/pages/references.html" onclick="toggleMenu()">References</a></li>
+            <li><a href="/pages/contact.html" onclick="toggleMenu()">Contact</a></li>
         </ul>
     </div>
 `;
