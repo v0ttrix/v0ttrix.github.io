@@ -1,4 +1,4 @@
-// Centralized navigation menu
+// all navigation links in one place so i dont have to copy paste everywhere
 const navigationHTML = `
     <div class="toc-menu" id="tocMenu">
         <ul>
@@ -14,27 +14,27 @@ const navigationHTML = `
     </div>
 `;
 
-// Inject navigation and set active page
+// inject the nav menu once DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Insert navigation after menu button
+    // slap the nav right after the menu button
     const menuButton = document.querySelector('.menu-btn');
     if (menuButton) {
         menuButton.insertAdjacentHTML('afterend', navigationHTML);
         
-        // Highlight current page in menu
+        // figure out which page we're on and highlight it
         const path = window.location.pathname;
         const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
         
         document.querySelectorAll('.toc-menu a').forEach(link => {
             const href = link.getAttribute('href');
             if (href === currentPage) {
-                link.classList.add('active');
+                link.classList.add('active');  // add active class to current page
             }
         });
     }
 });
 
-// Global toggleMenu function for onclick handlers
+// toggles the menu open/close when you click the hamburger
 function toggleMenu() {
     const menu = document.getElementById('tocMenu');
     if (menu) {
