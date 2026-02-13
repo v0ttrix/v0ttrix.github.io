@@ -75,12 +75,6 @@ if (heroSection) {
     heroSection.style.transform = 'translateY(0)';
 }
 
-// Toggle menu
-function toggleMenu() {
-    const menu = document.getElementById('tocMenu');
-    menu.classList.toggle('active');
-}
-
 // Toggle main section collapse/expand
 function toggleMainSection(header) {
     const content = header.nextElementSibling;
@@ -94,15 +88,5 @@ window.addEventListener('load', function() {
     collapsibleSections.forEach(section => {
         section.classList.add('collapsed');
     });
-    
-    // Highlight current page in menu
-    const path = window.location.pathname;
-    const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
-    
-    document.querySelectorAll('.toc-menu a').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === currentPage) {
-            link.classList.add('active');
-        }
-    });
 });
+

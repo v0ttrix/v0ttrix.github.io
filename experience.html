@@ -16,20 +16,7 @@
         <span></span>
     </button>
 
-    <!-- Table of Contents Menu -->
-    <div class="toc-menu" id="tocMenu">
-        
-        <ul>
-            <li><a href="index.html" onclick="toggleMenu()">Home</a></li>
-            <li><a href="about.html" onclick="toggleMenu()">About Me</a></li>
-            <li><a href="skills.html" onclick="toggleMenu()">Skills</a></li>
-            <li><a href="projects.html" onclick="toggleMenu()">Projects</a></li>
-            <li><a href="experience.html" onclick="toggleMenu()">Experience</a></li>
-            <li><a href="certifications.html" onclick="toggleMenu()">Certifications</a></li>
-            <li><a href="references.html" onclick="toggleMenu()">References</a></li>
-            <li><a href="contact.html" onclick="toggleMenu()">Contact</a></li>
-        </ul>
-    </div>
+    <!-- Navigation injected by nav.js -->
     
     <!-- Experience Section -->
     <section id="experience">
@@ -75,13 +62,7 @@
         <p>&copy; 2026 Jaden Mardini. All rights reserved.</p>
     </footer>
 
+    <script src="nav.js"></script>
     <script src="script.js"></script>
-    <script>
-        // Toggle menu function
-        function toggleMenu() {
-            const menu = document.getElementById('tocMenu');
-            menu.classList.toggle('active');
-        }
-    </script>
 </body>
 </html>
