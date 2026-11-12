@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Abd Ulrahman Mardini</title>
+    <meta name="description" content="TaskFlow — Java/JavaFX smart task manager with 5 design patterns, 84 unit tests, and full undo/redo support.">
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+        .back-btn { position: fixed; top: 20px; left: 20px; z-index: 999; }
+        .project-detail { padding: 150px 0 100px; }
+        .project-header h1 { color: var(--accent-cyan); font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 20px; }
+        .project-meta { display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
+        .meta-tag { background: var(--bg-card); padding: 8px 16px; border-radius: 4px; border: 1px solid var(--accent-green); color: var(--accent-green); }
+        .project-content { background: var(--bg-card); padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 10px; }
+        .project-content h2 { color: var(--accent-cyan); margin-bottom: 10px; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; }
+        .project-content h2:hover { color: var(--accent-green); }
+        .project-content h2::after { content: "▼"; font-size: 0.8em; transition: transform 0.3s; }
+        .project-content h2.collapsed::after { transform: rotate(-90deg); }
+        .project-content p, .project-content li { color: var(--text-secondary); line-height: 1.8; margin-bottom: 15px; }
+        .project-content ul { list-style: none; padding-left: 0; }
+        .project-content li::before { content: "▹"; color: var(--accent-green); margin-right: 10px; }
+        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .collapsible-content.expanded { max-height: 5000px; }
+        pre { background: var(--bg-dark); padding: 15px; border-radius: 4px; overflow-x: auto; color: var(--accent-green); font-size: 0.9rem; margin-bottom: 15px; }
+        .pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 10px; }
+        .pattern-card { background: var(--bg-dark); padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); }
+        .pattern-card h4 { color: var(--accent-cyan); margin-bottom: 8px; }
+        .pattern-card p { color: var(--text-secondary); font-size: 0.85rem; margin: 0; }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <a href="/pages/projects.html" class="btn btn-outline back-btn">← Back</a>
+
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <h1>TaskFlow</h1>
+                <div class="project-meta">
+                    <span class="meta-tag">Java</span>
+                    <span class="meta-tag">JavaFX</span>
+                    <span class="meta-tag">Maven</span>
+                    <span class="meta-tag">OOP</span>
+                    <span class="meta-tag">Design Patterns</span>
+                    <span class="meta-tag">TDD</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content expanded">
+                    <p>A smart task manager built with Java and JavaFX for CSCN72040 — Software Design Techniques. The project demonstrates 5 design patterns, SOLID principles, and test-driven development with 84 unit tests across 6 test classes and 41 commits.</p>
+                    <p>Tasks support categories (Work, Personal, School), priority levels (Low, Medium, High, Urgent), due date tracking with deadline warnings, and full undo/redo via the Command pattern.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Design Patterns</h2>
+                <div class="collapsible-content expanded">
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <h4>Observer</h4>
+                            <p>Task (Subject) notifies MainView (Observer) to refresh the UI whenever task state changes.</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4>Command + Undo/Redo</h4>
+                            <p>CommandManager holds undo/redo stacks. AddTaskCommand, DeleteTaskCommand, and ToggleCompleteCommand are all reversible.</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4>Factory Method</h4>
+                            <p>WorkTaskFactory, PersonalTaskFactory, SchoolTaskFactory all extend abstract TaskFactory. New categories require no changes to existing code.</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4>Decorator</h4>
+                            <p>PriorityDecorator and DeadlineDecorator wrap tasks to inject labels: "Study" → "[HIGH] Study" → "[HIGH] Study [2d left]".</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4>Singleton</h4>
+                            <p>AppConfig provides a single shared instance for app-wide configuration (name, version).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content expanded">
+                    <ul>
+                        <li>Create, edit, and delete tasks with Work / Personal / School categories</li>
+                        <li>Priority levels: Low, Medium, High, Urgent</li>
+                        <li>Due date tracking with visual deadline warnings</li>
+                        <li>Full undo/redo support via Command pattern</li>
+                        <li>Filter and search across all tasks</li>
+                        <li>84 unit tests across 6 test classes</li>
+                        <li>17 total classes, clean SOLID architecture</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">SOLID Principles</h2>
+                <div class="collapsible-content expanded">
+                    <ul>
+                        <li><strong style="color:var(--accent-cyan)">SRP</strong> — Each class has exactly one responsibility</li>
+                        <li><strong style="color:var(--accent-cyan)">OCP</strong> — Add new categories via new factory subclass, no existing code changes</li>
+                        <li><strong style="color:var(--accent-cyan)">LSP</strong> — All factories are substitutable for TaskFactory</li>
+                        <li><strong style="color:var(--accent-cyan)">ISP</strong> — TaskObserver exposes a single focused method</li>
+                        <li><strong style="color:var(--accent-cyan)">DIP</strong> — Depends on Command/TaskFactory abstractions, not concrete classes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Run & Test</h2>
+                <div class="collapsible-content expanded">
+                    <pre>mvn javafx:run   # run the app
+mvn test         # run all 84 unit tests</pre>
+                </div>
+            </div>
+
+            <a href="https://github.com/v0ttrix/TaskFlow" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+        </div>
+    </section>
+
+    <script src="../../script.js"></script>
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            header.classList.toggle('collapsed');
+            content.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>
