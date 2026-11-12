@@ -93,45 +93,66 @@
     <section class="project-detail">
         <div class="container">
             <div class="project-header">
-                <h1>SCADA Plant Monitoring System</h1>
+                <h1>FloraTracker — SCADA Plant Monitoring System</h1>
                 <div class="project-meta">
-                    <span class="meta-tag" style="border-color:var(--accent-cyan);color:var(--accent-cyan);">🏆 2026 ConHacks Winner</span>
-                    <span class="meta-tag">Python</span>
-                    <span class="meta-tag">FastAPI</span>
-                    <span class="meta-tag">MySQL</span>
-                    <span class="meta-tag">Avalonia</span>
+                    <span class="meta-tag" style="border-color:var(--accent-cyan);color:var(--accent-cyan);">🏆 ConHacks 2026 — Best Beginner Hack</span>
+                    <span class="meta-tag">React Native</span>
+                    <span class="meta-tag">Raspberry Pi</span>
+                    <span class="meta-tag">Flask</span>
+                    <span class="meta-tag">Snowflake</span>
+                    <span class="meta-tag">Supabase</span>
+                    <span class="meta-tag">Google Gemini</span>
                 </div>
             </div>
 
             <div class="project-content">
                 <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
                 <div class="collapsible-content">
-                    <p>GardenTracker is a comprehensive greenhouse monitoring and control system that enables real-time environmental sensor monitoring with customizable alert thresholds for temperature, humidity, and actuators like water pumps. The system features local automation rules and a fully customizable display interface tailored to user needs.</p>
+                    <p>FloraTracker is a plant monitoring app built in 24 hours at ConHacks 2026, where it won Best Beginner Hack. The idea was simple — a lot of plants go unnoticed and die because their owners don't have a way to track what they actually need. FloraTracker fixes that.</p>
+                    <p>A Raspberry Pi with sensors sits next to your plant and collects real-time environmental data. That data gets sent over an encrypted VPN tunnel (Tailscale) to a React Native app that displays a live dashboard per plant, makes AI-powered care recommendations using Snowflake, and lets you chat with Google Gemini for further guidance.</p>
                 </div>
             </div>
 
             <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">Key Features</h2>
+                <h2 class="collapsed" onclick="toggleSection(this)">How It Works</h2>
                 <div class="collapsible-content">
                     <ul>
-                        <li>Real-time sensor data visualization with dynamic card rendering and status indicators</li>
-                        <li>Local automation with database-synced thresholds and automated scheduling</li>
-                        <li>Historical data graphing and CSV export capabilities</li>
-                        <li>Full hardware integration with Windows stubbing fallback for development</li>
-                        <li>Fully customizable card-based interface with drag-and-drop editor</li>
-                        <li>Persistent settings between sessions with error recovery</li>
-                        <li>Strong accessibility and user experience design</li>
-                        <li>Client-level automation rules that submit requests on behalf of users</li>
+                        <li>Raspberry Pi collects sensor data (moisture, humidity, temperature, light) from a protoboard and stores it locally</li>
+                        <li>Tailscale VPN tunnel provides a secure SSH connection without exposing ports publicly</li>
+                        <li>Flask backend reads from the Pi and serves data to the frontend</li>
+                        <li>React Native app displays a real-time dashboard per registered plant</li>
+                        <li>Snowflake API analyzes sensor data to make decisions — does the plant need water? New soil?</li>
+                        <li>Google Gemini integration for natural language plant care assistance</li>
+                        <li>Supabase handles user authentication so each user gets their own plant dashboard</li>
                     </ul>
                 </div>
             </div>
 
             <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">Technical Implementation</h2>
+                <h2 class="collapsed" onclick="toggleSection(this)">What We Built</h2>
                 <div class="collapsible-content">
-                    <p>Frontend built with .NET 9 and Avalonia UI framework for cross-platform desktop support, featuring ScottPlot for data visualization. Backend powered by FastAPI with Python for high-performance async operations and MySQL for time-series data persistence.</p>
-                    <p>The system implements intelligent hardware detection with automatic stubbing - when physical hardware is connected, it runs on actual sensors; otherwise, it fully recreates the environment for development and testing. Hardware setup includes Raspberry Pi GPIO integration with ADS1115 ADC for analog sensor readings.</p>
-                    <p>Architecture supports RESTful API communication, automated threshold monitoring at the database layer, and persistent configuration management across sessions.</p>
+                    <ul>
+                        <li>Real-time sensor dashboard that updates live as sensors are moved or conditions change</li>
+                        <li>AI-driven care recommendations tailored to each plant</li>
+                        <li>Secure device-to-app connectivity via Tailscale VPN</li>
+                        <li>Multi-user support with Supabase auth</li>
+                        <li>Google Gemini chatbot integration for plant questions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 class="collapsed" onclick="toggleSection(this)">Built With</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>React Native — mobile frontend</li>
+                        <li>Flask — backend API</li>
+                        <li>Raspberry Pi — hardware sensor collection</li>
+                        <li>Tailscale — encrypted VPN tunnel</li>
+                        <li>Snowflake API — AI-powered data analysis and predictions</li>
+                        <li>Supabase — user authentication</li>
+                        <li>Google Gemini — natural language plant care assistant</li>
+                    </ul>
                 </div>
             </div>
 
@@ -139,50 +160,27 @@
                 <h2 class="collapsed" onclick="toggleSection(this)">Contributors</h2>
                 <div class="collapsible-content">
                     <ul>
-                        <li>JgreyScales</li>
-                        <li>V0ttrix (Abd Ulrahman Mardini)</li>
-                        <li>Angelchild00</li>
-                        <li>Cole-Johnson1</li>
+                        <li>Abd Ulrahman Mardini (V0ttrix)</li>
+                        <li>Liban Nur</li>
+                        <li>Ahmed Somaan</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">Results & Impact</h2>
-                <div class="collapsible-content">
-                    <p>Successfully demonstrated practical application of industrial control systems and IoT security principles in agricultural automation. The system provides comprehensive environmental monitoring with automated responses, customizable interfaces, and robust error handling for real-world greenhouse operations.</p>
-                    <p>Features full hardware-software integration with intelligent fallback mechanisms, making it suitable for both production deployment and development environments. Licensed under GPL-3.0 for open-source collaboration.</p>
-                </div>
-            </div>
-
-            <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">Project Demos</h2>
-                <div class="collapsible-content">
-                    <div style="display: grid; gap: 30px; margin-top: 20px;">
-                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/Hv8HGW6jdb8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/TfWioeiJG2A" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="project-content" style="padding: 20px 40px;">
-                <h2 class="collapsed" onclick="toggleSection(this)">Visuals</h2>
+                <h2 class="collapsed" onclick="toggleSection(this)">Screenshots</h2>
                 <div class="collapsible-content">
-                    <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 10px;">
-                        <img src="../../images/1765509631515.jpeg" alt="Raspberry Pi Monitoring System Screenshot 1" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
-                        <img src="../../images/1765509631968.jpeg" alt="Raspberry Pi Monitoring System Screenshot 2" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
-                        <img src="../../images/1765509632554.jpeg" alt="Raspberry Pi Monitoring System Screenshot 4" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
-                        <img src="../../images/1765509632359.jpeg" alt="Raspberry Pi Monitoring System Screenshot 3" style="width: 100%; border-radius: 8px; border: 1px solid var(--border-color); display: block;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px;">
+                        <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/710/datas/original.jpg" alt="FloraTracker — early frontend prototype" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
+                        <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/711/datas/original.jpg" alt="FloraTracker — hardware discovery 1" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
+                        <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/712/datas/original.jpg" alt="FloraTracker — hardware discovery 2" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
+                        <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/713/datas/original.jpg" alt="FloraTracker — hardware discovery 3" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
                     </div>
                 </div>
             </div>
 
-            <a href="https://github.com/v0ttrix/GardenTracker" class="btn btn-primary">View on GitHub →</a>
-            <a href="https://www.linkedin.com/posts/jaden-mardini_a-greenhouse-monitoring-system-that-combines-activity-7405084123817734144-te5i?utm_source=share&utm_medium=member_desktop" class="btn btn-secondary" rel="noopener noreferrer" style="margin-left: 20px;">View LinkedIn Post →</a>
+            <a href="https://github.com/TechNerd-019/ConHacks2026" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+            <a href="https://devpost.com/software/floratracker" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" style="margin-left: 20px;">View on Devpost →</a>
         </div>
     </section>
 
