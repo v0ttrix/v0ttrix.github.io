@@ -40,6 +40,12 @@ setInterval(drawMatrix, 35);
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    // reinitialize drops for the new column count, otherwise columns go misaligned
+    const newColumns = Math.floor(canvas.width / fontSize);
+    drops.length = newColumns;
+    for (let i = 0; i < newColumns; i++) {
+        if (drops[i] === undefined) drops[i] = 1;
+    }
 });
 
 // smooth scrolling for anchor links - way better UX than default jump
@@ -91,11 +97,16 @@ function toggleMainSection(header) {
     content.classList.toggle('expanded');
 }
 
-// start everything collapsed when page loads
+// start everything expanded when page loads
 window.addEventListener('load', function() {
     const collapsibleSections = document.querySelectorAll('.collapsible-section');
     collapsibleSections.forEach(section => {
-        section.classList.add('collapsed');
+        // remove collapsed so arrow points down and content shows
+        section.classList.remove('collapsed');
+        const content = section.nextElementSibling;
+        if (content) {
+            content.classList.add('expanded');
+        }
     });
 });
 
