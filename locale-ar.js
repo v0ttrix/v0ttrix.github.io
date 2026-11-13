@@ -19,7 +19,7 @@ window.PORTFOLIO_AR = {
   "Your browser doesn't support this video.": "متصفحك لا يدعم تشغيل هذا الفيديو.",
   "Download the demo": "تحميل العرض",
   "Best Beginner Hack · ConHacks 2026": "أفضل مشروع للمبتدئين · ConHacks 2026",
-  "Built with two teammates in 24 hours. A Raspberry Pi reads the plant's environment, and a mobile app turns the sensor data into a live dashboard and care recommendations.": "أنجزناه أنا وزميلان خلال 24 ساعة. يجمع Raspberry Pi بيانات البيئة المحيطة بالنبات، ويعرضها تطبيق الهاتف في لوحة متابعة مباشرة مع توصيات للعناية به.",
+  "Built with three teammates in 24 hours. A Raspberry Pi reads the plant's environment, and a mobile app turns the sensor data into a live dashboard and care recommendations.": "أنجزناه أنا وثلاثة زملاء خلال 24 ساعة. يجمع Raspberry Pi بيانات البيئة المحيطة بالنبات، ويعرضها تطبيق الهاتف في لوحة متابعة مباشرة مع توصيات للعناية به.",
   "The project ↗": "المشروع ↗",
   "Code ↗": "الكود ↗",
   "Download the COIL demo": "تحميل عرض COIL",
