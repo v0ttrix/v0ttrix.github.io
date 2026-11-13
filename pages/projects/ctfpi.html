@@ -116,25 +116,30 @@
             <div class="project-content">
                 <h2 class="collapsed" onclick="toggleSection(this)">Photos</h2>
                 <div class="collapsible-content">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px;">
-                        <img src="../../images/ctfpi/1776490432697.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490432784.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490432789.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490432979.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433120 (1).jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433120.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433452.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433490.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433563.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433568 (1).jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433568.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433875.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490433896.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490434444.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490434454.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
-                        <img src="../../images/ctfpi/1776490438736.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px; margin-top: 10px;">
+                        <img src="../../images/ctfpi/1776490432697.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490432784.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490432789.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490432979.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433120 (1).jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433120.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433452.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433490.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433563.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433568 (1).jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433568.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433875.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433896.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490434444.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490434454.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490438736.jpeg" alt="CTF Pi photo" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
                     </div>
                 </div>
+            </div>
+
+            <!-- Lightbox -->
+            <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; align-items:center; justify-content:center; cursor:pointer;">
+                <img id="lightbox-img" src="" style="max-width:90%; max-height:90vh; border-radius:8px; box-shadow:0 0 40px rgba(0,240,255,0.3);">
             </div>
 
             <a href="https://github.com/v0ttrix/Server-Client-CTFpi" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
@@ -148,6 +153,15 @@
             header.classList.toggle('collapsed');
             content.classList.toggle('expanded');
         }
+        function openLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = src;
+            lb.style.display = 'flex';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
     </script>
 </body>
 </html>
