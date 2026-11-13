@@ -974,3 +974,29 @@ section, main { scroll-margin-top: 100px; }
 .reference-column .reference-card { flex: 0 0 auto; }
 
 .project-card .project-award { display: block; margin-top: 8px; color: #fff; font-size: .85rem; font-weight: 400; line-height: 1.6; }
+
+/* Skills link directly to project examples. */
+.skills-page .section-title { margin-bottom: 18px; }
+.skills-intro { color: var(--text-secondary); margin-bottom: 38px; font-size: 1.1rem; }
+.skills-page .skills-grid { align-items: start; }
+.skills-page .skill-category { padding: 26px; }
+.skills-page .skill-category h2 { color: var(--accent-cyan); margin-bottom: 20px; font-size: 1.3rem; line-height: 1.4; }
+.skill-project-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.skill-project-link { display: inline-flex; align-items: center; gap: 9px; max-width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary); text-decoration: none; font-size: .9rem; line-height: 1.5; overflow-wrap: anywhere; }
+.skill-project-link span { color: var(--accent-cyan); font-size: .85rem; }
+.skill-project-link:hover, .skill-project-link:focus-visible { color: var(--accent-green); border-color: var(--accent-green); background: rgba(0,255,136,.04); }
+.additional-skills { padding: 0; margin-top: 45px; }
+.additional-skills h2 { font-size: 1.4rem; margin-bottom: 12px; }
+.additional-skills > p { color: var(--text-secondary); margin-bottom: 20px; }
+@media (max-width: 768px) { .skills-page .skill-category { padding: 20px; } }
+
+/* Let skill categories stack naturally instead of sharing the tallest row. */
+.skills-page .skills-grid { display: block; columns: 300px 3; column-gap: 24px; }
+.skills-page .skill-category { display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 24px; vertical-align: top; }
+@media (max-width: 768px) { .skills-page .skills-grid { columns: 1; } }
+
+.project-content[id] { scroll-margin-top: 100px; }
+
+.site-navigation .nav-home { display: inline-flex; align-items: center; justify-content: center; min-width: 30px; }
+.nav-home-icon { display: block; flex-shrink: 0; }
+@media (max-width: 768px) { .site-navigation .nav-home { justify-content: flex-start; } }

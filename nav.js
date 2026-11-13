@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.menu-btn')?.remove();
     const links = [
+        ['Home', '/'],
         ['Projects', '/pages/projects.html'], ['Phone Apps', '/pages/phone-apps.html'], ['My Business', '/pages/my-business.html'], ['Experience', '/pages/experience.html'],
         ['About', '/pages/about.html'], ['Skills', '/pages/skills.html'],
         ['Certifications', '/pages/certifications.html'], ['References', '/pages/references.html'],
@@ -9,8 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     const path = window.location.pathname;
     const navigation = links.map(([label, href]) => {
-        const active = path === href || (label === 'Projects' && path.startsWith('/pages/projects/')) || (label === 'Phone Apps' && path.startsWith('/pages/phone-apps/'));
-        return `<a href="${href}"${active ? ' aria-current="page"' : ''}>${label}</a>`;
+        const active = path === href || (label === 'Home' && path === '/index.html') || (label === 'Projects' && path.startsWith('/pages/projects/')) || (label === 'Phone Apps' && path.startsWith('/pages/phone-apps/'));
+        const content = label === 'Home' ? '<svg class="nav-home-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg>' : label;
+        return `<a href="${href}"${label === 'Home' ? ' class="nav-home" aria-label="Home" title="Home"' : ''}${active ? ' aria-current="page"' : ''}>${content}</a>`;
     }).join('');
     document.body.insertAdjacentHTML('afterbegin', `
         <a class="skip-link" href="#main">Skip to content</a>
