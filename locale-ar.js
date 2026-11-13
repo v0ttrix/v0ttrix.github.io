@@ -812,5 +812,7 @@ window.PORTFOLIO_AR = {
   "Raspberry Pi GPIO pin assignments for the ADS1115, sensors, and status LEDs": "توزيع أرجل GPIO لتوصيل ADS1115 والمستشعرات ومصابيح الحالة",
   "FloraTracker plant monitoring prototype with soil sensors and status LEDs": "نموذج مراقبة النباتات FloraTracker مع مستشعرات التربة ومصابيح الحالة",
   "FloraTracker wiring diagram connecting the Raspberry Pi, sensors, ADC, and LEDs": "مخطط توصيل FloraTracker بين Raspberry Pi والمستشعرات والمحول والمصابيح",
-  "Web Vulnerability Scanner Demo": "عرض ماسح ثغرات الويب"
+  "Web Vulnerability Scanner Demo": "عرض ماسح ثغرات الويب",
+  "A website for a Chicago-based real estate company that buys, renovates, and sells homes, with property selling information and consultation booking.": "موقع لشركة عقارية في شيكاغو تشتري المنازل وتجددها وتبيعها، ويضم معلومات عن بيع العقارات وحجز الاستشارات.",
+  "Visit ushayat.com ↗": "زيارة ushayat.com ↗"
 };
