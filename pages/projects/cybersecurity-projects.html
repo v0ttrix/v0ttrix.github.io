@@ -5,33 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberSecurity Projects - Abd Ulrahman Mardini</title>
     <meta name="description" content="A collection of cybersecurity tools: Red Team Network Scanner, Web Vulnerability Scanner, Intrusion Detection System, and Secure Communications Tool.">
+    <link rel="stylesheet" href="../../project.css">
     <link rel="stylesheet" href="../../style.css">
-    <style>
-        .back-btn { position: fixed; top: 20px; left: 20px; z-index: 999; }
-        .project-detail { padding: 150px 0 100px; }
-        .project-header h1 { color: var(--accent-cyan); font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 20px; }
-        .project-meta { display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
-        .meta-tag { background: var(--bg-card); padding: 8px 16px; border-radius: 4px; border: 1px solid var(--accent-green); color: var(--accent-green); }
-        .project-content { background: var(--bg-card); padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 10px; }
-        .project-content h2 { color: var(--accent-cyan); margin-bottom: 10px; cursor: pointer; user-select: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; }
-        .project-content h2:hover { color: var(--accent-green); }
-        .project-content h2::after { content: "▼"; font-size: 0.8em; transition: transform 0.3s; }
-        .project-content h2.collapsed::after { transform: rotate(-90deg); }
-        .project-content p, .project-content li { color: var(--text-secondary); line-height: 1.8; margin-bottom: 15px; }
-        .project-content ul { list-style: none; padding-left: 0; }
-        .project-content li::before { content: "▹"; color: var(--accent-green); margin-right: 10px; }
-        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .collapsible-content.expanded { max-height: 5000px; }
-        pre { background: var(--bg-dark); padding: 15px; border-radius: 4px; overflow-x: auto; color: var(--accent-green); font-size: 0.9rem; margin-bottom: 15px; }
-        .tool-header { color: var(--accent-green); font-size: 1rem; font-weight: bold; margin: 20px 0 10px; border-left: 3px solid var(--accent-green); padding-left: 12px; }
-        .impact-stat { background: var(--bg-dark); border: 1px solid var(--accent-cyan); border-radius: 6px; padding: 15px 20px; margin-bottom: 10px; }
-        .impact-stat span { color: var(--accent-cyan); font-size: 1.5rem; font-weight: bold; display: block; margin-bottom: 5px; }
-        .impact-stat p { color: var(--text-secondary); margin: 0; font-size: 0.9rem; }
-        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
-    </style>
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body>
-    <canvas id="matrix"></canvas>
+    <canvas id="matrix" aria-hidden="true"></canvas>
     <a href="/pages/projects.html" class="btn btn-outline back-btn">← Back</a>
 
     <section class="project-detail">
@@ -49,7 +28,7 @@
             </div>
 
             <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
+                <h2 onclick="toggleSection(this)">Overview</h2>
                 <div class="collapsible-content">
                     <p>A collection of four production-ready cybersecurity tools built for authorized security testing, threat detection, and secure communications. The goal wasn't just to generate alerts — it was to explore how far automated investigation could go.</p>
                     <div class="stats-row">
@@ -70,7 +49,7 @@
             </div>
 
             <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">1 — Red Team Network Scanner</h2>
+                <h2 onclick="toggleSection(this)">1 — Red Team Network Scanner</h2>
                 <div class="collapsible-content">
                     <p>Automated reconnaissance tool that runs Nmap scans, parses results, identifies risky services, and generates actionable reports in text and JSON format.</p>
                     <ul>
@@ -86,7 +65,7 @@ python red_team_scanner.py 192.168.1.1 -v -o report.txt</pre>
             </div>
 
             <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">2 — Web Vulnerability Scanner</h2>
+                <h2 onclick="toggleSection(this)">2 — Web Vulnerability Scanner</h2>
                 <div class="collapsible-content">
                     <p>Comprehensive web application scanner identifying common vulnerabilities including SQLi, XSS, CSRF, and security misconfigurations with HTML report generation.</p>
                     <ul>
@@ -104,7 +83,7 @@ python scanner.py --url https://example.com</pre>
             </div>
 
             <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">3 — Intrusion Detection System</h2>
+                <h2 onclick="toggleSection(this)">3 — Intrusion Detection System</h2>
                 <div class="collapsible-content">
                     <p>Network-based IDS that monitors traffic patterns in real time, identifying suspicious activity using both rule-based signatures and anomaly detection.</p>
                     <ul>
@@ -121,7 +100,7 @@ sudo python ids.py --interface eth0</pre>
             </div>
 
             <div class="project-content">
-                <h2 class="collapsed" onclick="toggleSection(this)">4 — Secure Communications Tool</h2>
+                <h2 onclick="toggleSection(this)">4 — Secure Communications Tool</h2>
                 <div class="collapsible-content">
                     <p>End-to-end encrypted messaging application demonstrating hybrid cryptography with RSA+AES, digital signatures, and key management.</p>
                     <ul>
@@ -141,13 +120,8 @@ python secure_comms.py</pre>
         </div>
     </section>
 
+    <script src="../../nav.js"></script>
     <script src="../../script.js"></script>
-    <script>
-        function toggleSection(header) {
-            const content = header.nextElementSibling;
-            header.classList.toggle('collapsed');
-            content.classList.toggle('expanded');
-        }
-    </script>
+    
 </body>
 </html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iSpeed360 - Abd Ulrahman Mardini</title>
+    <meta name="description" content="A mobile app concept for tracking driving habits with GPS and motion sensors, local trip history, and driving scores.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../phone-apps.html" class="btn btn-outline back-btn">&larr; Phone Apps</a>
+    <main id="main" class="project-detail"><div class="container">
+        <header class="project-header">
+            <img class="app-icon app-detail-icon ispeed-logo" src="../../images/Drivelogo.png" alt="iSpeed360 app logo" loading="lazy">
+            <h1 class="arqam-title">iSpeed360<span class="arqam-tagline">Improving Safety &amp; Skills</span></h1>
+            <p class="app-status">Group Project &middot; Planned for Android &amp; iOS</p>
+            <div class="project-meta"><span class="meta-tag">GPS</span><span class="meta-tag">Motion Sensors</span><span class="meta-tag">Local Storage</span><span class="meta-tag">Trip Scoring</span></div>
+            <div class="app-download-actions"><div class="app-platform-buttons"><button class="btn btn-outline app-ios-unavailable" type="button" disabled>Download for Android <span>(Coming soon)</span></button><button class="btn btn-outline app-ios-unavailable" type="button" disabled>Download for iOS <span>(Coming soon)</span></button></div></div>
+        </header>
+        <div class="project-content">
+            <h2 onclick="toggleSection(this)">Overview</h2>
+            <div class="collapsible-content">
+                <p>A mobile app concept that helps you understand your driving habits using the phone you already have. It would combine GPS speed and location with motion sensor readings to identify hard braking, rapid acceleration, and sharp turns.</p>
+                <p>Each trip would be stored locally on your phone, with a driving score and a notification summarizing the journey. The goal is to make patterns easy to spot: where abrupt maneuvers happen, how often they occur, and whether your driving becomes smoother over time.</p>
+                <p>The features below describe the planned app. A downloadable build is not available yet.</p>
+            </div>
+        </div>
+        <div class="project-content">
+            <h2 onclick="toggleSection(this)">Planned Features</h2>
+            <div class="collapsible-content"><ul>
+                <li><strong>Driving event detection:</strong> record sudden braking, quick acceleration, and sharp turns with a time, location, and estimated severity.</li>
+                <li><strong>GPS trip tracking:</strong> record the route, distance, duration, and average and maximum GPS speed.</li>
+                <li><strong>Trip scores:</strong> summarize each journey using event frequency and severity relative to the distance traveled.</li>
+                <li><strong>Local trip history:</strong> keep routes, events, and scores on the phone, with controls to delete individual trips or clear all data.</li>
+                <li><strong>Route event markers:</strong> see where each maneuver happened on the trip map.</li>
+                <li><strong>Personal trends:</strong> compare recent trips and weekly summaries to spot improvements or recurring habits.</li>
+                <li><strong>Trip notifications:</strong> receive a score and short summary after the journey ends, with notification controls.</li>
+                <li><strong>Adjustable sensitivity:</strong> calibrate motion readings for the phone's mounting position and tune event thresholds.</li>
+                <li><strong>Recording controls:</strong> start, pause, and stop trips, with an optional automatic trip-detection mode.</li>
+                <li><strong>Export:</strong> save a trip summary or export recorded events for personal analysis.</li>
+            </ul></div>
+        </div>
+        <div class="project-content">
+            <h2 onclick="toggleSection(this)">How It Would Work</h2>
+            <div class="collapsible-content"><p>GPS would provide location, speed, and distance. Accelerometer and gyroscope readings would help identify changes in movement, with filtering to reduce false events caused by bumps or phone movement. A local database would keep the trip records, and the app would calculate a score after recording ends.</p><p>Sensor thresholds, scoring, background recording, and battery use would need testing on real trips before release.</p></div>
+        </div>
+    </div></main>
+    <footer><p>&copy; 2026 Abd Ulrahman Mardini. All rights reserved.</p></footer>
+    <script src="../../nav.js"></script><script src="../../script.js"></script>
+</body>
+</html>

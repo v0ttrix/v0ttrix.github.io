@@ -1,43 +1,39 @@
-// all navigation links in one place so i dont have to copy paste everywhere
-const navigationHTML = `
-    <div class="toc-menu" id="tocMenu">
-        <ul>
-            <li><a href="/index.html" onclick="toggleMenu()">Home</a></li>
-            <li><a href="/pages/about.html" onclick="toggleMenu()">About Me</a></li>
-            <li><a href="/pages/skills.html" onclick="toggleMenu()">Skills</a></li>
-            <li><a href="/pages/projects.html" onclick="toggleMenu()">Projects</a></li>
-            <li><a href="/pages/experience.html" onclick="toggleMenu()">Experience</a></li>
-            <li><a href="/pages/certifications.html" onclick="toggleMenu()">Certifications</a></li>
-            <li><a href="/pages/references.html" onclick="toggleMenu()">References</a></li>
-            <li><a href="/pages/contact.html" onclick="toggleMenu()">Contact</a></li>
-        </ul>
-    </div>
-`;
-
-// inject the nav menu once DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // slap the nav right after the menu button
-    const menuButton = document.querySelector('.menu-btn');
-    if (menuButton) {
-        menuButton.insertAdjacentHTML('afterend', navigationHTML);
-        
-        // figure out which page we're on and highlight it
-        const path = window.location.pathname;
-        const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
-        
-        document.querySelectorAll('.toc-menu a').forEach(link => {
-            const href = link.getAttribute('href');
-            if (href === currentPage) {
-                link.classList.add('active');  // add active class to current page
-            }
-        });
+// Shared navigation for every page, including project details.
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.menu-btn')?.remove();
+    const links = [
+        ['Projects', '/pages/projects.html'], ['Phone Apps', '/pages/phone-apps.html'], ['My Business', '/pages/my-business.html'], ['Experience', '/pages/experience.html'],
+        ['About', '/pages/about.html'], ['Skills', '/pages/skills.html'],
+        ['Certifications', '/pages/certifications.html'], ['References', '/pages/references.html'],
+        ['Contact', '/pages/contact.html']
+    ];
+    const path = window.location.pathname;
+    const navigation = links.map(([label, href]) => {
+        const active = path === href || (label === 'Projects' && path.startsWith('/pages/projects/')) || (label === 'Phone Apps' && path.startsWith('/pages/phone-apps/'));
+        return `<a href="${href}"${active ? ' aria-current="page"' : ''}>${label}</a>`;
+    }).join('');
+    document.body.insertAdjacentHTML('afterbegin', `
+        <a class="skip-link" href="#main">Skip to content</a>
+        <header class="site-header"><div class="container nav-inner">
+            <a class="wordmark" href="/" aria-label="Jaden Mardini, home">jm<span>.</span></a>
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">Menu <span aria-hidden="true">+</span></button>
+            <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">${navigation}</nav>
+        </div></header>`);
+    if (!document.getElementById('main')) {
+        const content = document.querySelector('section, .contact-page');
+        if (content) { content.id ||= 'main'; document.querySelector('.skip-link').href = `#${content.id}`; }
     }
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.getElementById('site-navigation');
+    const close = () => { toggle.setAttribute('aria-expanded', 'false'); nav.classList.remove('is-open'); };
+    toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(open));
+        nav.classList.toggle('is-open', open);
+    });
+    nav.addEventListener('click', event => { if (event.target.closest('a')) close(); });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { close(); toggle.focus(); }
+    });
+    document.addEventListener('click', event => { if (!event.target.closest('.site-header')) close(); });
 });
-
-// toggles the menu open/close when you click the hamburger
-function toggleMenu() {
-    const menu = document.getElementById('tocMenu');
-    if (menu) {
-        menu.classList.toggle('active');
-    }
-}

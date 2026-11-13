@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task &amp; Appointment Manager - Abd Ulrahman Mardini</title>
+    <meta name="description" content="A menu-driven C application for adding, updating, searching, and filtering tasks. Saves records to disk and separates storage, display, and task operations into modules.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../projects.html" class="btn btn-outline back-btn">&larr; Projects</a>
+    <main id="main" class="project-detail"><div class="container">
+        <header class="project-header"><h1>Task &amp; Appointment Manager</h1><div class="project-meta"><span class="meta-tag">C</span><span class="meta-tag">File I/O</span><span class="meta-tag">Modular Design</span></div></header>
+        <div class="project-content"><h2 onclick="toggleSection(this)">Overview</h2><div class="collapsible-content"><p>A terminal task manager written in C. It supports day-to-day record management while keeping persistence, display formatting, validation, and task operations in separate source modules.</p></div></div>
+        <div class="project-content"><h2 onclick="toggleSection(this)">Features</h2><div class="collapsible-content"><ul><li>Add, edit, delete, and view task records.</li><li>Search by keyword and filter by date range.</li><li>Save tasks to disk and load them across sessions.</li><li>Input validation and error handling for menu operations.</li></ul></div></div>
+        <div class="project-content"><h2 onclick="toggleSection(this)">Development &amp; Testing</h2><div class="collapsible-content"><p>The repository documents builds with Make or GCC and lists the individual modules needed for manual compilation.</p></div></div>
+        <a class="btn btn-primary" href="https://github.com/v0ttrix/Task-Appointment-Manager-in-C" target="_blank" rel="noopener noreferrer">View on GitHub &nearr;</a>
+    </div></main>
+    <footer><p>&copy; 2026 Abd Ulrahman Mardini. All rights reserved.</p></footer>
+    <script src="../../nav.js"></script><script src="../../script.js"></script>
+</body>
+</html>

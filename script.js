@@ -1,112 +1,173 @@
-// matrix rain thing for the background - looks kinda cool
+// Pick a project for the homepage card, avoiding the previous pick when possible.
+(() => {
+    const card = document.getElementById('hero-project');
+    if (!card) return;
+    const projects = [
+        { id: 'coil', title: 'COIL robot / command & control', image: 'images/photo_5165805167360806308_x.jpg', alt: 'COIL robot network architecture diagram', href: 'pages/projects/coil-robot.html' },
+        { id: 'flora', title: 'FloraTracker / ConHacks 2026', image: 'images/IMG2.png', alt: 'FloraTracker wiring diagram with Raspberry Pi and plant sensors', href: 'pages/projects/scada-greenhouse-monitor.html' },
+        { id: 'ctf', title: 'CTF Pi / Raspberry Pi platform', image: 'images/ctfpi/1776490434444.jpeg', alt: 'CTF Pi hardware and server status LEDs', href: 'pages/projects/ctfpi.html' },
+        { id: 'scanner', title: 'Web Vulnerability Scanner', image: 'images/demo.jpg', alt: 'Web Vulnerability Scanner terminal report', href: 'pages/projects/virus-detection.html' },
+        { id: 'arqam', title: 'Arqam / All Your Banks in One Place', image: 'images/ArcLogo.png', alt: 'Arqam app logo', href: 'pages/phone-apps/arqam.html' }
+    ];
+    let previous;
+    try { previous = sessionStorage.getItem('hero-project'); } catch {}
+    const choices = projects.filter(project => project.id !== previous);
+    const selected = choices[Math.floor(Math.random() * choices.length)];
+    const image = card.querySelector('img');
+    image.src = selected.image;
+    image.alt = selected.alt;
+    card.querySelector('.hero-project-title').textContent = selected.title;
+    const link = card.querySelector('a');
+    link.href = selected.href;
+    link.textContent = 'View project ' + String.fromCodePoint(0x2197);
+    try { sessionStorage.setItem('hero-project', selected.id); } catch {}
+})();
+
+// A quiet background, with no animation when reduced motion is requested.
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
-
-// make canvas full screen
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// threw some japanese characters in here cuz why not lol
-const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+const ctx = canvas?.getContext('2d');
+let matrixTimer;
 const fontSize = 14;
-const columns = canvas.width / fontSize;
-const drops = Array(Math.floor(columns)).fill(1);
-
-function drawMatrix() {
-    // fade effect with low opacity
-    ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = fontSize + 'px monospace';
-    
-    //this here loops through and draws random chars
-    for (let i = 0; i < drops.length; i++) {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        
-        // reset drop to top when it reaches bottom (randomly)
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-        }
-        drops[i]++;
-    }
-}
-
-// runs every 35ms, fast enough to look smooth
-setInterval(drawMatrix, 35);
-
-//gotta resize canvas if window changes
-window.addEventListener('resize', () => {
+let drops = [];
+function resizeMatrix() {
+    if (!canvas) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    // reinitialize drops for the new column count, otherwise columns go misaligned
-    const newColumns = Math.floor(canvas.width / fontSize);
-    drops.length = newColumns;
-    for (let i = 0; i < newColumns; i++) {
-        if (drops[i] === undefined) drops[i] = 1;
-    }
-});
+    drops = Array(Math.ceil(canvas.width / fontSize)).fill(1);
+}
+function drawMatrix() {
+    ctx.fillStyle = 'rgba(10, 14, 39, 0.08)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00f0ff';
+    ctx.font = `${fontSize}px monospace`;
+    drops.forEach((drop, i) => {
+        ctx.fillText(Math.random() > 0.5 ? '1' : '0', i * fontSize, drop * fontSize);
+        drops[i] = drop * fontSize > canvas.height && Math.random() > 0.975 ? 0 : drop + 1;
+    });
+}
+function updateAnimation() {
+    clearInterval(matrixTimer);
+    if (ctx && !motionPreference.matches && !document.hidden) matrixTimer = setInterval(drawMatrix, 65);
+}
+resizeMatrix();
+updateAnimation();
+window.addEventListener('resize', resizeMatrix);
+motionPreference.addEventListener('change', updateAnimation);
+document.addEventListener('visibilitychange', updateAnimation);
 
-// smooth scrolling for anchor links - way better UX than default jump
+// Respect the visitor's motion preference for in-page links too.
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+    anchor.addEventListener('click', event => {
+        const id = anchor.getAttribute('href').slice(1);
+        const target = id && document.getElementById(id);
         if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            event.preventDefault();
+            target.scrollIntoView({ behavior: motionPreference.matches ? 'instant' : 'smooth', block: 'start' });
+            history.replaceState(null, '', `#${id}`);
         }
     });
 });
 
-// intersection observer stuff for the fade in effect when scrolling
-const observerOptions = {
-    threshold: 0.1,  // triggers when 10% visible
-    rootMargin: '0px 0px -100px 0px'  // offset from bottom
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            // make it visible when it enters viewport
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// start all sections invisible and slightly down
-document.querySelectorAll('section').forEach(section => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(20px)';
-    section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(section);  // watch em
-});
-
-// hero needs to show immediately, don't fade it in
-const heroSection = document.querySelector('#hero');
-if (heroSection) {
-    heroSection.style.opacity = '1';
-    heroSection.style.transform = 'translateY(0)';
-}
-
-//this here is for the collapsible sections on project pages
-function toggleMainSection(header) {
-    const content = header.nextElementSibling;
-    header.classList.toggle('collapsed');
-    content.classList.toggle('expanded');
-}
-
-// start everything expanded when page loads
-window.addEventListener('load', function() {
-    const collapsibleSections = document.querySelectorAll('.collapsible-section');
-    collapsibleSections.forEach(section => {
-        // remove collapsed so arrow points down and content shows
-        section.classList.remove('collapsed');
-        const content = section.nextElementSibling;
-        if (content) {
-            content.classList.add('expanded');
-        }
+// Project details remain readable without JavaScript. Overview and demos start open.
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[onclick="toggleSection(this)"], [onclick="toggleMainSection(this)"]').forEach((header, index) => {
+        const content = header.nextElementSibling;
+        if (!content) return;
+        const open = /overview|demo|photos|screenshots/i.test(header.textContent) || header.classList.contains('collapsible-section');
+        content.id ||= `project-section-${index}`;
+        header.removeAttribute('onclick');
+        header.setAttribute('role', 'button');
+        header.setAttribute('tabindex', '0');
+        header.setAttribute('aria-controls', content.id);
+        const setOpen = expanded => {
+            header.classList.toggle('collapsed', !expanded);
+            header.setAttribute('aria-expanded', String(expanded));
+            content.hidden = !expanded;
+            content.classList.toggle('expanded', expanded);
+        };
+        setOpen(open);
+        const toggle = () => setOpen(header.getAttribute('aria-expanded') !== 'true');
+        header.addEventListener('click', toggle);
+        header.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); }
+        });
     });
 });
 
+// One image viewer for the whole site, matching the COIL photo overlay.
+document.addEventListener('DOMContentLoaded', () => {
+    const images = [...document.querySelectorAll('img')];
+    if (!images.length) return;
+    const viewer = document.createElement('dialog');
+    viewer.className = 'image-viewer';
+    viewer.setAttribute('aria-label', 'Full-size image');
+    viewer.innerHTML = '<button class="image-viewer-close" type="button" aria-label="Close image viewer">×</button><img class="image-viewer-image" alt="">';
+    document.body.append(viewer);
+    const expandedImage = viewer.querySelector('img');
+    const closeButton = viewer.querySelector('button');
+    let opener;
+    let previousOverflow;
+    const open = (image, trigger) => {
+        opener = trigger;
+        expandedImage.src = image.currentSrc || image.src;
+        expandedImage.alt = image.alt;
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        viewer.showModal();
+        closeButton.focus();
+    };
+    viewer.addEventListener('click', () => viewer.close());
+    viewer.addEventListener('close', () => {
+        document.body.style.overflow = previousOverflow;
+        expandedImage.removeAttribute('src');
+        opener?.focus({ preventScroll: true });
+    });
+    images.forEach(image => {
+        const anchor = image.closest('a');
+        const imageOnlyLink = anchor && anchor.children.length === 1 && anchor.firstElementChild === image && !anchor.textContent.trim();
+        const trigger = imageOnlyLink ? anchor : image;
+        if (!imageOnlyLink) trigger.tabIndex = 0;
+        trigger.setAttribute('role', 'button');
+        trigger.setAttribute('aria-haspopup', 'dialog');
+        trigger.setAttribute('aria-label', `Enlarge image: ${image.alt || 'Photo'}`);
+        image.classList.add('expandable-image');
+        trigger.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            open(image, trigger);
+        });
+        trigger.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                event.stopPropagation();
+                open(image, trigger);
+            }
+        });
+    });
+});
+
+// Independent reference columns: opening a quote only pushes down its own column.
+document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.querySelector('.references-grid');
+    if (!grid) return;
+    const cards = [...grid.querySelectorAll(':scope > .reference-card')];
+    if (!cards.length) return;
+    let currentColumns = 0;
+    const layout = () => {
+        const count = window.innerWidth <= 768 ? 1 : Math.max(1, Math.min(3, Math.floor((grid.clientWidth + 24) / 324)));
+        if (count === currentColumns) return;
+        currentColumns = count;
+        const columns = Array.from({ length: count }, () => {
+            const column = document.createElement('div');
+            column.className = 'reference-column';
+            return column;
+        });
+        cards.forEach((card, index) => columns[index % count].append(card));
+        grid.replaceChildren(...columns);
+        grid.style.gridTemplateColumns = `repeat(${count}, minmax(0, 1fr))`;
+    };
+    layout();
+    new ResizeObserver(layout).observe(grid);
+    window.addEventListener('resize', layout);
+});

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FloraTracker App - Abd Ulrahman Mardini</title>
+    <meta name="description" content="FloraTracker is a React Native plant care app with Raspberry Pi sensor readings, plant profiles, history charts, and a Gemini-powered assistant. Best Beginner Hack at ConHacks 2026.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../phone-apps.html" class="btn btn-outline back-btn">&larr; Phone Apps</a>
+    <main id="main" class="project-detail">
+        <div class="container">
+            <header class="project-header">
+                <img class="app-icon app-detail-icon flora-logo" src="../../images/flora-icon.png" alt="FloraTracker leaf logo">
+                <h1 class="arqam-title flora-title">FloraTracker<span class="arqam-tagline">Make Time To Grow</span></h1>
+                <p class="app-status">ConHacks 2026 &middot; Best Beginner Hack &middot; Hackathon prototype</p>
+                <div class="project-meta"><span class="meta-tag">React Native</span><span class="meta-tag">Expo</span><span class="meta-tag">TypeScript</span><span class="meta-tag">Supabase</span><span class="meta-tag">Flask</span><span class="meta-tag">Snowflake</span><span class="meta-tag">Google Gemini</span></div>
+                <div class="app-download-actions"><div class="app-platform-buttons"><button class="btn btn-outline app-ios-unavailable" type="button" disabled title="Android download coming soon">Download for Android <span>(Coming soon)</span></button><button class="btn btn-outline app-ios-unavailable" type="button" disabled title="iOS download coming soon">Download for iOS <span>(Coming soon)</span></button></div></div>
+            </header>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>FloraTracker puts your plants and their sensor readings on your phone. Check whether the soil is dry, see the room temperature and humidity, or look back at recent readings before deciding what the plant needs.</p>
+                    <p>Built with two teammates in 24 hours at ConHacks 2026, the project won Best Beginner Hack. The mobile app uses React Native, Expo, and TypeScript. A Flask API on a Raspberry Pi provides the sensor data, while Supabase handles sign-in, plant records, and photo storage.</p>
+                    <p>The app also includes Flora, a Gemini-powered assistant that uses current sensor readings and recent history to answer plant care questions. This is the phone app for the <a class="text-link" href="../projects/scada-greenhouse-monitor.html">FloraTracker SCADA plant monitoring project</a>.</p>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">App Features</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong>Your garden:</strong> create plant profiles with names, species, notes, and camera photos. Browse plants and mark favourites.</li>
+                        <li><strong>Live readings:</strong> view temperature, humidity, soil moisture, and water level. The sensor screen refreshes every five seconds and supports pull-to-refresh.</li>
+                        <li><strong>History:</strong> review past readings and charts to see how conditions have changed.</li>
+                        <li><strong>Flora assistant:</strong> ask about plant health or watering, with current readings and recent history supplied by the backend.</li>
+                        <li><strong>Light controls:</strong> switch the connected plant light from the app or through the assistant when the light card is enabled.</li>
+                        <li><strong>In-app inbox:</strong> see care messages based on plant vitality, dry soil, and low humidity.</li>
+                        <li><strong>Accounts:</strong> sign in with Supabase and manage plant records and uploaded photos.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">How It Connects</h2>
+                <div class="collapsible-content">
+                    <div class="arch-diagram">React Native app<br>&harr; Flask API on Raspberry Pi<br>&harr; DHT22 and ADS1115 sensor readings<br><br>Supabase &mdash; authentication, plant records, photos<br>Snowflake &mdash; sensor history<br>Gemini &mdash; Flora chat responses</div>
+                    <p>The phone requests live readings from the Pi and displays them as sensor cards. The backend reads temperature and humidity from a DHT22 and uses an ADS1115 to read the soil moisture and water level sensors. History requests read stored measurements from Snowflake.</p>
+                    <p>The hackathon setup connects to the Pi over a Tailscale network. It needs the Pi and backend services running; it is not a standalone plant identification app.</p>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Demo Video</h2>
+                <div class="collapsible-content">
+                    <video controls preload="none" poster="../../images/win.jpg" aria-label="FloraTracker app and plant monitoring demo" style="width:100%; border-radius:8px;"><source src="../../images/floratracker-demo.mp4" type="video/mp4">Your browser does not support this video. <a href="../../images/floratracker-demo.mp4">Download the demo</a>.</video>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Project Photos</h2>
+                <div class="collapsible-content">
+                    <div class="flora-gallery">
+                        <a href="../../images/IMG1.jpg"><img src="../../images/IMG1.jpg" alt="FloraTracker prototype with a plant, soil sensors, and status LEDs" loading="lazy"></a>
+                        <a href="../../images/IMG2.png"><img src="../../images/IMG2.png" alt="Wiring diagram for the Raspberry Pi, plant sensors, and LEDs" loading="lazy"></a>
+                        <a href="../../images/win.jpg"><img src="../../images/win.jpg" alt="FloraTracker at ConHacks 2026" loading="lazy"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Team</h2>
+                <div class="collapsible-content"><p>Abd Ulrahman Mardini, Liban Nur, and Ahmed Somaan.</p></div>
+            </div>
+            <div class="project-actions"><a href="../projects/scada-greenhouse-monitor.html">Hardware project &rarr;</a><a href="https://github.com/v0ttrix/GardenTracker" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a><a href="https://devpost.com/software/floratracker" target="_blank" rel="noopener noreferrer">Devpost &nearr;</a></div>
+        </div>
+    </main>
+    <footer><p>&copy; 2026 Abd Ulrahman Mardini. All rights reserved.</p></footer>
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+</body>
+</html>

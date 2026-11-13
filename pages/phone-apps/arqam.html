@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arqam - Abd Ulrahman Mardini</title>
+    <meta name="description" content="Arqam is a personal finance app for iOS and Android, built with React Native, Expo, Supabase, and Plaid. A look at its features, architecture, and testing.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../phone-apps.html" class="btn btn-outline back-btn">← Phone Apps</a>
+    <main id="main" class="project-detail">
+        <div class="container">
+            <header class="project-header">
+                <img class="app-icon app-detail-icon arqam-logo" src="../../images/ArcLogo.png" alt="Arqam app icon">
+                <h1 class="arqam-title">Arqam<span class="arqam-tagline">All Your Banks in One Place</span></h1>
+                <p class="app-status">In development · iOS &amp; Android · Plaid sandbox</p>
+                <div class="project-meta">
+                    <span class="meta-tag">React Native</span><span class="meta-tag">Expo</span><span class="meta-tag">TypeScript</span><span class="meta-tag">Supabase</span><span class="meta-tag">Plaid</span><span class="meta-tag">Zustand</span>
+                </div>
+                <div class="app-download-actions"><div class="app-platform-buttons"><a href="https://github.com/v0ttrix/v0ttrix.github.io/releases/download/arqam-android-v1/application-b099f0ac-3023-492c-8a71-e5807db19784.apk" class="btn btn-primary">Download for Android</a><button class="btn btn-outline app-ios-unavailable" type="button" disabled title="iOS download coming soon">Download for iOS <span>(Coming soon)</span></button></div><span class="app-download-note">APK &middot; 107 MB &middot; Test build</span></div>
+            </header>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>Arqam brings all your connected bank accounts into one place, showing your balances, transactions, and combined total so you can see where you stand without switching between banking apps.</p>
+                    <p>Arqam has read-only access. It cannot send, receive, or transfer money, open bank accounts, or make changes to your bank accounts. It only reads account information to help you understand your finances.</p>
+                    <p>With your permission, the optional AI assistant can analyze your financial data, explain where your money is going, help you build spending and savings plans, and estimate what you can afford based on your income, expenses, and goals.</p>
+                    <p>I built it with React Native and Expo for iOS and Android. Supabase handles authentication, the database, and server-side functions. Plaid handles the bank-linking flow and transaction sync.</p>
+                    <p>The app is in pre-launch testing. Bank connections currently use Plaid's sandbox, and physical-device testing and release preparation are still in progress.</p>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">What the App Does</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong>Accounts and activity:</strong> connect accounts through Plaid Link, view balances, and browse synchronized transactions.</li>
+                        <li><strong>Budgets:</strong> set category budgets and track spending against them.</li>
+                        <li><strong>Savings goals:</strong> create goals and follow their progress.</li>
+                        <li><strong>Bills:</strong> view and manage upcoming and recurring bills, including manually added entries.</li>
+                        <li><strong>Optional AI:</strong> understand your spending, build spending and savings plans, and estimate affordability using your financial data. Choose OpenAI or Anthropic and control whether your financial context is shared.</li>
+                        <li><strong>Settings:</strong> manage currency, hide displayed balances, enable a device-local biometric lock, export account data, and delete the account.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Architecture</h2>
+                <div class="collapsible-content">
+                    <div class="arch-diagram">React Native / Expo Router<br>↕<br>Zustand stores and TypeScript services<br>↕<br>Supabase Auth, Postgres, and Edge Functions<br>↕<br>Plaid and optional AI providers</div>
+                    <p>The phone handles navigation and local preferences. Sensitive token exchanges and provider calls run in Edge Functions. This keeps Plaid access tokens and AI provider keys out of the mobile client.</p>
+                    <p>Transaction sync handles multiple pages, repeated requests, and restarts when Plaid reports a change during pagination. Disconnecting an institution revokes its Plaid connection; hiding an individual account retains the institution connection.</p>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Security</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Plaid access tokens and user-supplied AI keys are encrypted server-side with AES-256-GCM.</li>
+                        <li>Supabase row-level security policies restrict access to user-owned records.</li>
+                        <li>Plaid webhook handling verifies signed requests and rejects malformed or stale payloads.</li>
+                        <li>Biometric locking and balance visibility are device-local preferences.</li>
+                        <li>Data export excludes credentials and provider tokens. Account deletion includes disconnecting Plaid institutions.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Testing &amp; Current Status</h2>
+                <div class="collapsible-content">
+                    <p>The project includes Jest and React Native Testing Library tests for components, screens, stores, and services. Integration tests cover user-data isolation, Edge Functions, and the Plaid sandbox lifecycle. Maestro flows cover mobile navigation and common app actions.</p>
+                    <p>Physical Android and iOS verification is still required, including biometric behavior, Plaid reconnect flows, accessibility, and signed release builds. Arqam is not yet available as a public App Store or Google Play release.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer><p>&copy; 2026 Abd Ulrahman Mardini. All rights reserved.</p></footer>
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+</body>
+</html>

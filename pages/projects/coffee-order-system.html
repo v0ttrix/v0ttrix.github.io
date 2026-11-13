@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Order System - Abd Ulrahman Mardini</title>
+    <meta name="description" content="A C# coffee order engine built with test-driven development. Validates orders, calculates prices and promotions, classifies beverages, and generates receipts.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../projects.html" class="btn btn-outline back-btn">&larr; Projects</a>
+    <main id="main" class="project-detail"><div class="container">
+        <header class="project-header"><h1>Coffee Order System</h1><div class="project-meta"><span class="meta-tag">C#</span><span class="meta-tag">.NET 8</span><span class="meta-tag">MSTest</span><span class="meta-tag">TDD</span></div></header>
+        <div class="project-content"><h2 onclick="toggleSection(this)">Overview</h2><div class="collapsible-content"><p>A small coffee shop domain built in C# and .NET 8, with separate components for validation, beverage classification, pricing, promotions, and receipt formatting. The core logic runs without external I/O, making the calculations straightforward to test.</p></div></div>
+        <div class="project-content"><h2 onclick="toggleSection(this)">Features</h2><div class="collapsible-content"><ul><li>Order validation is kept separate from pricing and promotions.</li><li>Decimal-based pricing with explicit rounding to two decimal places.</li><li>HAPPYHOUR and BOGO promotions applied in a defined order.</li><li>Beverage classification, allergen warnings, and deterministic receipt formatting.</li></ul></div></div>
+        <div class="project-content"><h2 onclick="toggleSection(this)">Development &amp; Testing</h2><div class="collapsible-content"><p>The repository includes MSTest tests written using the Arrange, Act, Assert pattern. Two tests are intentionally marked Pending and left failing to demonstrate work in progress in the TDD cycle.</p></div></div>
+        <a class="btn btn-primary" href="https://github.com/v0ttrix/Coffee-Order-System" target="_blank" rel="noopener noreferrer">View on GitHub &nearr;</a>
+    </div></main>
+    <footer><p>&copy; 2026 Abd Ulrahman Mardini. All rights reserved.</p></footer>
+    <script src="../../nav.js"></script><script src="../../script.js"></script>
+</body>
+</html>
