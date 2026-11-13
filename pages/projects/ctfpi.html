@@ -45,16 +45,16 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Overview</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
                     <p>A full-stack Capture The Flag platform built to run on a Raspberry Pi. Users log in, browse challenges, and interact with the server through a custom binary protocol. The whole system runs on the Pi with physical GPIO LED indicators showing live server status — green for online, red for down, yellow for maintenance, white for active SSH sessions.</p>
                     <p>Built as a university project for Project IV — Mobile and Networked Environments, with 110 commits and a full multi-layer architecture from hardware GPIO all the way up to a React SPA.</p>
                 </div>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Architecture</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Architecture</h2>
+                <div class="collapsible-content">
                     <div class="arch-diagram">Browser (React) &lt;--WebSocket--&gt; Node.js Middleware &lt;--TCP Binary--&gt; C++ Server &lt;--SQL--&gt; PostgreSQL</div>
                     <ul>
                         <li>C++ backend listens on port 8080 via raw TCP sockets with a custom 12-byte packet format</li>
@@ -68,8 +68,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Custom Binary Protocol</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Custom Binary Protocol</h2>
+                <div class="collapsible-content">
                     <p>Every client-server message uses a custom packet format:</p>
                     <div class="arch-diagram">| Command ID (4 bytes) | Payload Size (4 bytes) | CRC32 (4 bytes) | Payload (variable) |</div>
                     <p>Commands: <code style="color: var(--accent-green);">LOGIN (100)</code>, <code style="color: var(--accent-green);">TOGGLE_MAINTENANCE (101)</code>, <code style="color: var(--accent-green);">SET_ONLINE (102)</code>, <code style="color: var(--accent-green);">REQUEST_FLAG_IMAGE (103)</code>, <code style="color: var(--accent-green);">ACK (200)</code>, <code style="color: var(--accent-green);">ERROR (400)</code></p>
@@ -77,15 +77,15 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Server State Machine</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Server State Machine</h2>
+                <div class="collapsible-content">
                     <p>The C++ server operates as a state machine with three states: <strong style="color: var(--accent-cyan);">ONLINE</strong>, <strong style="color: var(--accent-cyan);">MAINTENANCE</strong>, and <strong style="color: var(--accent-cyan);">OFFLINE</strong>. Clients can trigger state transitions by sending commands from the Challenges page. Each state change is reflected immediately via GPIO LEDs on the physical hardware.</p>
                 </div>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Features</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
                     <ul>
                         <li>User authentication via custom binary LOGIN command</li>
                         <li>Challenge browsing and flag submission</li>
@@ -100,8 +100,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Project Structure</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Project Structure</h2>
+                <div class="collapsible-content">
                     <pre>Server-Client-CTFpi/
 ├── Backend/          # C++ TCP server
 ├── Frontend/CTF/     # React SPA
@@ -114,8 +114,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Photos</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Photos</h2>
+                <div class="collapsible-content">
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 10px;">
                         <img src="../../images/ctfpi/1776490432697.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
                         <img src="../../images/ctfpi/1776490432784.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">

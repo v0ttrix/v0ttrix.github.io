@@ -48,16 +48,16 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Overview</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
                     <p>A smart task manager built with Java and JavaFX for CSCN72040 — Software Design Techniques. The project demonstrates 5 design patterns, SOLID principles, and test-driven development with 84 unit tests across 6 test classes and 41 commits.</p>
                     <p>Tasks support categories (Work, Personal, School), priority levels (Low, Medium, High, Urgent), due date tracking with deadline warnings, and full undo/redo via the Command pattern.</p>
                 </div>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Design Patterns</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Design Patterns</h2>
+                <div class="collapsible-content">
                     <div class="pattern-grid">
                         <div class="pattern-card">
                             <h4>Observer</h4>
@@ -84,8 +84,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Features</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
                     <ul>
                         <li>Create, edit, and delete tasks with Work / Personal / School categories</li>
                         <li>Priority levels: Low, Medium, High, Urgent</li>
@@ -99,8 +99,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">SOLID Principles</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">SOLID Principles</h2>
+                <div class="collapsible-content">
                     <ul>
                         <li><strong style="color:var(--accent-cyan)">SRP</strong> — Each class has exactly one responsibility</li>
                         <li><strong style="color:var(--accent-cyan)">OCP</strong> — Add new categories via new factory subclass, no existing code changes</li>
@@ -112,8 +112,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Run & Test</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Run & Test</h2>
+                <div class="collapsible-content">
                     <pre>mvn javafx:run   # run the app
 mvn test         # run all 84 unit tests</pre>
                 </div>

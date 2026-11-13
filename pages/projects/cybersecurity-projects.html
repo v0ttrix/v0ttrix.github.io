@@ -49,8 +49,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Overview</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
                     <p>A collection of four production-ready cybersecurity tools built for authorized security testing, threat detection, and secure communications. The goal wasn't just to generate alerts — it was to explore how far automated investigation could go.</p>
                     <div class="stats-row">
                         <div class="impact-stat">
@@ -70,8 +70,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">1 — Red Team Network Scanner</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">1 — Red Team Network Scanner</h2>
+                <div class="collapsible-content">
                     <p>Automated reconnaissance tool that runs Nmap scans, parses results, identifies risky services, and generates actionable reports in text and JSON format.</p>
                     <ul>
                         <li>Automated Nmap scanning with service and version detection</li>
@@ -86,8 +86,8 @@ python red_team_scanner.py 192.168.1.1 -v -o report.txt</pre>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">2 — Web Vulnerability Scanner</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">2 — Web Vulnerability Scanner</h2>
+                <div class="collapsible-content">
                     <p>Comprehensive web application scanner identifying common vulnerabilities including SQLi, XSS, CSRF, and security misconfigurations with HTML report generation.</p>
                     <ul>
                         <li>XSS and SQL injection detection</li>
@@ -104,8 +104,8 @@ python scanner.py --url https://example.com</pre>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">3 — Intrusion Detection System</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">3 — Intrusion Detection System</h2>
+                <div class="collapsible-content">
                     <p>Network-based IDS that monitors traffic patterns in real time, identifying suspicious activity using both rule-based signatures and anomaly detection.</p>
                     <ul>
                         <li>Real-time packet capture and protocol analysis (TCP, UDP, HTTP, DNS)</li>
@@ -121,8 +121,8 @@ sudo python ids.py --interface eth0</pre>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">4 — Secure Communications Tool</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">4 — Secure Communications Tool</h2>
+                <div class="collapsible-content">
                     <p>End-to-end encrypted messaging application demonstrating hybrid cryptography with RSA+AES, digital signatures, and key management.</p>
                     <ul>
                         <li>Hybrid encryption: RSA (2048-bit) for key exchange, AES for message encryption</li>

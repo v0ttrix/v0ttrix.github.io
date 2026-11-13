@@ -44,15 +44,15 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Overview</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
                     <p>A client-server application demonstrating UDP socket programming with custom packet serialization in C++ using Winsock. The client reads text from a file, wraps each line into a custom packet format, and transmits them to the server over UDP. The server receives, deserializes, and processes each packet.</p>
                 </div>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Packet Format</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Packet Format</h2>
+                <div class="collapsible-content">
                     <p>Each packet has three components:</p>
                     <div class="arch-diagram">Header (2 bytes)
   ├── Source ID:   4 bits  — identifies the packet source
@@ -68,8 +68,8 @@ CRC (4 bytes)
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Architecture</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Architecture</h2>
+                <div class="collapsible-content">
                     <ul>
                         <li>Client reads lines from InputFile.txt, serializes each into a packet, sends via UDP to localhost:27000</li>
                         <li>Server listens on UDP port 27000, receives packets, deserializes, and displays contents</li>
@@ -80,8 +80,8 @@ CRC (4 bytes)
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Technical Details</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Technical Details</h2>
+                <div class="collapsible-content">
                     <ul>
                         <li>Protocol: UDP (SOCK_DGRAM) via Winsock2</li>
                         <li>Port: 27000 on 127.0.0.1</li>
@@ -93,8 +93,8 @@ CRC (4 bytes)
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Project Structure</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Project Structure</h2>
+                <div class="collapsible-content">
                     <pre>UDP-Packet-Transmitter/
 ├── Client/
 │   ├── client.cpp      # Client implementation
@@ -107,8 +107,8 @@ CRC (4 bytes)
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Build & Run</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Build & Run</h2>
+                <div class="collapsible-content">
                     <p>1. Open <code style="color: var(--accent-green);">UDP-Packet-Transmitter.sln</code> in Visual Studio</p>
                     <p>2. Build the solution (F7) — generates both Client and Server executables</p>
                     <p>3. Run the Server first, then the Client</p>

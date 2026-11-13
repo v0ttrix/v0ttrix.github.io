@@ -46,15 +46,15 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Overview</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
                     <p>Built as part of a COIL (Collaborative Online International Learning) program pairing Canadian and Dutch students. Our team won. The project is a full robot remote control system — a C++ webserver that accepts commands from a browser GUI, serializes them into a custom binary protocol, and transmits them to a physical robot or simulator over TCP/UDP.</p>
                 </div>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Architecture</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Architecture</h2>
+                <div class="collapsible-content">
                     <div class="arch-diagram">Browser GUI  →  Crow REST API  →  PktDef (packet builder)  →  MySocket (TCP/UDP)  →  Robot/Simulator
                                                                                                           ←  Telemetry & ACK  ←</div>
                     <ul>
@@ -67,16 +67,16 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Packet Protocol</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Packet Protocol</h2>
+                <div class="collapsible-content">
                     <div class="arch-diagram">| PktCount (2 bytes) | Flags (1 byte) | Length (1 byte) | Body (variable) | CRC (1 byte) |</div>
                     <p>Commands: <code style="color:var(--accent-green)">DRIVE</code> (forward/back/left/right), <code style="color:var(--accent-green)">SLEEP</code>, <code style="color:var(--accent-green)">TELEMETRY</code>. Responses: <code style="color:var(--accent-green)">ACK</code> / <code style="color:var(--accent-green)">NACK</code>.</p>
                 </div>
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">REST API</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">REST API</h2>
+                <div class="collapsible-content">
                     <ul>
                         <li><code style="color:var(--accent-green)">GET  /</code> — serves the browser GUI</li>
                         <li><code style="color:var(--accent-green)">POST /connect/&lt;ip&gt;/&lt;port&gt;</code> — connect to robot via UDP (29500) or TCP (29000)</li>
@@ -89,8 +89,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Features</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
                     <ul>
                         <li>Drive forward, backward, left, right with configurable duration and power</li>
                         <li>Sleep command and telemetry request</li>
@@ -103,8 +103,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Demo Video</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Demo Video</h2>
+                <div class="collapsible-content">
                     <div style="max-width: 640px; margin: 10px auto 0;">
                         <video controls style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
                             <source src="../../images/output_progressive.mp4" type="video/mp4">
@@ -114,8 +114,8 @@
             </div>
 
             <div class="project-content">
-                <h2 onclick="toggleSection(this)">Photos</h2>
-                <div class="collapsible-content expanded">
+                <h2 class="collapsed" onclick="toggleSection(this)">Photos</h2>
+                <div class="collapsible-content">
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px; margin-top: 10px;">
                         <img src="../../images/photo_5165805167360806308_x.jpg" alt="COIL Robot photo 1" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
                         <img src="../../images/photo_5165805167360806309_y.jpg" alt="COIL Robot photo 2" onclick="openLightbox(this.src)" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
