@@ -80,16 +80,24 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         }
         ctx.stroke();
 
-        // Every upright plus has the same size, spacing, and opacity across the screen.
+        // Bold upright pluses fill the cells; major lines carry perpendicular dashes.
         ctx.strokeStyle = css(color, strength);
         ctx.globalAlpha = .8;
-        ctx.lineWidth = 1.4;
+        ctx.lineWidth = 2.6;
         ctx.beginPath();
         for (let row = 0, y = origin; y < height + 8; row++, y += spacingY) {
             const offset = row % 2 ? spacingX / 2 : 0;
             for (let x = origin + offset; x < width + 8; x += spacingX) {
-                ctx.moveTo(x - 6, y); ctx.lineTo(x + 6, y);
-                ctx.moveTo(x, y - 6); ctx.lineTo(x, y + 6);
+                const onVerticalLine = (x - origin) % (spacingX * 4) === 0;
+                const onHorizontalLine = row % 4 === 0;
+                // Keep major-line intersections clear. On a line, only the arm
+                // crossing it is bold; the other arm remains the thin grid line.
+                if (!onHorizontalLine) {
+                    ctx.moveTo(x - 7, y); ctx.lineTo(x + 7, y);
+                }
+                if (!onVerticalLine) {
+                    ctx.moveTo(x, y - 7); ctx.lineTo(x, y + 7);
+                }
             }
         }
         ctx.stroke();
