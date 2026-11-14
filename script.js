@@ -31,10 +31,21 @@ let matrixTimer;
 const fontSize = 14;
 let drops = [];
 function resizeMatrix() {
-    if (!canvas) return;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    drops = Array(Math.ceil(canvas.width / fontSize)).fill(1);
+    if (!ctx) return;
+    const width = Math.ceil(canvas.clientWidth);
+    const height = Math.ceil(canvas.clientHeight);
+    if (!width || !height || (canvas.width === width && canvas.height === height && drops.length)) return;
+    // Keep the trails and column positions when the device actually changes size.
+    // Mobile browser controls can fire resize events during ordinary scrolling.
+    const previous = document.createElement('canvas');
+    previous.width = canvas.width;
+    previous.height = canvas.height;
+    previous.getContext('2d').drawImage(canvas, 0, 0);
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(previous, 0, 0);
+    drops = Array.from({ length: Math.ceil(width / fontSize) }, (_, i) =>
+        drops[i] ?? Math.floor(Math.random() * height / fontSize));
 }
 function drawMatrix() {
     ctx.fillStyle = 'rgba(10, 14, 39, 0.08)';
@@ -145,6 +156,53 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+});
+
+// Filter skills and highlight matches while preserving project links.
+document.addEventListener('DOMContentLoaded', () => {
+    const search = document.getElementById('skill-search');
+    if (!search) return;
+    const skills = [...document.querySelectorAll('.skill-project-link, .additional-skills .skill-tags > span')].map(element => {
+        const text = [...element.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+        const source = text?.textContent.trim() || '';
+        const label = document.createElement('span');
+        label.className = 'skill-search-label';
+        label.setAttribute('data-no-translate', '');
+        text?.replaceWith(label);
+        return { element, label, source };
+    });
+    function highlight() {
+        const query = search.value.trim().toLocaleLowerCase();
+        const arabic = document.documentElement.lang === 'ar';
+        skills.forEach(({ element, label, source }) => {
+            const name = arabic ? (window.PORTFOLIO_AR?.[source] || source) : source;
+            const normalized = name.toLocaleLowerCase();
+            const exact = !!query && normalized === query;
+            element.hidden = !!query && !normalized.includes(query);
+            element.classList.toggle('skill-exact-match', exact);
+            label.replaceChildren();
+            let offset = 0;
+            let index = query && !exact ? normalized.indexOf(query) : -1;
+            while (index !== -1) {
+                label.append(document.createTextNode(name.slice(offset, index)));
+                const mark = document.createElement('mark');
+                mark.textContent = name.slice(index, index + query.length);
+                label.append(mark);
+                offset = index + query.length;
+                index = normalized.indexOf(query, offset);
+            }
+            label.append(document.createTextNode(name.slice(offset)));
+        });
+    }
+    search.addEventListener('input', highlight);
+    let lastLanguage = document.documentElement.lang;
+    new MutationObserver(() => {
+        const language = document.documentElement.lang;
+        if (language === lastLanguage) return;
+        lastLanguage = language;
+        highlight();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    highlight();
 });
 
 // Independent reference columns: opening a quote only pushes down its own column.

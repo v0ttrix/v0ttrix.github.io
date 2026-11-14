@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.menu-btn')?.remove();
     const links = [
         ['Home', '/'],
-        ['Projects', '/pages/projects.html'], ['Phone Apps', '/pages/phone-apps.html'], ['My Business', '/pages/my-business.html'], ['Experience', '/pages/experience.html'],
+        ['My Business', '/pages/my-business.html'],
+        ['Projects', '/pages/projects.html'], ['Phone Apps', '/pages/phone-apps.html'], ['Experience', '/pages/experience.html'],
         ['About', '/pages/about.html'], ['Skills', '/pages/skills.html'],
         ['Certifications', '/pages/certifications.html'], ['References', '/pages/references.html'],
         ['Contact', '/pages/contact.html']
