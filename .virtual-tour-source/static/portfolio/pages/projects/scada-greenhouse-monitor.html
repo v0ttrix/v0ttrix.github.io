@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCADA Plant Monitoring System - Abd Ulrahman Mardini</title>
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <script src="../../locale-ar.js" defer></script>
+    <script src="../../i18n.js" defer></script>
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    
+    <a href="../../pages/projects.html" class="btn btn-outline back-btn">← Back</a>
+
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <h1>FloraTracker — SCADA Plant Monitoring System</h1>
+                <div class="project-meta">
+                    <span class="meta-tag" style="border-color:var(--accent-cyan);color:var(--accent-cyan);">🏆 ConHacks 2026 — Best Beginner Hack</span>
+                    <span class="meta-tag">React Native</span>
+                    <span class="meta-tag">Raspberry Pi</span>
+                    <span class="meta-tag">Flask</span>
+                    <span class="meta-tag">Snowflake</span>
+                    <span class="meta-tag">Supabase</span>
+                    <span class="meta-tag">Google Gemini</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>FloraTracker is a plant monitoring app built in 24 hours at ConHacks 2026, where it won Best Beginner Hack. The idea was simple — a lot of plants go unnoticed and die because their owners don't have a way to track what they actually need. FloraTracker fixes that.</p>
+                    <p>A Raspberry Pi with sensors sits next to your plant and collects real-time environmental data. That data gets sent over an encrypted VPN tunnel (Tailscale) to a React Native app that displays a live dashboard per plant, makes AI-powered care recommendations using Snowflake, and lets you chat with Google Gemini for further guidance.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">How It Works</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Raspberry Pi collects sensor data (moisture, humidity, temperature, light) from a protoboard and stores it locally</li>
+                        <li>Tailscale VPN tunnel provides a secure SSH connection without exposing ports publicly</li>
+                        <li>Flask backend reads from the Pi and serves data to the frontend</li>
+                        <li>React Native app displays a real-time dashboard per registered plant</li>
+                        <li>Snowflake API analyzes sensor data to make decisions — does the plant need water? New soil?</li>
+                        <li>Google Gemini integration for natural language plant care assistance</li>
+                        <li>Supabase handles user authentication so each user gets their own plant dashboard</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">What We Built</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Real-time sensor dashboard that updates live as sensors are moved or conditions change</li>
+                        <li>AI-driven care recommendations tailored to each plant</li>
+                        <li>Secure device-to-app connectivity via Tailscale VPN</li>
+                        <li>Multi-user support with Supabase auth</li>
+                        <li>Google Gemini chatbot integration for plant questions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Built With</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>React Native — mobile frontend</li>
+                        <li>Flask — backend API</li>
+                        <li>Raspberry Pi — hardware sensor collection</li>
+                        <li>Tailscale — encrypted VPN tunnel</li>
+                        <li>Snowflake API — AI-powered data analysis and predictions</li>
+                        <li>Supabase — user authentication</li>
+                        <li>Google Gemini — natural language plant care assistant</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Contributors</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Abd Ulrahman Mardini (V0ttrix)</li>
+                        <li>Liban Nur</li>
+                        <li>Ahmed Somaan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content" style="padding: 20px 40px;">
+                <h2 onclick="toggleSection(this)">Demo Video</h2>
+                <div class="collapsible-content">
+                    <video controls preload="none" style="width:100%; border-radius:8px; border:1px solid var(--border-color); margin-top:10px;">
+                        <source src="../../images/floratracker-demo.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+
+            <div class="project-content" style="padding: 20px 40px;">
+                <h2 onclick="toggleSection(this)">Screenshots</h2>
+                <div class="collapsible-content">
+                    <div class="flora-gallery">
+                        <a href="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/710/datas/original.jpg" target="_blank" rel="noopener noreferrer"><img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/710/datas/original.jpg" alt="FloraTracker — early frontend prototype" loading="lazy"></a>
+                        <a href="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/711/datas/original.jpg" target="_blank" rel="noopener noreferrer"><img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/711/datas/original.jpg" alt="FloraTracker — hardware discovery 1" loading="lazy"></a>
+                        <a href="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/712/datas/original.jpg" target="_blank" rel="noopener noreferrer"><img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/712/datas/original.jpg" alt="FloraTracker — hardware discovery 2" loading="lazy"></a>
+                        <a href="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/713/datas/original.jpg" target="_blank" rel="noopener noreferrer"><img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/004/629/713/datas/original.jpg" alt="FloraTracker — hardware discovery 3" loading="lazy"></a>
+                        <a href="../../images/IMG3.png" target="_blank" rel="noopener noreferrer"><img src="../../images/IMG3.png" alt="Raspberry Pi GPIO pin assignments for the ADS1115, sensors, and status LEDs" loading="lazy"></a>
+                        <a href="../../images/IMG1.jpg" target="_blank" rel="noopener noreferrer"><img src="../../images/IMG1.jpg" alt="FloraTracker plant monitoring prototype with soil sensors and status LEDs" loading="lazy"></a>
+                        <a href="../../images/IMG2.png" target="_blank" rel="noopener noreferrer"><img src="../../images/IMG2.png" alt="FloraTracker wiring diagram connecting the Raspberry Pi, sensors, ADC, and LEDs" loading="lazy"></a>
+                    </div>
+                </div>
+            </div>
+
+            <p><a class="text-link" href="../phone-apps/floratracker.html">Explore the FloraTracker phone app &rarr;</a></p>
+            <a href="https://github.com/v0ttrix/GardenTracker" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+            <a href="https://devpost.com/software/floratracker" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" style="margin-left: 20px;">View on Devpost →</a>
+        </div>
+    </section>
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+    
+</body>
+</html>

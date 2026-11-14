@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<rect width="1600" height="900" fill="#251f2b"/><rect x="0" y="0" width="18" height="900" fill="#b7ee97"/>
+<circle cx="1490" cy="85" r="230" fill="#b7ee97" opacity=".07"/>
+<g font-family="Arial, sans-serif"><text x="90" y="100" font-size="28" fill="#b7ee97" letter-spacing="4">MOBILE APPS · 01</text>
+<text x="90" y="220" font-size="58" font-weight="700" fill="#fff">Arqam</text>
+<text x="90" y="370" font-size="30" fill="#d8cfde">See your connected bank accounts, transactions, and combined balance in one</text><text x="90" y="410" font-size="30" fill="#d8cfde">place. Read-only access means Arqam cannot move money or change your bank</text><text x="90" y="450" font-size="30" fill="#d8cfde">accounts. Optional AI helps explain your spending, build plans, and estimate</text><text x="90" y="490" font-size="30" fill="#d8cfde">what you can afford. Currently in pre-launch testing with Plaid sandbox</text><text x="90" y="530" font-size="30" fill="#d8cfde">accounts.</text>
+<text x="90" y="800" font-size="24" fill="#b7ee97">In development · iOS &amp; Android</text>
+<text x="90" y="850" font-size="23" fill="#b2a6bc">Open the case study for the build, demos, and code.</text></g></svg>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Pi - Abd Ulrahman Mardini</title>
+    <meta name="description" content="CTF Pi — A full-stack Capture The Flag platform running on a Raspberry Pi with a custom binary TCP protocol, C++ backend, React frontend, and GPIO LEDs.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <script src="../../locale-ar.js" defer></script>
+    <script src="../../i18n.js" defer></script>
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../../pages/projects.html" class="btn btn-outline back-btn">← Back</a>
+
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <h1>CTF Pi</h1>
+                <div class="project-meta">
+                    <span class="meta-tag">C++</span>
+                    <span class="meta-tag">Node.js</span>
+                    <span class="meta-tag">React</span>
+                    <span class="meta-tag">PostgreSQL</span>
+                    <span class="meta-tag">Raspberry Pi</span>
+                    <span class="meta-tag">TCP Sockets</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>A full-stack Capture The Flag platform built to run on a Raspberry Pi. Users log in, browse challenges, and interact with the server through a custom binary protocol. The whole system runs on the Pi with physical GPIO LED indicators showing live server status — green for online, red for down, yellow for maintenance, white for active SSH sessions.</p>
+                    <p>Built as a university project for Project IV — Mobile and Networked Environments, with 110 commits and a full multi-layer architecture from hardware GPIO all the way up to a React SPA.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Architecture</h2>
+                <div class="collapsible-content">
+                    <div class="arch-diagram">Browser (React) &lt;--WebSocket--&gt; Node.js Middleware &lt;--TCP Binary--&gt; C++ Server &lt;--SQL--&gt; PostgreSQL</div>
+                    <ul>
+                        <li>C++ backend listens on port 8080 via raw TCP sockets with a custom 12-byte packet format</li>
+                        <li>Node.js middleware bridges WebSocket (port 3000) to TCP, translating JSON ↔ binary packets</li>
+                        <li>React frontend connects via WebSocket, sends commands like LOGIN, REQUEST_FLAG_IMAGE, TOGGLE_MAINTENANCE</li>
+                        <li>Nginx serves the built React SPA on port 80</li>
+                        <li>PostgreSQL stores login attempts and nginx access logs</li>
+                        <li>GPIO LEDs on the Pi provide physical server state visualization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Custom Binary Protocol</h2>
+                <div class="collapsible-content">
+                    <p>Every client-server message uses a custom packet format:</p>
+                    <div class="arch-diagram">| Command ID (4 bytes) | Payload Size (4 bytes) | CRC32 (4 bytes) | Payload (variable) |</div>
+                    <p>Commands: <code style="color: var(--accent-green);">LOGIN (100)</code>, <code style="color: var(--accent-green);">TOGGLE_MAINTENANCE (101)</code>, <code style="color: var(--accent-green);">SET_ONLINE (102)</code>, <code style="color: var(--accent-green);">REQUEST_FLAG_IMAGE (103)</code>, <code style="color: var(--accent-green);">ACK (200)</code>, <code style="color: var(--accent-green);">ERROR (400)</code></p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Server State Machine</h2>
+                <div class="collapsible-content">
+                    <p>The C++ server operates as a state machine with three states: <strong style="color: var(--accent-cyan);">ONLINE</strong>, <strong style="color: var(--accent-cyan);">MAINTENANCE</strong>, and <strong style="color: var(--accent-cyan);">OFFLINE</strong>. Clients can trigger state transitions by sending commands from the Challenges page. Each state change is reflected immediately via GPIO LEDs on the physical hardware.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>User authentication via custom binary LOGIN command</li>
+                        <li>Challenge browsing and flag submission</li>
+                        <li>Admin maintenance mode toggle from the frontend</li>
+                        <li>Physical GPIO LEDs reflecting live server state</li>
+                        <li>Nginx access log ingestion into PostgreSQL</li>
+                        <li>Python maintenance scripts and start orchestration</li>
+                        <li>Doxygen documentation generation</li>
+                        <li>Environment-based configuration via .env</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Project Structure</h2>
+                <div class="collapsible-content">
+                    <pre>Server-Client-CTFpi/
+├── Backend/          # C++ TCP server
+├── Frontend/CTF/     # React SPA
+├── Middleware/       # Node.js WebSocket ↔ TCP bridge
+├── start.py          # Orchestration script
+├── maintain.py       # Maintenance utilities
+├── nginx_to_pg.py    # Log ingestion
+└── Doxyfile          # API docs config</pre>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Photos</h2>
+                <div class="collapsible-content">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 15px; margin-top: 10px;">
+                        <img src="../../images/ctfpi/1776490432697.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490432784.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490432789.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490432979.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433120 (1).jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433120.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433452.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433490.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433563.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433568 (1).jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433568.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433875.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490433896.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490434444.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490434454.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <img src="../../images/ctfpi/1776490438736.jpeg" alt="CTF Pi photo" style="width:100%; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-content" id="log-parsing"><h2>Log Parsing</h2><p>Python log-processing utilities use regular expressions to extract fields from Nginx access logs and insert the parsed records into PostgreSQL.</p></div>
+            <a href="https://github.com/v0ttrix/Server-Client-CTFpi" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+        </div>
+    </section>
+
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+</body>
+</html>

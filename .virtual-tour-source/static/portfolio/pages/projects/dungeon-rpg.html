@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon RPG Game - Abd Ulrahman Mardini</title>
+    <meta name="description" content="Dungeon RPG Game — Console-based RPG in C# with dungeon exploration, turn-based combat, character progression, and unit tests.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <script src="../../locale-ar.js" defer></script>
+    <script src="../../i18n.js" defer></script>
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../../pages/projects.html" class="btn btn-outline back-btn">← Back</a>
+
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <h1>Dungeon RPG Game</h1>
+                <div class="project-meta">
+                    <span class="meta-tag">C#</span>
+                    <span class="meta-tag">.NET</span>
+                    <span class="meta-tag">OOP</span>
+                    <span class="meta-tag">Console</span>
+                    <span class="meta-tag">Unit Testing</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>A console-based RPG game built in C# featuring dungeon exploration, turn-based combat, character progression, and inventory management. The project demonstrates object-oriented design principles with a clean separation between game logic and presentation, backed by a unit test suite.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Character creation and customization</li>
+                        <li>Turn-based combat system with multiple attack types</li>
+                        <li>Dungeon exploration with procedural room navigation</li>
+                        <li>Inventory management — pick up, equip, and drop items</li>
+                        <li>Experience and leveling system with stat progression</li>
+                        <li>Multiple enemy types with different behaviors and difficulties</li>
+                        <li>Unit test suite via DungeonRpg.Tests project</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Technical Details</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Language: C# with .NET</li>
+                        <li>Architecture: OOP with separate model, game logic, and console UI layers</li>
+                        <li>Two VS projects in one solution: DungeonRpg (game) + DungeonRpg.Tests</li>
+                        <li>Sample output included for reference</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Run</h2>
+                <div class="collapsible-content">
+                    <pre>dotnet run --project DungeonRpg</pre>
+                </div>
+            </div>
+
+            <a href="https://github.com/v0ttrix/Dungeon-RPG-Game" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+        </div>
+    </section>
+
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+    
+</body>
+</html>

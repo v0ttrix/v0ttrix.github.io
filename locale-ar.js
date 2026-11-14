@@ -815,6 +815,7 @@ window.PORTFOLIO_AR = {
   "Web Vulnerability Scanner Demo": "عرض ماسح ثغرات الويب",
   "Search skills": "البحث عن مهارة",
   "Search projects": "البحث عن مشروع",
+  "Virtual Tour": "جولة افتراضية",
   "Search projects…": "ابحث عن مشروع…",
   "Search skills…": "ابحث عن مهارة…",
   "A website for a Chicago-based real estate company that buys, renovates, and sells homes, with property selling information and consultation booking.": "موقع لشركة عقارية في شيكاغو تشتري المنازل وتجددها وتبيعها، ويضم معلومات عن بيع العقارات وحجز الاستشارات.",

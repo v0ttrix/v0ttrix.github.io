@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UDP Packet Transmitter - Abd Ulrahman Mardini</title>
+    <meta name="description" content="UDP Packet Transmitter — C++ client-server UDP communication system with custom packet serialization and CRC32 integrity checks using Winsock.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <script src="../../locale-ar.js" defer></script>
+    <script src="../../i18n.js" defer></script>
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../../pages/projects.html" class="btn btn-outline back-btn">← Back</a>
+
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <h1>UDP Packet Transmitter</h1>
+                <div class="project-meta">
+                    <span class="meta-tag">C++</span>
+                    <span class="meta-tag">Winsock</span>
+                    <span class="meta-tag">Networking</span>
+                    <span class="meta-tag">UDP</span>
+                    <span class="meta-tag">Visual Studio</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>A client-server application demonstrating UDP socket programming with custom packet serialization in C++ using Winsock. The client reads text from a file, wraps each line into a custom packet format, and transmits them to the server over UDP. The server receives, deserializes, and processes each packet.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Packet Format</h2>
+                <div class="collapsible-content">
+                    <p>Each packet has three components:</p>
+                    <div class="arch-diagram">Header (2 bytes)
+  ├── Source ID:   4 bits  — identifies the packet source
+  ├── Line Number: 4 bits  — tracks input file line
+  └── Length:      1 byte  — number of chars in data field
+
+Data (variable)
+  └── Text content from InputFile.txt
+
+CRC (4 bytes)
+  └── 0xFF00FF00 — cyclic redundancy check for integrity</div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Architecture</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Client reads lines from InputFile.txt, serializes each into a packet, sends via UDP to localhost:27000</li>
+                        <li>Server listens on UDP port 27000, receives packets, deserializes, and displays contents</li>
+                        <li>Packet class handles both serialization (SetData, SerializeData) and deserialization (char* constructor)</li>
+                        <li>CRC verification ensures data integrity on receipt</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Technical Details</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Protocol: UDP (SOCK_DGRAM) via Winsock2</li>
+                        <li>Port: 27000 on 127.0.0.1</li>
+                        <li>Language: C++ with Visual Studio 2019+</li>
+                        <li>Packet class methods: SetData(), SerializeData(), CalculateCRC()</li>
+                        <li>Both Client and Server as separate VS projects in one solution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Project Structure</h2>
+                <div class="collapsible-content">
+                    <pre>UDP-Packet-Transmitter/
+├── Client/
+│   ├── client.cpp      # Client implementation
+│   ├── Packet.h        # Packet class definition
+│   └── InputFile.txt   # Input data (one line per packet)
+├── Server/
+│   └── server.cpp      # Server implementation
+└── UDP-Packet-Transmitter.sln</pre>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Build & Run</h2>
+                <div class="collapsible-content">
+                    <p>1. Open <code style="color: var(--accent-green);">UDP-Packet-Transmitter.sln</code> in Visual Studio</p>
+                    <p>2. Build the solution (F7) — generates both Client and Server executables</p>
+                    <p>3. Run the Server first, then the Client</p>
+                    <p>4. Server displays each received packet with its details</p>
+                </div>
+            </div>
+
+            <a href="https://github.com/v0ttrix/UDP-Packet-Transmitter" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+        </div>
+    </section>
+
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+    
+</body>
+</html>

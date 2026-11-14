@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Apps - Abd Ulrahman Mardini</title>
+    <meta name="description" content="Mobile apps by Abd Ulrahman Mardini: Arqam for personal finance and FloraTracker for plant care, live sensor data, and AI-assisted advice.">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <script src="../locale-ar.js" defer></script>
+    <script src="../i18n.js" defer></script>
+</head>
+<body class="phone-apps-page">
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <section id="phone-apps">
+        <div class="container">
+            <h2 class="section-title"><span class="accent">//</span> Phone Apps</h2>
+            <div class="projects-grid">
+                <article class="project-card phone-app-card">
+                    <img class="app-icon arqam-logo" src="../images/ArcLogo.png" alt="Arqam app icon" loading="lazy">
+                    <p class="app-status">In development &middot; iOS &amp; Android</p>
+                    <h3 class="arqam-title">Arqam<span class="arqam-tagline">All Your Banks in One Place</span></h3>
+                    <p>See your connected bank accounts, transactions, and combined balance in one place. Read-only access means Arqam cannot move money or change your bank accounts. Optional AI helps explain your spending, build plans, and estimate what you can afford. Currently in pre-launch testing with Plaid sandbox accounts.</p>
+                    <div class="skill-tags"><span>React Native</span><span>TypeScript</span><span>Supabase</span><span>Plaid</span></div>
+                    <div class="app-download-actions"><a href="phone-apps/arqam.html" class="project-link">Learn More &rarr;</a><div class="app-platform-buttons"><a href="https://github.com/v0ttrix/v0ttrix.github.io/releases/download/arqam-android-v1/application-b099f0ac-3023-492c-8a71-e5807db19784.apk" class="btn btn-primary">Download for Android</a><button class="btn btn-outline app-ios-unavailable" type="button" disabled title="iOS download coming soon">Download for iOS <span>(Coming soon)</span></button></div></div>
+                </article>
+                <article class="project-card phone-app-card">
+                    <img class="app-icon flora-logo" src="../images/flora-icon.png" alt="FloraTracker leaf logo" loading="lazy">
+                    <p class="app-status">ConHacks 2026 &middot; Best Beginner Hack</p>
+                    <h3 class="arqam-title flora-title">FloraTracker<span class="arqam-tagline">Make Time To Grow</span></h3>
+                    <p>A plant care app connected to a Raspberry Pi. Check live temperature, humidity, soil moisture, and water levels, and review sensor history. It automatically waters plants when the soil is dry and skips watering when rain is forecast. Add plant profiles with photos from your phone, and ask Flora, your personal AI assistant, questions about your plants for advice based on their readings.</p>
+                    <div class="skill-tags"><span>React Native</span><span>Expo</span><span>Supabase</span><span>Gemini</span></div>
+                    <div class="app-download-actions"><a href="phone-apps/floratracker.html" class="project-link">Learn More &rarr;</a><div class="app-platform-buttons"><button class="btn btn-outline app-ios-unavailable" type="button" disabled title="Android download coming soon">Download for Android <span>(Coming soon)</span></button><button class="btn btn-outline app-ios-unavailable" type="button" disabled title="iOS download coming soon">Download for iOS <span>(Coming soon)</span></button></div></div>
+                </article>
+                <article class="project-card phone-app-card">
+                    <img class="app-icon ispeed-logo" src="../images/Drivelogo.png" alt="iSpeed360 app logo" loading="lazy">
+                    <p class="app-status">Group Project &middot; Android &amp; iOS</p>
+                    <h3 class="arqam-title">iSpeed360<span class="arqam-tagline">Improving Safety &amp; Skills</span></h3>
+                    <p>A driving diary that uses your phone's motion sensors and GPS to track hard braking, rapid acceleration, sharp turns, and travel speed. Trips stay on your phone and contribute to a driving score, with a notification summarizing each trip. Planned features include route history, event markers, personal trends, and adjustable sensitivity.</p>
+                    <div class="skill-tags"><span>GPS</span><span>Motion Sensors</span><span>Local Storage</span><span>Trip Scoring</span></div>
+                    <div class="app-download-actions"><a href="phone-apps/driving-habits.html" class="project-link">Learn More &rarr;</a><div class="app-platform-buttons"><button class="btn btn-outline app-ios-unavailable" type="button" disabled>Download for Android <span>(Coming soon)</span></button><button class="btn btn-outline app-ios-unavailable" type="button" disabled>Download for iOS <span>(Coming soon)</span></button></div></div>
+                </article>
+            </div>
+        </div>
+    </section>
+    <footer><p>&copy; 2026 Abd Ulrahman Mardini. All rights reserved.</p></footer>
+    <script src="../nav.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

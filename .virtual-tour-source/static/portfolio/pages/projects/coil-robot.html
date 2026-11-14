@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COIL Robot Command & Control - Abd Ulrahman Mardini</title>
+    <meta name="description" content="COIL Robot C&C — international competition project (Canada vs Netherlands). C++ robot control system with custom packet protocol, TCP/UDP sockets, and a Crow REST webserver.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <script src="../../locale-ar.js" defer></script>
+    <script src="../../i18n.js" defer></script>
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../../pages/projects.html" class="btn btn-outline back-btn">← Back</a>
+
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <h1>Path Finder Maze Robot</h1>
+                <div class="project-meta">
+                    <span class="meta-tag win">🏆 COIL: Netherlands × Canada — Top 3 Best Network Application Layer</span>
+                    <span class="meta-tag">C++</span>
+                    <span class="meta-tag">TCP/UDP</span>
+                    <span class="meta-tag">REST API</span>
+                    <span class="meta-tag">Crow</span>
+                    <span class="meta-tag">Winsock</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>Built as part of a COIL (Collaborative Online International Learning) program pairing Canadian and Dutch students. Our team won. The project is a full robot remote control system — a C++ webserver that accepts commands from a browser GUI, serializes them into a custom binary protocol, and transmits them to a physical robot or simulator over TCP/UDP.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Architecture</h2>
+                <div class="collapsible-content">
+                    <div class="arch-diagram">Browser GUI  →  Crow REST API  →  PktDef (packet builder)  →  MySocket (TCP/UDP)  →  Robot/Simulator
+                                                                                                          ←  Telemetry & ACK  ←</div>
+                    <ul>
+                        <li><strong style="color:var(--accent-cyan)">PktDefLib</strong> — static library implementing the custom packet protocol: headers, CRC, serialization/deserialization</li>
+                        <li><strong style="color:var(--accent-cyan)">MySocket</strong> — static library wrapping Winsock for TCP/UDP client & server communication</li>
+                        <li><strong style="color:var(--accent-cyan)">Webserver</strong> — Crow REST API on port 8080 serving the browser GUI and routing commands to the robot</li>
+                        <li><strong style="color:var(--accent-cyan)">PktDefTests + mysocketTests</strong> — MSTest unit test suites for both libraries</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Packet Protocol</h2>
+                <div class="collapsible-content">
+                    <div class="arch-diagram">| PktCount (2 bytes) | Flags (1 byte) | Length (1 byte) | Body (variable) | CRC (1 byte) |</div>
+                    <p>Commands: <code style="color:var(--accent-green)">DRIVE</code> (forward/back/left/right), <code style="color:var(--accent-green)">SLEEP</code>, <code style="color:var(--accent-green)">TELEMETRY</code>. Responses: <code style="color:var(--accent-green)">ACK</code> / <code style="color:var(--accent-green)">NACK</code>.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">REST API</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><code style="color:var(--accent-green)">GET  /</code> — serves the browser GUI</li>
+                        <li><code style="color:var(--accent-green)">POST /connect/&lt;ip&gt;/&lt;port&gt;</code> — connect to robot via UDP (29500) or TCP (29000)</li>
+                        <li><code style="color:var(--accent-green)">PUT  /telecommand/</code> — send drive or sleep command</li>
+                        <li><code style="color:var(--accent-green)">GET  /telementry_request/</code> — request housekeeping telemetry</li>
+                        <li><code style="color:var(--accent-green)">POST /routing_table/</code> — forward commands through a middle instance to another GUI</li>
+                        <li><code style="color:var(--accent-green)">GET  /log</code> — rolling JSON log of TX/RX packets</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Drive forward, backward, left, right with configurable duration and power</li>
+                        <li>Sleep command and telemetry request</li>
+                        <li>Command routing — forward commands through a middle server instance to another GUI</li>
+                        <li>Physical robot connection over UDP or TCP depending on port</li>
+                        <li>Rolling packet log visible in the browser</li>
+                        <li>Full MSTest unit test coverage for both PktDef and MySocket</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Demo Video</h2>
+                <div class="collapsible-content">
+                    <div style="max-width: 640px; margin: 10px auto 0;">
+                        <video controls preload="none" style="width:100%; border-radius:8px; border:1px solid var(--border-color);">
+                            <source src="../../images/output_progressive.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Photos</h2>
+                <div class="collapsible-content">
+                    <div class="coil-gallery">
+                        <img src="../../images/photo_5165805167360806308_x.jpg" alt="COIL Robot photo 1" loading="lazy">
+                        <img src="../../images/photo_5165805167360806309_y.jpg" alt="COIL Robot photo 2" loading="lazy">
+                        <img src="../../images/photo_5165805167360806310_y.jpg" alt="COIL Robot photo 3" loading="lazy">
+                        <img src="../../images/photo_5165805167360806311_x.jpg" alt="COIL Robot photo 4" loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://github.com/v0ttrix/coil-network6" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+        </div>
+    </section>
+
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+</body>
+</html>

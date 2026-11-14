@@ -1,0 +1,17 @@
+.portfolio-return {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    right: calc(80px + env(safe-area-inset-right));
+    z-index: 10000;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 6px;
+    background: rgba(10, 14, 39, .85);
+    color: #fff;
+    font: 600 14px/1.4 system-ui, sans-serif;
+    text-decoration: none;
+}
+.portfolio-return:hover, .portfolio-return:focus-visible {
+    border-color: #00f0ff;
+    color: #00f0ff;
+}

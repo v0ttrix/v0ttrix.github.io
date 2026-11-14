@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Vulnerability Scanner - Abd Ulrahman Mardini</title>
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <script src="../../locale-ar.js" defer></script>
+    <script src="../../i18n.js" defer></script>
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    
+    <a href="../../pages/projects.html" class="btn btn-outline back-btn">← Back</a>
+
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <h1>Web Vulnerability Scanner</h1>
+                <div class="project-meta">
+                    <span class="meta-tag">Python</span>
+                    <span class="meta-tag">Security</span>
+                    <span class="meta-tag">Cross-platform</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>A cross-platform terminal tool for scanning websites and generating vulnerability reports. This tool helps identify security weaknesses in web applications through comprehensive automated testing.</p>
+                    <img src="../../images/demo.jpg" alt="Web Vulnerability Scanner Demo" style="width: 100%; border-radius: 4px; margin-top: 20px;">
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Download</h2>
+                <div class="collapsible-content">
+                    <p><strong>Latest Release (v2.0):</strong> <a href="https://github.com/v0ttrix/Virus-Detection-Tool/releases/latest/download/webscan" style="color: var(--accent-green);">Download webscan</a></p>
+                    <p>After downloading:</p>
+                    <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">chmod +x webscan
+./webscan &lt;website-url&gt;</pre>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Usage</h2>
+                <div class="collapsible-content">
+                    <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">./webscan example.com
+./webscan https://mywebsite.com</pre>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>SQL Injection Detection - Error-based and time-based SQLi testing</li>
+                        <li>Memory Leak Detection - Identifies potential memory issues and resource leaks</li>
+                        <li>Code Quality Analysis - Detects debug mode, exposed errors, dangerous functions</li>
+                        <li>Security Headers - Analyzes X-Frame-Options, CSP, HSTS, etc.</li>
+                        <li>Form Security - Checks for CSRF tokens and insecure methods</li>
+                        <li>SSL/HTTPS Verification - Ensures encrypted communication</li>
+                        <li>Exposed Files Detection - Scans for .env, config files, backups</li>
+                        <li>Risk Scoring Algorithm - Calculates overall security risk (0-100)</li>
+                        <li>Color-coded Severity - CRITICAL, HIGH, MEDIUM, LOW levels</li>
+                        <li>Actionable Recommendations - Specific fixes for detected issues</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Build from Source</h2>
+                <div class="collapsible-content">
+                    <pre style="background: var(--bg-primary); padding: 15px; border-radius: 4px; overflow-x: auto;">git clone https://github.com/v0ttrix/Virus-Detection-Tool.git
+cd Virus-Detection-Tool
+pip install -r requirements.txt
+python scanner.py &lt;website-url&gt;</pre>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Compatibility</h2>
+                <div class="collapsible-content">
+                    <p>Works on Linux, Windows, and macOS</p>
+                </div>
+            </div>
+
+            <div class="project-content" id="bash-launcher"><h2>Bash Launcher</h2><p>The repository includes a Bash script that creates or activates a Python virtual environment, installs dependencies on first use, and forwards command-line arguments to the scanner.</p></div>
+            <a href="https://github.com/v0ttrix/Virus-Detection-Tool" class="btn btn-primary">View on GitHub →</a>
+        </div>
+    </section>
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+    
+</body>
+</html>

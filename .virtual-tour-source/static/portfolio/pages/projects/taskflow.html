@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Abd Ulrahman Mardini</title>
+    <meta name="description" content="TaskFlow — Java/JavaFX smart task manager with 5 design patterns, 84 unit tests, and full undo/redo support.">
+    <link rel="stylesheet" href="../../project.css">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+    <script src="../../locale-ar.js" defer></script>
+    <script src="../../i18n.js" defer></script>
+</head>
+<body>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <a href="../../pages/projects.html" class="btn btn-outline back-btn">← Back</a>
+
+    <section class="project-detail">
+        <div class="container">
+            <div class="project-header">
+                <h1>TaskFlow</h1>
+                <div class="project-meta">
+                    <span class="meta-tag">Java</span>
+                    <span class="meta-tag">JavaFX</span>
+                    <span class="meta-tag">Maven</span>
+                    <span class="meta-tag">OOP</span>
+                    <span class="meta-tag">Design Patterns</span>
+                    <span class="meta-tag">TDD</span>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Overview</h2>
+                <div class="collapsible-content">
+                    <p>A smart task manager built with Java and JavaFX for CSCN72040 — Software Design Techniques. The project demonstrates 5 design patterns, SOLID principles, and test-driven development with 84 unit tests across 6 test classes and 41 commits.</p>
+                    <p>Tasks support categories (Work, Personal, School), priority levels (Low, Medium, High, Urgent), due date tracking with deadline warnings, and full undo/redo via the Command pattern.</p>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Design Patterns</h2>
+                <div class="collapsible-content">
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <h4>Observer</h4>
+                            <p>Task (Subject) notifies MainView (Observer) to refresh the UI whenever task state changes.</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4>Command + Undo/Redo</h4>
+                            <p>CommandManager holds undo/redo stacks. AddTaskCommand, DeleteTaskCommand, and ToggleCompleteCommand are all reversible.</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4>Factory Method</h4>
+                            <p>WorkTaskFactory, PersonalTaskFactory, SchoolTaskFactory all extend abstract TaskFactory. New categories require no changes to existing code.</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4>Decorator</h4>
+                            <p>PriorityDecorator and DeadlineDecorator wrap tasks to inject labels: "Study" → "[HIGH] Study" → "[HIGH] Study [2d left]".</p>
+                        </div>
+                        <div class="pattern-card">
+                            <h4>Singleton</h4>
+                            <p>AppConfig provides a single shared instance for app-wide configuration (name, version).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Features</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li>Create, edit, and delete tasks with Work / Personal / School categories</li>
+                        <li>Priority levels: Low, Medium, High, Urgent</li>
+                        <li>Due date tracking with visual deadline warnings</li>
+                        <li>Full undo/redo support via Command pattern</li>
+                        <li>Filter and search across all tasks</li>
+                        <li>84 unit tests across 6 test classes</li>
+                        <li>17 total classes, clean SOLID architecture</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">SOLID Principles</h2>
+                <div class="collapsible-content">
+                    <ul>
+                        <li><strong style="color:var(--accent-cyan)">SRP</strong> — Each class has exactly one responsibility</li>
+                        <li><strong style="color:var(--accent-cyan)">OCP</strong> — Add new categories via new factory subclass, no existing code changes</li>
+                        <li><strong style="color:var(--accent-cyan)">LSP</strong> — All factories are substitutable for TaskFactory</li>
+                        <li><strong style="color:var(--accent-cyan)">ISP</strong> — TaskObserver exposes a single focused method</li>
+                        <li><strong style="color:var(--accent-cyan)">DIP</strong> — Depends on Command/TaskFactory abstractions, not concrete classes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="project-content">
+                <h2 onclick="toggleSection(this)">Run & Test</h2>
+                <div class="collapsible-content">
+                    <pre>mvn javafx:run   # run the app
+mvn test         # run all 84 unit tests</pre>
+                </div>
+            </div>
+
+            <a href="https://github.com/v0ttrix/TaskFlow" class="btn btn-primary" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+        </div>
+    </section>
+
+    <script src="../../nav.js"></script>
+    <script src="../../script.js"></script>
+    
+</body>
+</html>

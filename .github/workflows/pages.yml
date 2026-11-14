@@ -1,0 +1,50 @@
+name: Deploy portfolio and virtual tour
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get pinned 3D world source
+        uses: actions/checkout@v4
+        with:
+          repository: v0ttrix/My-3D-world
+          ref: d0a7d6d58d009f6d751bc387ab149ed02c0762bb
+          path: .world-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Apply portfolio customizations
+        run: cp -a .virtual-tour-source/. .world-build/
+      - name: Install world dependencies
+        working-directory: .world-build
+        run: npm ci
+      - name: Build world
+        working-directory: .world-build
+        run: npm run build
+      - name: Assemble website
+        run: node .virtual-tour-source/assemble.cjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Publish GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

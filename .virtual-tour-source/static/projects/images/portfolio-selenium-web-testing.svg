@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<rect width="1600" height="900" fill="#251f2b"/><rect x="0" y="0" width="18" height="900" fill="#b7ee97"/>
+<circle cx="1490" cy="85" r="230" fill="#b7ee97" opacity=".07"/>
+<g font-family="Arial, sans-serif"><text x="90" y="100" font-size="28" fill="#b7ee97" letter-spacing="4">PROJECTS · 13</text>
+<text x="90" y="220" font-size="58" font-weight="700" fill="#fff">Selenium Web Testing</text>
+<text x="90" y="370" font-size="30" fill="#d8cfde">A Selenium WebDriver suite with 33 MSTest cases for navigation, form</text><text x="90" y="410" font-size="30" fill="#d8cfde">validation, and pricing. Includes tests designed to reveal defects in the</text><text x="90" y="450" font-size="30" fill="#d8cfde">target web application.</text>
+<text x="90" y="800" font-size="24" fill="#b7ee97">JADEN MARDINI / @v0ttrix</text>
+<text x="90" y="850" font-size="23" fill="#b2a6bc">Open the case study for the build, demos, and code.</text></g></svg>

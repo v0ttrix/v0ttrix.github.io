@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Abd Ulrahman Mardini</title>
+    <meta name="description" content="Cybersecurity and software development projects by Abd Ulrahman Mardini, including a web vulnerability scanner, malware scanner, and network security utilities.">
+    <link rel="stylesheet" href="../style.css?v=project-search-1">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <script src="../locale-ar.js?v=project-search-1" defer></script>
+    <script src="../i18n.js" defer></script>
+</head>
+<body class="projects-page">
+    <canvas id="matrix" aria-hidden="true"></canvas>
+
+    <!-- Navigation injected by nav.js -->
+    
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="skills-toolbar projects-toolbar">
+                <h2 class="section-title"><span class="accent">//</span> Projects</h2>
+                <input id="project-search" class="skill-search" type="search" aria-label="Search projects" placeholder="Search projects…" autocomplete="off" spellcheck="false">
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Path Finder Maze Robot<span class="project-award">COIL: Netherlands &times; Canada<br>(Top 3 Best Network Application Layer)</span></h3>
+                    <p>International competition project — Canada vs Netherlands, we won. C++ robot control system with a custom binary packet protocol, TCP/UDP socket layer, Crow REST API, and browser GUI.</p>
+                    <a href="projects/coil-robot.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>FloraTracker<span class="project-award">SCADA Plant Monitoring System<br>(2026 ConHacks Winner)</span></h3>
+                    <p>Hackathon project that won Best Beginner Hack at ConHacks 2026. Real-time plant monitoring via Raspberry Pi sensors, React Native app, AI-powered predictions using Snowflake API, and secure VPN tunneling with Tailscale.</p>
+                    <a href="projects/scada-greenhouse-monitor.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>CTF Pi</h3>
+                    <p>Full-stack Capture The Flag platform running on a Raspberry Pi. Custom binary TCP protocol, C++ backend, React frontend, Node.js middleware, PostgreSQL, and GPIO LEDs for physical server status.</p>
+                    <a href="projects/ctfpi.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>Web Vulnerability Scanner</h3>
+                    <p>Cross-platform terminal tool that detects SQLi, XSS, CSRF, security headers, exposed files, and SSL issues. Includes a 0–100 risk scoring algorithm with color-coded severity levels.</p>
+                    <a href="projects/virus-detection.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>CyberSecurity Projects</h3>
+                    <p>Collection of 4 security tools: Red Team Network Scanner, Web Vulnerability Scanner, Intrusion Detection System, and a Secure Communications Tool with RSA+AES hybrid encryption.</p>
+                    <a href="projects/cybersecurity-projects.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>TaskFlow</h3>
+                    <p>Smart task manager built in Java/JavaFX with 5 design patterns, 84 unit tests, priority levels, due date tracking, and full undo/redo support.</p>
+                    <a href="projects/taskflow.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>UDP Packet Transmitter</h3>
+                    <p>Client-server UDP communication system in C++ with custom packet serialization, CRC32 integrity checks, and Winsock networking.</p>
+                    <a href="projects/udp-packet-transmitter.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>Dungeon RPG Game</h3>
+                    <p>Console-based RPG in C# with dungeon exploration, turn-based combat, character progression, inventory management, and unit tests.</p>
+                    <a href="projects/dungeon-rpg.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>Web Malware Scanner</h3>
+                    <p>Automated web crawler that detects PHP backdoors, obfuscated JavaScript, webshells, and malicious redirects with configurable scan depth.</p>
+                    <a href="projects/web-malware-scanner.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>Network Security Utility</h3>
+                    <p>Suite of network security tools for real-time packet capture, intrusion detection with custom rule sets, protocol analysis, and anomaly detection.</p>
+                    <a href="projects/network-security-utility.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>API Security Testing Pipeline</h3>
+                    <p>Automated security testing framework for REST APIs covering OWASP API Top 10, authentication testing, injection attacks, and CI/CD integration.</p>
+                    <a href="projects/api-security-testing.html" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <h3>Coffee Order System</h3>
+                    <p>A C# coffee order engine built with test-driven development. Validates orders, calculates prices and promotions, classifies beverages, and generates receipts.</p>
+                    <a href="projects/coffee-order-system.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Selenium Web Testing</h3>
+                    <p>A Selenium WebDriver suite with 33 MSTest cases for navigation, form validation, and pricing. Includes tests designed to reveal defects in the target web application.</p>
+                    <a href="projects/selenium-web-testing.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Database Management System</h3>
+                    <p>A SQL schema and query collection covering relational design, constraints, joins, subqueries, stored procedures, and database functions.</p>
+                    <a href="projects/database-management-system.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Task &amp; Appointment Manager</h3>
+                    <p>A menu-driven C application for adding, updating, searching, and filtering tasks. Saves records to disk and separates storage, display, and task operations into modules.</p>
+                    <a href="projects/task-appointment-manager.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Airline Reservations &amp; File Processing</h3>
+                    <p>A C project with a 12-seat airline reservation system and a text-file converter. Includes booking, cancellation, passenger listings, and persistent reservation storage.</p>
+                    <a href="projects/airline-reservation-system.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>ARM Assembly &amp; Hardware Control</h3>
+                    <p>ARM assembly programs for LED and seven-segment display control, arithmetic, recursion, and memory operations. Explores register use, stack management, and system calls.</p>
+                    <a href="projects/arm-assembly.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Monolith Website / Ushayat Holdings</h3>
+                    <p>A multi-page real estate website with company information, selling and contact pages, FAQs, and a consultation calendar interface.</p>
+                    <a href="projects/monolith-website.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>C Calculator &amp; Version Control</h3>
+                    <p>A menu-driven calculator with arithmetic, powers, square roots, input validation, and checks for invalid operations.</p>
+                    <a href="projects/c-calculator.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Web Registration Form</h3>
+                    <p>A responsive registration form with client-side validation and a separate page for viewing registration data.</p>
+                    <a href="projects/web-registration-form.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Loops, Tables &amp; Conversion Utilities</h3>
+                    <p>Three C utilities for generating number sequences, printing mathematical tables, and converting days into weeks.</p>
+                    <a href="projects/loops-and-conversions.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Stack ADT &amp; String Reversal</h3>
+                    <p>Static and dynamic stack implementations with push/pop operations, capacity checks, and a string-reversal example.</p>
+                    <a href="projects/stack-string-reversal.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Number Guesser Game</h3>
+                    <p>A terminal guessing game with two difficulty levels, persistent high scores, game history, and input validation.</p>
+                    <a href="projects/number-guesser.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>C++ Functions, Pointers &amp; References</h3>
+                    <p>Examples of function overloading, default arguments, and passing values through pointers and references.</p>
+                    <a href="projects/cpp-function-overloading.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Polygon Checker</h3>
+                    <p>A geometry tool that validates and classifies triangles, calculates their angles, and checks rectangles from coordinates.</p>
+                    <a href="projects/polygon-checker.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Rectangle &amp; Square Operator Overloading</h3>
+                    <p>Rectangle and Square classes with overloaded addition, scaling, and stream-output operators.</p>
+                    <a href="projects/cpp-operator-overloading.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Rectangle Operations Testing Suite</h3>
+                    <p>Rectangle dimension validation, area, and perimeter calculations backed by unit tests for normal, invalid, and boundary inputs.</p>
+                    <a href="projects/rectangle-testing.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>C++ Deep Copy &amp; Move Semantics</h3>
+                    <p>A GameCharacter example exploring deep copies, move operations, resource ownership, and parameter passing.</p>
+                    <a href="projects/cpp-copy-move.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>C Functions, Structures &amp; Unit Tests</h3>
+                    <p>A set of tested functions for comparing values, finding array extremes, multiplying arrays, and displaying student records.</p>
+                    <a href="projects/clean-c-testing.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Rock Paper Scissors / TDD</h3>
+                    <p>Test-driven game logic for identifying the winner, a draw, or invalid input in Rock Paper Scissors.</p>
+                    <a href="projects/rock-paper-scissors.html" class="project-link">Learn More &rarr;</a>
+                </div>
+                <div class="project-card"><h3>ClariNexus Building Energy Analysis</h3><p>A building energy analysis app with CSV uploads, temperature-based regression, occupancy schedules, and interactive charts.</p><a href="projects/clarinexus-energy-analysis.html" class="project-link">Learn More &rarr;</a></div>
+                <div class="project-card"><h3>ClariNexus GHG &amp; Utility Cost Analysis</h3><p>A Streamlit dashboard for exploring greenhouse gas emissions and utility costs by equipment type, with interactive plots and CSV data processing.</p><a href="projects/clarinexus-ghg-analysis.html" class="project-link">Learn More &rarr;</a></div>
+                <div class="project-card"><h3>GardenTracker Desktop &amp; Sensor API</h3><p>A greenhouse monitoring system with a customizable Avalonia desktop dashboard, a FastAPI sensor backend, MySQL storage, and local automation rules.</p><a href="projects/gardentracker-desktop.html" class="project-link">Learn More &rarr;</a></div>
+                <div class="project-card"><h3>CTF Challenge Website</h3><p>A local Capture the Flag web platform with registration, login, challenge levels, flag submissions, scores, and a leaderboard backed by SQLite.</p><a href="projects/ctf-web-platform.html" class="project-link">Learn More &rarr;</a></div>
+                <div class="project-card"><h3>CustosEye System Monitor</h3><p>A local-first Windows monitoring tool for processes, network connections, and file integrity, with trust scoring and a Flask dashboard.</p><a href="projects/custoseye.html" class="project-link">Learn More &rarr;</a></div>
+                <div class="project-card"><h3>Cybersecurity Training Database</h3><p>A relational database for companies, employees, training modules, course completion, phishing simulations, and security alerts.</p><a href="projects/cybersecurity-training-database.html" class="project-link">Learn More &rarr;</a></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Abd Ulrahman Mardini. All rights reserved.</p>
+    </footer>
+
+    <script src="../nav.js"></script>
+    <script src="../script.js?v=project-search-1"></script>
+</body>
+</html>
