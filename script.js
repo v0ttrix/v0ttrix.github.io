@@ -64,18 +64,19 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         const color = light.map((value, i) => value * gridColor[i]);
         // Sample the cycle once: lines and plus signs share the same light and brightness.
         const strength = .8 / Math.max(...color);
-        const spacingX = 160, spacingY = 96;
+        const spacingX = 80, spacingY = 80;
+        const majorEvery = 8;
         const origin = 32;
 
         // Sparse major grid lines stay flat and run through the repeating plus lattice.
         ctx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
-        ctx.globalAlpha = .4;
-        ctx.lineWidth = 1;
+        ctx.globalAlpha = .7;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        for (let x = origin; x < width; x += spacingX * 4) {
+        for (let x = origin; x < width; x += spacingX * majorEvery) {
             ctx.moveTo(x, 0); ctx.lineTo(x, height);
         }
-        for (let y = origin; y < height; y += spacingY * 4) {
+        for (let y = origin; y < height; y += spacingY * majorEvery) {
             ctx.moveTo(0, y); ctx.lineTo(width, y);
         }
         ctx.stroke();
@@ -83,15 +84,14 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         // Bold upright pluses fill the cells; major lines carry perpendicular dashes.
         ctx.strokeStyle = css(color, strength);
         ctx.globalAlpha = .8;
-        ctx.lineWidth = 2.6;
+        ctx.lineWidth = 3;
         ctx.beginPath();
         for (let row = 0, y = origin; y < height + 8; row++, y += spacingY) {
-            const offset = row % 2 ? spacingX / 2 : 0;
-            for (let x = origin + offset; x < width + 8; x += spacingX) {
-                const onVerticalLine = (x - origin) % (spacingX * 4) === 0;
-                const onHorizontalLine = row % 4 === 0;
+            for (let x = origin; x < width + 8; x += spacingX) {
+                const onVerticalLine = (x - origin) % (spacingX * majorEvery) === 0;
+                const onHorizontalLine = row % majorEvery === 0;
                 // Keep major-line intersections clear. On a line, only the arm
-                // crossing it is bold; the other arm remains the thin grid line.
+                // crossing it is bold; the other arm remains the continuous grid line.
                 if (!onHorizontalLine) {
                     ctx.moveTo(x - 7, y); ctx.lineTo(x + 7, y);
                 }
