@@ -56,27 +56,29 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         return presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix));
     }
     const css = (color, strength = 1) => `rgb(${color.map(v => Math.round(srgb(v * strength) * 255)).join(',')})`;
+    // Cap daytime brightness so secondary text remains legible through the whole cycle.
+    const backgroundCss = (color, strength) => css(color, Math.min(strength, .025 / Math.max(...color)));
     function draw() {
         const [light, fogA, fogB] = palette(Date.now());
         const background = ctx.createLinearGradient(0, 0, width, height);
-        background.addColorStop(0, css(fogA, .055));
-        background.addColorStop(1, css(fogB, .045));
+        background.addColorStop(0, backgroundCss(fogA, .12));
+        background.addColorStop(1, backgroundCss(fogB, .14));
         ctx.fillStyle = background;
         ctx.fillRect(0, 0, width, height);
         // A shallow perspective plane, angled like the world's cross-marked floor.
         const project = (x, z) => {
             const depth = 1 + z * .065;
-            return [width * .5 + (x + z * 1.9) * 90 / depth, height * .94 - z * height * .065 / depth];
+            return [width * .5 + (x + z * .7) * 90 / depth, height * .94 + (x * 25 - z * height * .065) / depth];
         };
         ctx.strokeStyle = css(light.map((value, i) => value * gridColor[i]), 2);
         ctx.lineWidth = 1;
         for (let z = -1; z < 72; z += 2) {
-            ctx.globalAlpha = .18 * (1 - z / 80);
+            ctx.globalAlpha = .32 * (1 - z / 80);
             for (let x = -60; x <= 60; x += 2) {
                 const [px, py] = project(x, z);
                 if (px < -20 || px > width + 20 || py < -20 || py > height + 20) continue;
                 ctx.beginPath();
-                for (const [dx, dz] of [[.075, 0], [0, .075]]) {
+                for (const [dx, dz] of [[.09, 0], [0, .12]]) {
                     const a = project(x - dx, z - dz), b = project(x + dx, z + dz);
                     ctx.moveTo(...a); ctx.lineTo(...b);
                 }
