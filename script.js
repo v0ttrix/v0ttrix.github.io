@@ -56,39 +56,27 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         return presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix));
     }
     const css = (color, strength = 1) => `rgb(${color.map(v => Math.round(srgb(v * strength) * 255)).join(',')})`;
-    // Cap daytime brightness so secondary text remains legible through the whole cycle.
-    const backgroundCss = (color, strength) => css(color, Math.min(strength, .025 / Math.max(...color)));
     function draw() {
-        const [light, fogA, fogB] = palette(Date.now());
-        const background = ctx.createLinearGradient(0, 0, width, height);
-        background.addColorStop(0, backgroundCss(fogA, .12));
-        background.addColorStop(1, backgroundCss(fogB, .14));
-        ctx.fillStyle = background;
-        ctx.fillRect(0, 0, width, height);
-        // A shallow perspective plane, angled like the world's cross-marked floor.
-        const project = (x, z) => {
-            const depth = 1 + z * .065;
-            return [width * .5 + (x + z * .7) * 90 / depth, height * .94 + (x * 25 - z * height * .065) / depth];
-        };
-        ctx.strokeStyle = css(light.map((value, i) => value * gridColor[i]), 2);
-        ctx.lineWidth = 1;
-        for (let z = -1; z < 72; z += 2) {
-            ctx.globalAlpha = .32 * (1 - z / 80);
-            for (let x = -60; x <= 60; x += 2) {
-                const [px, py] = project(x, z);
-                if (px < -20 || px > width + 20 || py < -20 || py > height + 20) continue;
-                ctx.beginPath();
-                for (const [dx, dz] of [[.09, 0], [0, .12]]) {
-                    const a = project(x - dx, z - dz), b = project(x + dx, z + dz);
-                    ctx.moveTo(...a); ctx.lineTo(...b);
-                }
-                ctx.stroke();
+        const [light] = palette(Date.now());
+        // Leave the site's solid navy background visible: no fog, tint, or colour wash.
+        ctx.clearRect(0, 0, width, height);
+        const color = light.map((value, i) => value * gridColor[i]);
+        // Keep the marks crisp throughout the cycle, including the darker night palette.
+        ctx.strokeStyle = css(color, .8 / Math.max(...color));
+        ctx.globalAlpha = .8;
+        ctx.lineWidth = 1.4;
+        // A flat, repeating lattice. Every cross has the same size and spacing;
+        // alternating rows echo the world's floor without a horizon or perspective.
+        const spacingX = 160, spacingY = 96;
+        ctx.beginPath();
+        for (let row = 0, y = 32; y < height + 8; row++, y += spacingY) {
+            const offset = row % 2 ? spacingX / 2 : 0;
+            for (let x = 32 + offset; x < width + 8; x += spacingX) {
+                ctx.moveTo(x - 8, y - 4); ctx.lineTo(x + 8, y + 4);
+                ctx.moveTo(x - 8, y + 4); ctx.lineTo(x + 8, y - 4);
             }
         }
-        ctx.globalAlpha = .055;
-        for (const x of [-12, 12]) {
-            ctx.beginPath(); ctx.moveTo(...project(x, -1)); ctx.lineTo(...project(x, 72)); ctx.stroke();
-        }
+        ctx.stroke();
         ctx.globalAlpha = 1;
     }
     function resize() {
