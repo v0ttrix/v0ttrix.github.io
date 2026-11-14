@@ -23,49 +23,95 @@
     try { sessionStorage.setItem('hero-project', selected.id); } catch {}
 })();
 
-// A quiet background, with no animation when reduced motion is requested.
+// Palette and stops are refreshed from the pinned world's DayCycles.js at build time.
+// WORLD_DAY_CYCLE_START
+const worldDayCycle = { duration: 240, presets: {
+    day: ['#ffd2c2', '#00ffff', '#9b89ff'],
+    dusk: ['#ff8181', '#3e53ff', '#ff4ce4'],
+    night: ['#3240ff', '#10266f', '#490a42'],
+    dawn: ['#ffa882', '#f885ff', '#ff7d24']
+}, stops: [[0, 'day'], [.15, 'day'], [.25, 'dusk'], [.35, 'night'], [.6, 'night'], [.8, 'dawn'], [.9, 'day'], [1, 'day']] };
+// WORLD_DAY_CYCLE_END
+
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-const canvas = document.getElementById('matrix');
-const ctx = canvas?.getContext('2d');
-let matrixTimer;
-const fontSize = 14;
-let drops = [];
-function resizeMatrix() {
+(() => {
+    // Keep the existing canvas ID so every portfolio page gets the same background.
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas?.getContext('2d');
     if (!ctx) return;
-    const width = Math.ceil(canvas.clientWidth);
-    const height = Math.ceil(canvas.clientHeight);
-    if (!width || !height || (canvas.width === width && canvas.height === height && drops.length)) return;
-    // Keep the trails and column positions when the device actually changes size.
-    // Mobile browser controls can fire resize events during ordinary scrolling.
-    const previous = document.createElement('canvas');
-    previous.width = canvas.width;
-    previous.height = canvas.height;
-    previous.getContext('2d').drawImage(canvas, 0, 0);
-    canvas.width = width;
-    canvas.height = height;
-    ctx.drawImage(previous, 0, 0);
-    drops = Array.from({ length: Math.ceil(width / fontSize) }, (_, i) =>
-        drops[i] ?? Math.floor(Math.random() * height / fontSize));
-}
-function drawMatrix() {
-    ctx.fillStyle = 'rgba(10, 14, 39, 0.08)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = `${fontSize}px monospace`;
-    drops.forEach((drop, i) => {
-        ctx.fillText(Math.random() > 0.5 ? '1' : '0', i * fontSize, drop * fontSize);
-        drops[i] = drop * fontSize > canvas.height && Math.random() > 0.975 ? 0 : drop + 1;
-    });
-}
-function updateAnimation() {
-    clearInterval(matrixTimer);
-    if (ctx && !motionPreference.matches && !document.hidden) matrixTimer = setInterval(drawMatrix, 65);
-}
-resizeMatrix();
-updateAnimation();
-window.addEventListener('resize', resizeMatrix);
-motionPreference.addEventListener('change', updateAnimation);
-document.addEventListener('visibilitychange', updateAnimation);
+    canvas.setAttribute('aria-hidden', 'true');
+    let width, height, timer;
+    const linear = value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
+    const srgb = value => value <= .0031308 ? value * 12.92 : 1.055 * value ** (1 / 2.4) - .055;
+    const rgb = hex => hex.match(/[a-f0-9]{2}/gi).map(v => linear(parseInt(v, 16) / 255));
+    const gridColor = rgb('#8d55ff');
+    const presets = Object.fromEntries(Object.entries(worldDayCycle.presets).map(([key, colors]) => [key, colors.map(rgb)]));
+    function palette(now) {
+        const progress = (now / 1000 / worldDayCycle.duration) % 1;
+        const next = worldDayCycle.stops.findIndex(stop => stop[0] > progress);
+        const [start, from] = worldDayCycle.stops[next - 1];
+        const [end, to] = worldDayCycle.stops[next];
+        const t = (progress - start) / (end - start);
+        const mix = t * t * (3 - 2 * t); // Same smoothstep and linear colour space as Three.js.
+        return presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix));
+    }
+    const css = (color, strength = 1) => `rgb(${color.map(v => Math.round(srgb(v * strength) * 255)).join(',')})`;
+    function draw() {
+        const [light, fogA, fogB] = palette(Date.now());
+        const background = ctx.createLinearGradient(0, 0, width, height);
+        background.addColorStop(0, css(fogA, .055));
+        background.addColorStop(1, css(fogB, .045));
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, width, height);
+        // A shallow perspective plane, angled like the world's cross-marked floor.
+        const project = (x, z) => {
+            const depth = 1 + z * .065;
+            return [width * .5 + (x + z * 1.9) * 90 / depth, height * .94 - z * height * .065 / depth];
+        };
+        ctx.strokeStyle = css(light.map((value, i) => value * gridColor[i]), 2);
+        ctx.lineWidth = 1;
+        for (let z = -1; z < 72; z += 2) {
+            ctx.globalAlpha = .18 * (1 - z / 80);
+            for (let x = -60; x <= 60; x += 2) {
+                const [px, py] = project(x, z);
+                if (px < -20 || px > width + 20 || py < -20 || py > height + 20) continue;
+                ctx.beginPath();
+                for (const [dx, dz] of [[.075, 0], [0, .075]]) {
+                    const a = project(x - dx, z - dz), b = project(x + dx, z + dz);
+                    ctx.moveTo(...a); ctx.lineTo(...b);
+                }
+                ctx.stroke();
+            }
+        }
+        ctx.globalAlpha = .055;
+        for (const x of [-12, 12]) {
+            ctx.beginPath(); ctx.moveTo(...project(x, -1)); ctx.lineTo(...project(x, 72)); ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+    }
+    function resize() {
+        const w = Math.ceil(canvas.clientWidth), h = Math.ceil(canvas.clientHeight);
+        if (!w || !h || (w === width && h === height)) return;
+        width = w; height = h;
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        draw();
+    }
+    function updateAnimation() {
+        clearInterval(timer);
+        if (!document.hidden) {
+            draw();
+            if (!motionPreference.matches) timer = setInterval(draw, 250);
+        }
+    }
+    resize();
+    updateAnimation();
+    window.addEventListener('resize', resize);
+    window.addEventListener('pageshow', updateAnimation);
+    motionPreference.addEventListener('change', updateAnimation);
+    document.addEventListener('visibilitychange', updateAnimation);
+})();
 
 // Respect the visitor's motion preference for in-page links too.
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
