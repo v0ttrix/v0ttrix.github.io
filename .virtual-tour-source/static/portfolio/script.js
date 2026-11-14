@@ -45,6 +45,7 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const srgb = value => value <= .0031308 ? value * 12.92 : 1.055 * value ** (1 / 2.4) - .055;
     const rgb = hex => hex.match(/[a-f0-9]{2}/gi).map(v => linear(parseInt(v, 16) / 255));
     const gridColor = rgb('#8d55ff');
+    const lineColor = rgb('#675369'); // The world's major grid-line material.
     const presets = Object.fromEntries(Object.entries(worldDayCycle.presets).map(([key, colors]) => [key, colors.map(rgb)]));
     function palette(now) {
         const progress = (now / 1000 / worldDayCycle.duration) % 1;
@@ -61,17 +62,32 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         // Leave the site's solid navy background visible: no fog, tint, or colour wash.
         ctx.clearRect(0, 0, width, height);
         const color = light.map((value, i) => value * gridColor[i]);
-        // Keep the marks crisp throughout the cycle, including the darker night palette.
-        ctx.strokeStyle = css(color, .8 / Math.max(...color));
+        // Sample the cycle once: lines and plus signs share the same light and brightness.
+        const strength = .8 / Math.max(...color);
+        const spacingX = 160, spacingY = 96;
+        const origin = 32;
+
+        // Sparse major grid lines stay flat and run through the repeating plus lattice.
+        ctx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
+        ctx.globalAlpha = .4;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for (let x = origin; x < width; x += spacingX * 4) {
+            ctx.moveTo(x, 0); ctx.lineTo(x, height);
+        }
+        for (let y = origin; y < height; y += spacingY * 4) {
+            ctx.moveTo(0, y); ctx.lineTo(width, y);
+        }
+        ctx.stroke();
+
+        // Every upright plus has the same size, spacing, and opacity across the screen.
+        ctx.strokeStyle = css(color, strength);
         ctx.globalAlpha = .8;
         ctx.lineWidth = 1.4;
-        // A flat, repeating lattice. Every cross has the same size and spacing;
-        // alternating rows echo the world's floor without a horizon or perspective.
-        const spacingX = 160, spacingY = 96;
         ctx.beginPath();
-        for (let row = 0, y = 32; y < height + 8; row++, y += spacingY) {
+        for (let row = 0, y = origin; y < height + 8; row++, y += spacingY) {
             const offset = row % 2 ? spacingX / 2 : 0;
-            for (let x = 32 + offset; x < width + 8; x += spacingX) {
+            for (let x = origin + offset; x < width + 8; x += spacingX) {
                 ctx.moveTo(x - 6, y); ctx.lineTo(x + 6, y);
                 ctx.moveTo(x, y - 6); ctx.lineTo(x, y + 6);
             }
