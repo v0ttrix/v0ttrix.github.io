@@ -72,8 +72,8 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         for (let row = 0, y = 32; y < height + 8; row++, y += spacingY) {
             const offset = row % 2 ? spacingX / 2 : 0;
             for (let x = 32 + offset; x < width + 8; x += spacingX) {
-                ctx.moveTo(x - 8, y - 4); ctx.lineTo(x + 8, y + 4);
-                ctx.moveTo(x - 8, y + 4); ctx.lineTo(x + 8, y - 4);
+                ctx.moveTo(x - 6, y); ctx.lineTo(x + 6, y);
+                ctx.moveTo(x, y - 6); ctx.lineTo(x, y + 6);
             }
         }
         ctx.stroke();
