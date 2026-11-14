@@ -754,7 +754,7 @@ body { isolation: isolate; }
 .hero-photo figcaption { padding: 16px; font: .75rem/1.8 monospace; color: var(--text-secondary); }
 .hero-photo figcaption a { color: var(--accent-cyan); display: block; margin-left: 16px; }
 .status-dot { display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: var(--accent-green); }
-.proof-strip { display: grid; grid-template-columns: 1fr 1fr 1.2fr; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding-top: 25px; padding-bottom: 25px; gap: 35px; }
+.proof-strip { display: grid; grid-template-columns: 1fr 1fr 1.2fr; padding-top: 25px; padding-bottom: 25px; gap: 35px; }
 .proof-strip a { text-decoration: none; display: grid; gap: 7px; }
 .proof-strip strong { color: var(--text-primary); font-size: 1.8rem; letter-spacing: -.04em; }
 .proof-strip span { color: var(--text-secondary); font-size: .85rem; }
@@ -812,7 +812,6 @@ body { isolation: isolate; }
     .hero-photo img { height: 300px; }
     .proof-strip { grid-template-columns: 1fr; gap: 0; padding-top: 4px; padding-bottom: 4px; }
     .proof-strip a { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 20px 4px; align-items: start; }
-    .proof-strip a + a { border-top: 1px solid var(--border-color); }
     .proof-strip strong { font-size: 1.6rem; line-height: 1.2; }
     .proof-strip span { max-width: 34ch; font-size: .9rem; line-height: 1.6; }
     .section-heading { align-items: flex-start; flex-direction: column; }
@@ -1060,14 +1059,17 @@ html[dir="rtl"] .skill-project-link { text-align: right; }
     html[dir="rtl"] .home-page #hero h1 { line-height: 1.25; }
 }
 
-/* A soft vertical black scrim keeps the hero text clear over the live grid. */
-.home-page .hero-layout > :first-child { position: relative; isolation: isolate; }
-.home-page .hero-layout > :first-child::before {
+/* A light content-wide shade runs from the introduction through the footer. */
+.home-page { position: relative; }
+.home-page::after {
     content: '';
     position: absolute;
-    inset: -36px -12px;
+    inset-block: 80px 0;
+    inset-inline: 0;
+    margin-inline: auto;
+    width: min(100%, 1280px);
     z-index: -1;
     pointer-events: none;
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, .68) 16%, rgba(0, 0, 0, .68) 84%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, .25) 6%, rgba(0, 0, 0, .25) 94%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 64px, #000 calc(100% - 48px), transparent);
 }
