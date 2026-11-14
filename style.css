@@ -995,6 +995,10 @@ section, main { scroll-margin-top: 100px; }
 .skill-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(0,240,255,.85); }
 .skills-page .skill-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(0,255,136,.25); }
 .skill-exact-match .skill-search-label { color: var(--accent-green); text-shadow: 0 0 9px rgba(0,255,136,.8); }
+.projects-toolbar .section-title { margin: 0; }
+.project-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(0,240,255,.85); }
+.project-search-label.project-exact-match { color: var(--accent-green); text-shadow: 0 0 9px rgba(0,255,136,.8); }
+.project-card.project-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(0,255,136,.25); }
 @media (max-width: 768px) {
     .skills-toolbar { align-items: stretch; flex-direction: column; }
     .skill-search { width: 100%; box-sizing: border-box; }

@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Abd Ulrahman Mardini</title>
     <meta name="description" content="Cybersecurity and software development projects by Abd Ulrahman Mardini, including a web vulnerability scanner, malware scanner, and network security utilities.">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css?v=project-search-1">
     <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-    <script src="../locale-ar.js" defer></script>
+    <script src="../locale-ar.js?v=project-search-1" defer></script>
     <script src="../i18n.js" defer></script>
 </head>
-<body>
+<body class="projects-page">
     <canvas id="matrix" aria-hidden="true"></canvas>
 
     <!-- Navigation injected by nav.js -->
@@ -18,7 +18,10 @@
     <!-- Projects Section -->
     <section id="projects">
         <div class="container">
-            <h2 class="section-title"><span class="accent">//</span> Projects</h2>
+            <div class="skills-toolbar projects-toolbar">
+                <h2 class="section-title"><span class="accent">//</span> Projects</h2>
+                <input id="project-search" class="skill-search" type="search" aria-label="Search projects" placeholder="Search projects…" autocomplete="off" spellcheck="false">
+            </div>
             <div class="projects-grid">
                 <div class="project-card">
                     <h3>Path Finder Maze Robot<span class="project-award">COIL: Netherlands &times; Canada<br>(Top 3 Best Network Application Layer)</span></h3>
@@ -185,6 +188,6 @@
     </footer>
 
     <script src="../nav.js"></script>
-    <script src="../script.js"></script>
+    <script src="../script.js?v=project-search-1"></script>
 </body>
 </html>

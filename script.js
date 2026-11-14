@@ -205,6 +205,68 @@ document.addEventListener('DOMContentLoaded', () => {
     highlight();
 });
 
+// Project search includes titles, awards and descriptions, preserving their markup.
+document.addEventListener('DOMContentLoaded', () => {
+    const search = document.getElementById('project-search');
+    if (!search) return;
+    const cards = [...document.querySelectorAll('#projects .project-card')].map(element => {
+        const labels = [];
+        element.querySelectorAll('h3, p').forEach(container => {
+            const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+            const nodes = [];
+            while (walker.nextNode()) if (walker.currentNode.textContent.trim()) nodes.push(walker.currentNode);
+            nodes.forEach(node => {
+                const source = node.textContent;
+                const label = document.createElement('span');
+                label.className = 'project-search-label';
+                label.setAttribute('data-no-translate', '');
+                node.replaceWith(label);
+                labels.push({ source, label, title: container.tagName === 'H3' });
+            });
+        });
+        return { element, labels };
+    });
+    function highlightProjects() {
+        const query = search.value.trim().toLocaleLowerCase();
+        const arabic = document.documentElement.lang === 'ar';
+        cards.forEach(({ element, labels }) => {
+            let matches = !query;
+            let exactTitle = false;
+            labels.forEach(({ source, label, title }) => {
+                const name = arabic ? (window.PORTFOLIO_AR?.[source.trim()] || source) : source;
+                const normalized = name.toLocaleLowerCase();
+                const exact = !!query && normalized.trim() === query;
+                if (query && normalized.includes(query)) matches = true;
+                if (exact && title) exactTitle = true;
+                label.classList.toggle('project-exact-match', exact);
+                label.replaceChildren();
+                let offset = 0;
+                let index = query && !exact ? normalized.indexOf(query) : -1;
+                while (index !== -1) {
+                    label.append(document.createTextNode(name.slice(offset, index)));
+                    const mark = document.createElement('mark');
+                    mark.textContent = name.slice(index, index + query.length);
+                    label.append(mark);
+                    offset = index + query.length;
+                    index = normalized.indexOf(query, offset);
+                }
+                label.append(document.createTextNode(name.slice(offset)));
+            });
+            element.hidden = !matches;
+            element.classList.toggle('project-exact-match', exactTitle);
+        });
+    }
+    search.addEventListener('input', highlightProjects);
+    let lastLanguage = document.documentElement.lang;
+    new MutationObserver(() => {
+        const language = document.documentElement.lang;
+        if (language === lastLanguage) return;
+        lastLanguage = language;
+        highlightProjects();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    highlightProjects();
+});
+
 // Independent reference columns: opening a quote only pushes down its own column.
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.references-grid');
