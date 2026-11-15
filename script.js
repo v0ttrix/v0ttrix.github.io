@@ -23,49 +23,146 @@
     try { sessionStorage.setItem('hero-project', selected.id); } catch {}
 })();
 
-// A quiet background, with no animation when reduced motion is requested.
+// Palette and stops are refreshed from the pinned world's DayCycles.js at build time.
+// WORLD_DAY_CYCLE_START
+const worldDayCycle = { duration: 240, floorColor: '#1b191f', lightIntensities: { day: 1.2, dusk: 1.2, night: 3.8, dawn: 1.2 }, fogRanges: { day: [.315, 1.25], dusk: [0, 1.25], night: [-.85, 1], dawn: [.3, 1.25] }, presets: {
+    day: ['#ffd2c2', '#00ffff', '#9b89ff'],
+    dusk: ['#ff8181', '#3e53ff', '#ff4ce4'],
+    night: ['#3240ff', '#10266f', '#490a42'],
+    dawn: ['#ffa882', '#f885ff', '#ff7d24']
+}, stops: [[0, 'day'], [.15, 'day'], [.25, 'dusk'], [.35, 'night'], [.6, 'night'], [.8, 'dawn'], [.9, 'day'], [1, 'day']] };
+// WORLD_DAY_CYCLE_END
+
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-const canvas = document.getElementById('matrix');
-const ctx = canvas?.getContext('2d');
-let matrixTimer;
-const fontSize = 14;
-let drops = [];
-function resizeMatrix() {
+(() => {
+    // Keep the existing canvas ID so every portfolio page gets the same background.
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas?.getContext('2d');
     if (!ctx) return;
-    const width = Math.ceil(canvas.clientWidth);
-    const height = Math.ceil(canvas.clientHeight);
-    if (!width || !height || (canvas.width === width && canvas.height === height && drops.length)) return;
-    // Keep the trails and column positions when the device actually changes size.
-    // Mobile browser controls can fire resize events during ordinary scrolling.
-    const previous = document.createElement('canvas');
-    previous.width = canvas.width;
-    previous.height = canvas.height;
-    previous.getContext('2d').drawImage(canvas, 0, 0);
-    canvas.width = width;
-    canvas.height = height;
-    ctx.drawImage(previous, 0, 0);
-    drops = Array.from({ length: Math.ceil(width / fontSize) }, (_, i) =>
-        drops[i] ?? Math.floor(Math.random() * height / fontSize));
-}
-function drawMatrix() {
-    ctx.fillStyle = 'rgba(10, 14, 39, 0.08)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#00f0ff';
-    ctx.font = `${fontSize}px monospace`;
-    drops.forEach((drop, i) => {
-        ctx.fillText(Math.random() > 0.5 ? '1' : '0', i * fontSize, drop * fontSize);
-        drops[i] = drop * fontSize > canvas.height && Math.random() > 0.975 ? 0 : drop + 1;
-    });
-}
-function updateAnimation() {
-    clearInterval(matrixTimer);
-    if (ctx && !motionPreference.matches && !document.hidden) matrixTimer = setInterval(drawMatrix, 65);
-}
-resizeMatrix();
-updateAnimation();
-window.addEventListener('resize', resizeMatrix);
-motionPreference.addEventListener('change', updateAnimation);
-document.addEventListener('visibilitychange', updateAnimation);
+    canvas.setAttribute('aria-hidden', 'true');
+    let width, height, animationFrame;
+    const cycleLeadMs = 4000; // Anticipate a few seconds of loading when entering the world.
+    const frameInterval = 1000 / 30;
+    let lastFrame = -Infinity;
+    const linear = value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
+    const srgb = value => value <= .0031308 ? value * 12.92 : 1.055 * value ** (1 / 2.4) - .055;
+    const rgb = hex => hex.match(/[a-f0-9]{2}/gi).map(v => linear(parseInt(v, 16) / 255));
+    const floorColor = rgb(worldDayCycle.floorColor);
+    const gridColor = rgb('#8d55ff');
+    const lineColor = rgb('#675369'); // The world's major grid-line material.
+    const presets = Object.fromEntries(Object.entries(worldDayCycle.presets).map(([key, colors]) => [key, colors.map(rgb)]));
+    function palette(now) {
+        const progress = ((now + cycleLeadMs) / 1000 / worldDayCycle.duration) % 1;
+        const next = worldDayCycle.stops.findIndex(stop => stop[0] > progress);
+        const [start, from] = worldDayCycle.stops[next - 1];
+        const [end, to] = worldDayCycle.stops[next];
+        const t = (progress - start) / (end - start);
+        const mix = t * t * (3 - 2 * t); // Same smoothstep and linear colour space as Three.js.
+        return {
+            colors: presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix)),
+            intensity: worldDayCycle.lightIntensities[from] + (worldDayCycle.lightIntensities[to] - worldDayCycle.lightIntensities[from]) * mix,
+            fogRange: worldDayCycle.fogRanges[from].map((v, i) => v + (worldDayCycle.fogRanges[to][i] - v) * mix)
+        };
+    }
+    const css = (color, strength = 1) => `rgb(${color.map(v => (srgb(v * strength) * 255).toFixed(2)).join(',')})`;
+    function draw() {
+        const { colors: [light, fogA, fogB], intensity, fogRange: [near, far] } = palette(Date.now());
+        const litFloor = light.map((value, i) => value * floorColor[i] * intensity);
+        // The world's night palette includes radial blue/purple fog as well as blue light.
+        // Adapt its near-plane fog strength to the flat floor, in linear colour space.
+        const fogStrength = Math.max(0, Math.min(1, -near / (far - near)));
+        ctx.save();
+        ctx.scale(width, height); // Match the world's normalized viewport UV coordinates.
+        const background = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+        for (let step = 0; step <= 16; step++) {
+            const position = step / 16;
+            const blend = position * position * (3 - 2 * position);
+            const fog = fogA.map((value, i) => value + (fogB[i] - value) * blend);
+            const shadedFloor = litFloor.map((value, i) => value + (fog[i] - value) * fogStrength);
+            background.addColorStop(position, css(shadedFloor));
+        }
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, 1, 1);
+        ctx.restore();
+        const color = light.map((value, i) => value * gridColor[i]);
+        // Sample the cycle once: lines and plus signs share the same light and brightness.
+        const strength = .8 / Math.max(...color);
+        const spacingX = 112, spacingY = 112;
+        const majorEvery = 8;
+        const origin = 32.5; // Align odd-width strokes to pixel centers.
+        // The fixed canvas drifts down as the document content travels up.
+        const majorSpacingY = spacingY * majorEvery;
+        const scrollOffset = motionPreference.matches ? 0 : window.scrollY * .6;
+        const originY = origin + (scrollOffset % majorSpacingY);
+
+        // Sparse major grid lines stay flat and run through the repeating plus lattice.
+        ctx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'square';
+        ctx.beginPath();
+        for (let x = origin; x < width; x += spacingX * majorEvery) {
+            ctx.moveTo(x, 0); ctx.lineTo(x, height);
+        }
+        for (let y = originY - majorSpacingY; y < height; y += majorSpacingY) {
+            ctx.moveTo(0, y); ctx.lineTo(width, y);
+        }
+        ctx.stroke();
+
+        // Bold upright pluses fill the cells; major lines carry perpendicular dashes.
+        ctx.strokeStyle = css(color, strength);
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let row = -majorEvery, y = originY - majorSpacingY; y < height + 12; row++, y += spacingY) {
+            for (let x = origin; x < width + 8; x += spacingX) {
+                const onVerticalLine = (x - origin) % (spacingX * majorEvery) === 0;
+                const onHorizontalLine = row % majorEvery === 0;
+                // Keep major-line intersections clear. On a line, only the arm
+                // crossing it is bold; the other arm remains the continuous grid line.
+                if (!onHorizontalLine) {
+                    ctx.moveTo(Math.round(x) - 9, Math.round(y)); ctx.lineTo(Math.round(x) + 9, Math.round(y));
+                }
+                if (!onVerticalLine) {
+                    ctx.moveTo(Math.round(x), Math.round(y) - 9); ctx.lineTo(Math.round(x), Math.round(y) + 9);
+                }
+            }
+        }
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+    }
+    function resize() {
+        const w = Math.ceil(canvas.clientWidth), h = Math.ceil(canvas.clientHeight);
+        if (!w || !h || (w === width && h === height)) return;
+        width = w; height = h;
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        draw();
+    }
+    function animate(timestamp) {
+        if (document.hidden || motionPreference.matches) return;
+        if (timestamp - lastFrame >= frameInterval) {
+            draw();
+            lastFrame = timestamp;
+        }
+        animationFrame = requestAnimationFrame(animate);
+    }
+    function updateAnimation() {
+        cancelAnimationFrame(animationFrame);
+        lastFrame = -Infinity;
+        if (!document.hidden) {
+            draw();
+            if (!motionPreference.matches) animationFrame = requestAnimationFrame(animate);
+        }
+    }
+    resize();
+    updateAnimation();
+    window.addEventListener('resize', resize);
+    window.addEventListener('pageshow', updateAnimation);
+    motionPreference.addEventListener('change', updateAnimation);
+    document.addEventListener('visibilitychange', updateAnimation);
+})();
 
 // Respect the visitor's motion preference for in-page links too.
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {

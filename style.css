@@ -7,8 +7,8 @@
 :root {
     --bg-dark: #0a0e27;
     --bg-card: #111827;
-    --accent-cyan: #00f0ff;
-    --accent-green: #00ff88;
+    --accent-cyan: #ff8a1f;
+    --accent-green: #ff3344;
     --text-primary: #e5e7eb;
     --text-secondary: #9ca3af;
     --border-color: #1f2937;
@@ -45,7 +45,7 @@ body {
 
 .menu-btn:hover {
     border-color: var(--accent-green);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.3);
 }
 
 .menu-btn span {
@@ -113,7 +113,7 @@ body {
     color: var(--accent-green);
     border-left-color: var(--accent-green);
     padding-left: 20px;
-    background: rgba(0, 255, 136, 0.1);
+    background: rgba(255, 51, 68, 0.1);
 }
 
 #matrix {
@@ -125,7 +125,7 @@ body {
     height: 100lvh;
     pointer-events: none;
     z-index: -1;
-    opacity: 0.15;
+    opacity: 1;
 }
 
 .container {
@@ -153,7 +153,7 @@ section {
     font-weight: 700;
     margin-bottom: 20px;
     color: var(--accent-cyan);
-    text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    text-shadow: 0 0 20px rgba(255, 138, 31, 0.5);
     white-space: nowrap;
 }
 
@@ -307,7 +307,7 @@ section {
 
 .skill-category:hover {
     border-color: var(--accent-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.2);
     transform: translateY(-5px);
 }
 
@@ -355,7 +355,7 @@ section {
 
 .project-card:hover {
     border-color: var(--accent-green);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+    box-shadow: 0 0 20px rgba(255, 51, 68, 0.2);
     transform: translateY(-5px);
 }
 
@@ -397,7 +397,7 @@ section {
 }
 
 .experience-card:hover {
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.2);
     transform: translateX(5px);
 }
 
@@ -466,7 +466,7 @@ section {
 
 .cert-card:hover {
     border-color: var(--accent-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.2);
     transform: scale(1.05);
 }
 
@@ -503,7 +503,7 @@ section {
 
 .reference-card:hover {
     border-color: var(--accent-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.2);
     transform: translateY(-5px);
 }
 
@@ -738,10 +738,7 @@ a:focus-visible, button:focus-visible, [role="button"]:focus-visible { outline: 
 .skip-link { position: fixed; top: -100px; left: 16px; z-index: 1200; background: var(--accent-green); color: var(--bg-dark); padding: 12px 20px; }
 .skip-link:focus { top: 10px; }
 body { isolation: isolate; }
-#matrix { opacity: .06; }
-@media (pointer: coarse) {
-    #matrix { opacity: .12; }
-}
+#matrix { opacity: 1; }
 .eyebrow { font: .76rem/1.6 "Courier New", monospace; text-transform: uppercase; letter-spacing: .12em; color: var(--accent-cyan); margin-bottom: 20px; }
 .home-page #hero { min-height: auto; padding: 95px 0 75px; text-align: left; }
 .hero-layout { display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 64px; }
@@ -757,7 +754,7 @@ body { isolation: isolate; }
 .hero-photo figcaption { padding: 16px; font: .75rem/1.8 monospace; color: var(--text-secondary); }
 .hero-photo figcaption a { color: var(--accent-cyan); display: block; margin-left: 16px; }
 .status-dot { display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: var(--accent-green); }
-.proof-strip { display: grid; grid-template-columns: 1fr 1fr 1.2fr; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding-top: 25px; padding-bottom: 25px; gap: 35px; }
+.proof-strip { display: grid; grid-template-columns: 1fr 1fr 1.2fr; padding-top: 25px; padding-bottom: 25px; gap: 35px; }
 .proof-strip a { text-decoration: none; display: grid; gap: 7px; }
 .proof-strip strong { color: var(--text-primary); font-size: 1.8rem; letter-spacing: -.04em; }
 .proof-strip span { color: var(--text-secondary); font-size: .85rem; }
@@ -765,7 +762,7 @@ body { isolation: isolate; }
 .home-page h2 { font-size: clamp(2rem,3.7vw,3rem); letter-spacing: -.04em; line-height: 1.2; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 40px; }
 .text-link { color: var(--accent-cyan); font-size: .95rem; }
-.featured-project { display: grid; grid-template-columns: 1.1fr 1fr; border-top: 1px solid var(--border-color); padding: 40px 0; gap: 45px; align-items: center; }
+.featured-project { display: grid; grid-template-columns: 1.1fr 1fr; padding: 40px 0; gap: 45px; align-items: center; }
 .project-media { min-width: 0; display: block; overflow: hidden; background: #050916; border-radius: 8px; }
 .project-media img, .project-media video { width: 100%; height: 330px; display: block; object-fit: cover; }
 .project-media video { object-fit: contain; }
@@ -815,7 +812,6 @@ body { isolation: isolate; }
     .hero-photo img { height: 300px; }
     .proof-strip { grid-template-columns: 1fr; gap: 0; padding-top: 4px; padding-bottom: 4px; }
     .proof-strip a { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 20px 4px; align-items: start; }
-    .proof-strip a + a { border-top: 1px solid var(--border-color); }
     .proof-strip strong { font-size: 1.6rem; line-height: 1.2; }
     .proof-strip span { max-width: 34ch; font-size: .9rem; line-height: 1.6; }
     .section-heading { align-items: flex-start; flex-direction: column; }
@@ -827,7 +823,7 @@ body { isolation: isolate; }
 }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-    #matrix { display: none; }
+    /* The grid stays still when reduced motion is requested. */
 }
 
 section, main { scroll-margin-top: 100px; }
@@ -853,7 +849,7 @@ section, main { scroll-margin-top: 100px; }
 .image-viewer { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(0,0,0,.9); color: white; cursor: zoom-out; overflow: hidden; }
 .image-viewer[open] { display: flex; align-items: center; justify-content: center; }
 .image-viewer::backdrop { background: transparent; }
-.image-viewer .image-viewer-image { display: block; width: auto; height: auto; max-width: 90vw; max-height: 90dvh; object-fit: contain; border-radius: 8px; box-shadow: 0 0 40px rgba(0,240,255,.3); }
+.image-viewer .image-viewer-image { display: block; width: auto; height: auto; max-width: 90vw; max-height: 90dvh; object-fit: contain; border-radius: 8px; box-shadow: 0 0 40px rgba(255, 138, 31,.3); }
 .image-viewer-close { position: absolute; top: 12px; right: 16px; width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; color: white; background: rgba(0,0,0,.6); font: 30px/1 sans-serif; cursor: pointer; }
 
 /* Robot photos retain their proportions without stretching grid rows. */
@@ -902,7 +898,7 @@ section, main { scroll-margin-top: 100px; }
     .phone-apps-page .phone-app-card > .project-link { align-self: start; margin-top: 18px; }
 }
 
-.driving-app-icon { display: grid; place-items: center; background: rgba(0, 240, 255, .08); border: 1px solid var(--border-color); font-size: 2.5rem; }
+.driving-app-icon { display: grid; place-items: center; background: rgba(255, 138, 31, .08); border: 1px solid var(--border-color); font-size: 2.5rem; }
 @media (min-width: 769px) { .phone-apps-page .phone-app-card { margin-top: 0; margin-bottom: 30px; } }
 
 .phone-app-card .flora-title { flex-wrap: nowrap; min-width: 0; }
@@ -992,13 +988,13 @@ section, main { scroll-margin-top: 100px; }
 .skill-search::placeholder { color: var(--text-secondary); opacity: 1; }
 .skill-search:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 3px; }
 .skills-page .skill-search-label { color: inherit; font: inherit; }
-.skill-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(0,240,255,.85); }
-.skills-page .skill-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(0,255,136,.25); }
-.skill-exact-match .skill-search-label { color: var(--accent-green); text-shadow: 0 0 9px rgba(0,255,136,.8); }
+.skill-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(255, 138, 31,.85); }
+.skills-page .skill-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(255, 51, 68,.25); }
+.skill-exact-match .skill-search-label { color: var(--accent-green); text-shadow: 0 0 9px rgba(255, 51, 68,.8); }
 .projects-toolbar .section-title { margin: 0; }
-.project-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(0,240,255,.85); }
-.project-search-label.project-exact-match { color: var(--accent-green); text-shadow: 0 0 9px rgba(0,255,136,.8); }
-.project-card.project-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(0,255,136,.25); }
+.project-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(255, 138, 31,.85); }
+.project-search-label.project-exact-match { color: var(--accent-green); text-shadow: 0 0 9px rgba(255, 51, 68,.8); }
+.project-card.project-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(255, 51, 68,.25); }
 @media (max-width: 768px) {
     .skills-toolbar { align-items: stretch; flex-direction: column; }
     .skill-search { width: 100%; box-sizing: border-box; }
@@ -1009,7 +1005,7 @@ section, main { scroll-margin-top: 100px; }
 .skill-project-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .skill-project-link { display: inline-flex; align-items: center; gap: 9px; max-width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary); text-decoration: none; font-size: .9rem; line-height: 1.5; overflow-wrap: anywhere; }
 .skill-project-link span { color: var(--accent-cyan); font-size: .85rem; }
-.skill-project-link:hover, .skill-project-link:focus-visible { color: var(--accent-green); border-color: var(--accent-green); background: rgba(0,255,136,.04); }
+.skill-project-link:hover, .skill-project-link:focus-visible { color: var(--accent-green); border-color: var(--accent-green); background: rgba(255, 51, 68,.04); }
 .additional-skills { padding: 0; margin-top: 45px; }
 .additional-skills h2 { font-size: 1.4rem; margin-bottom: 12px; }
 .additional-skills > p { color: var(--text-secondary); margin-bottom: 20px; }
@@ -1071,4 +1067,249 @@ html[dir="rtl"] .skill-project-link { text-align: right; }
     .nav-inner { gap: 6px; padding-inline: 12px; }
     .header-actions { gap: 5px; }
     .nav-toggle { padding: 9px 10px; gap: 8px; }
+}
+
+/* Rounded glass panels keep text readable with a defined edge. */
+.home-page .hero-layout > div,
+.home-page .proof-strip,
+.home-page .section-heading,
+.home-page .featured-copy,
+.home-page .home-about .container,
+.home-page .home-contact .container,
+.about-page #about > .container {
+    background: rgba(0, 0, 0, .28);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .06);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+.home-page .hero-layout > div,
+.home-page .featured-copy { min-width: 0; }
+.home-page .home-about { background: transparent; border: 0; }
+.home-page .hero-intro,
+.home-page .hero-socials a,
+.home-page .proof-strip span,
+.home-page .featured-copy p:not(.eyebrow),
+.home-page .about-layout p:not(.eyebrow),
+.home-page .home-contact p:not(.eyebrow) { color: #d1d1d6; }
+@media (max-width: 768px) {
+    .home-page .hero-layout > div,
+    .home-page .proof-strip,
+    .home-page .section-heading,
+    .home-page .featured-copy,
+    .home-page .home-about .container,
+    .home-page .home-contact .container,
+    .about-page #about > .container { padding: 22px; border-radius: 20px; }
+}
+
+/* Use the same transparent panels throughout the portfolio. */
+body .experience-card,
+body .skill-category,
+body .project-card,
+body .cert-card,
+body .references-grid .reference-card,
+body .project-content,
+body .contact-container,
+body .hero-photo,
+body .business-intro,
+body .additional-skills {
+    background: rgba(0, 0, 0, .28);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 24px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .06);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+body .business-intro,
+body .additional-skills { padding: 28px; }
+/* Nested labels stay light so transparency does not stack into a solid fill. */
+body .email-item,
+body .skill-project-link,
+body .skill-tags > span,
+body .meta-tag,
+body .impact-stat,
+body .pattern-card,
+body .arch-diagram,
+body .project-content pre {
+    background: rgba(0, 0, 0, .12);
+    border-radius: 12px;
+}
+body .email-item { border-color: rgba(255, 255, 255, .16); }
+@media (max-width: 768px) {
+    body .experience-card,
+    body .skill-category,
+    body .project-card,
+    body .cert-card,
+    body .references-grid .reference-card,
+    body .project-content,
+    body .contact-container,
+    body .hero-photo,
+    body .business-intro,
+    body .additional-skills { border-radius: 20px; }
+    body .business-intro,
+    body .additional-skills,
+    body .contact-container { padding: 22px; }
+}
+
+/* Transparent black navigation matches the content panels. */
+body .site-header {
+    background: rgba(0, 0, 0, .28);
+    border-bottom-color: rgba(255, 255, 255, .16);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+body .nav-toggle,
+body .language-switch,
+body .virtual-tour {
+    background: rgba(0, 0, 0, .28);
+    border-color: rgba(255, 255, 255, .16);
+    border-radius: 12px;
+}
+@media (max-width: 1280px) {
+    body .site-navigation {
+        background: rgba(0, 0, 0, .28);
+        border: 1px solid rgba(255, 255, 255, .16);
+        border-radius: 0 0 20px 20px;
+        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(2px);
+    }
+}
+
+/* Center the footer content on a transparent black surface. */
+body footer {
+    background: rgba(0, 0, 0, .28);
+    border-top: 1px solid rgba(255, 255, 255, .16);
+    text-align: center;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+body footer .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+}
+
+/* Transparent search fields match the surrounding panels. */
+body #skill-search,
+body #project-search {
+    background: rgba(0, 0, 0, .28);
+    border-color: rgba(255, 255, 255, .16);
+    border-radius: 12px;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+/* Certification panels fit their contents without extra vertical space. */
+body .cert-grid { align-items: start; }
+body .cert-card {
+    min-height: 0;
+    padding: 18px 24px;
+    justify-content: flex-start;
+}
+body .cert-card .cert-icon { margin-bottom: 8px; font-size: 2.4rem; }
+body .cert-card h3 { min-height: 0; }
+@media (max-width: 768px) {
+    body .cert-card { padding: 16px 20px; }
+}
+
+/* Keep the References footer at the viewport bottom on short pages. */
+body.references-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+.references-page > #references { flex: 1 0 auto; }
+.references-page > footer { margin-top: auto; flex-shrink: 0; }
+
+/* Every portfolio page keeps its footer below the content and at least screen height. */
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+body > main,
+body > section,
+body > .contact-page { flex: 1 0 auto; }
+body > .contact-page { min-height: 0; }
+body > footer { margin-top: auto; flex-shrink: 0; width: 100%; }
+
+/* Standalone back buttons keep their natural width in the page's flex layout. */
+body > .back-btn { align-self: flex-start; }
+
+/* Orange back buttons glow on hover and depress on activation. */
+body .back-btn {
+    background: var(--accent-cyan);
+    color: #0a0e27;
+    border-color: var(--accent-cyan);
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+body .back-btn:hover {
+    background: var(--accent-cyan);
+    color: #0a0e27;
+    box-shadow: 0 0 12px rgba(255, 138, 31, .65), 0 0 28px rgba(255, 138, 31, .35);
+    transform: translateY(-2px);
+}
+body .back-btn:active {
+    transform: translateY(2px) scale(.98);
+    box-shadow: 0 0 8px rgba(255, 138, 31, .4);
+}
+
+/* Homepage buttons glow on hover and depress when clicked. */
+.home-page .btn {
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+.home-page .btn-primary:hover {
+    box-shadow: 0 0 12px rgba(255, 138, 31, .65), 0 0 28px rgba(255, 138, 31, .35);
+    transform: translateY(-2px);
+}
+.home-page .btn:active {
+    transform: translateY(2px) scale(.98);
+}
+.home-page .btn-primary:active {
+    box-shadow: 0 0 8px rgba(255, 138, 31, .4);
+}
+
+/* Press feedback uses a separate transform so existing hover styling stays intact. */
+:where(button, a, [role="button"], summary, input[type="button"], input[type="submit"], input[type="reset"]) {
+    translate: 0 0;
+}
+:where(button, a, [role="button"], summary, input[type="button"], input[type="submit"], input[type="reset"]):active:not(:disabled):not([aria-disabled="true"]) {
+    translate: 0 2px;
+}
+/* Inline links need a transformable box for press feedback. */
+a:active { position: relative; top: 2px; translate: none; }
+/* Existing button press rules already provide their own movement. */
+body .back-btn:active,
+.home-page .btn:active { translate: none; top: auto; }
+
+.home-page .btn-tour {
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+}
+.home-page .btn-tour:hover {
+    background: transparent;
+    color: var(--accent-green);
+    box-shadow: 0 0 12px rgba(255, 51, 68, .65), 0 0 28px rgba(255, 51, 68, .35);
+    transform: translateY(-2px);
+}
+.home-page .btn-tour:active {
+    background: var(--accent-green);
+    color: #0a0e27;
+    transform: translateY(2px) scale(.98);
+    box-shadow: inset 0 0 22px rgba(255, 51, 68, .55), 0 0 12px rgba(255, 51, 68, .65), 0 0 28px rgba(255, 51, 68, .35);
+}
+
+.home-page .cta-buttons a[href="resume.pdf"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(255, 138, 31, .65), 0 0 28px rgba(255, 138, 31, .35);
+}
+.home-page .cta-buttons a[href="resume.pdf"]:active {
+    transform: translateY(2px) scale(.98);
 }

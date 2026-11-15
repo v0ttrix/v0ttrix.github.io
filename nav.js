@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">Menu <span aria-hidden="true">+</span></button>
             <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">${navigation}</nav>
             <div class="header-actions">
-                <a class="virtual-tour" href="/virtual-tour/">Virtual Tour</a>
                 <button id="language-switch" class="language-switch" type="button" dir="ltr" data-no-translate aria-label="Switch to Arabic" aria-pressed="false"><span lang="en" data-language="en">Eng</span><span aria-hidden="true">/</span><span lang="ar" data-language="ar">Ar</span></button>
             </div>
         </div></header>`);

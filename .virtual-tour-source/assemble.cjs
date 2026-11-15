@@ -14,3 +14,4 @@ html = html.replace('<head>', '<head>\n<link rel="stylesheet" href="./portfolio-
 html = html.replace(/<body([^>]*)>/, '<body$1>\n<a class="portfolio-return" href="/">Back to portfolio</a>');
 html = html.replace('rel="canonical" href="https://v0ttrix.github.io/"', 'rel="canonical" href="https://v0ttrix.github.io/virtual-tour/"');
 fs.writeFileSync(index, html);
+require('./sync-background.cjs').syncBackground('.world-build', '_site');
