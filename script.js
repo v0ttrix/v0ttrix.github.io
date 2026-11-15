@@ -115,6 +115,11 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         gridPattern = ctx.createPattern(gridLayer, 'repeat');
         gridPattern.setTransform(new DOMMatrix().scale(1 / pixelRatio));
     }
+    function gridOffset() {
+        // Keep the loader aligned even when focus or history changes the page scroll.
+        if (document.documentElement.classList.contains('tour-loading')) return -334;
+        return motionPreference.matches ? 0 : window.scrollY * .6;
+    }
     function draw(scrollOffset) {
         ctx.drawImage(backgroundLayer, 0, 0, width, height);
         ctx.save();
@@ -139,12 +144,12 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         gridLayer.width = gridLayer.height = Math.round(gridPeriod * ratio);
         gridLayer.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
         updateLayers();
-        draw(motionPreference.matches ? 0 : window.scrollY * .6);
+        draw(gridOffset());
         lastColorFrame = performance.now();
     }
     function animate(timestamp) {
         if (document.hidden || motionPreference.matches) return;
-        const scrollOffset = window.scrollY * .6;
+        const scrollOffset = gridOffset();
         const colorsChanged = timestamp - lastColorFrame >= colorInterval;
         if (colorsChanged) {
             updateLayers();
@@ -158,7 +163,7 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         lastColorFrame = -Infinity;
         if (!document.hidden) {
             updateLayers();
-            draw(motionPreference.matches ? 0 : window.scrollY * .6);
+            draw(gridOffset());
             if (!motionPreference.matches) animationFrame = requestAnimationFrame(animate);
         }
     }
@@ -168,6 +173,10 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     window.addEventListener('pageshow', updateAnimation);
     motionPreference.addEventListener('change', updateAnimation);
     document.addEventListener('visibilitychange', updateAnimation);
+    new MutationObserver(() => {
+        const offset = gridOffset();
+        if (!document.hidden && offset !== lastScrollOffset) draw(offset);
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 })();
 
 // Respect the visitor's motion preference for in-page links too.

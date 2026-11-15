@@ -2,12 +2,20 @@
 .tour-entered .tour-world-frame { opacity:1; pointer-events:auto; }
 .tour-loading body > :is(main,section,header,footer) { opacity:0; pointer-events:none; transition:opacity .45s ease; }
 .tour-entered body > :is(main,section,header,footer) { opacity:0; pointer-events:none; }
-.tour-status { position:fixed; inset:auto 20px 24px; margin:auto; width:fit-content; max-width:calc(100% - 40px); z-index:6000; display:flex; flex-wrap:wrap; align-items:center; gap:16px; padding:14px 20px; border:1px solid rgba(255,255,255,.16); border-radius:18px; background:rgba(0,0,0,.65); color:#eee; font:14px/1.5 system-ui,sans-serif; }
-.tour-status button,.tour-status a { color:#ff8a1f; font:inherit; background:transparent; border:0; cursor:pointer; }
-@media(prefers-reduced-motion:reduce) { .tour-world-frame,.tour-loading body > :is(main,section,header,footer) { transition:none; } }
+/* The animated canvas remains visible: the loader has no backdrop or panel. */
+.tour-status { --tour-ring-color:#5f7dff; position:fixed; top:50%; left:calc(50% - 28px); transform:translate(-50%,-50%); width:min(760px,80vw); z-index:6000; display:flex; flex-direction:column; align-items:center; gap:20px; color:#bdefff; text-align:center; font:14px/1.5 system-ui,sans-serif; transition:opacity .8s ease,scale .8s ease; }
+.tour-progress { position:relative; width:min(clamp(400px,64vw,580px),78vw,78dvh); aspect-ratio:1; display:grid; place-items:center; }
+.tour-ring { position:absolute; inset:0; width:100%; height:100%; overflow:visible; transform:rotate(-90deg); fill:none; }
+.tour-ring-track { stroke:var(--tour-ring-color); opacity:.2; stroke-width:2; }
+.tour-ring-progress { stroke:var(--tour-ring-color); stroke-width:3; stroke-linecap:round; stroke-dasharray:100; stroke-dashoffset:100; filter:drop-shadow(0 0 4px var(--tour-ring-color)) drop-shadow(0 0 12px var(--tour-ring-color)); transition:stroke-dashoffset .3s ease; }
+.tour-percent { color:var(--tour-ring-color); font-size:min(clamp(104px,16vw,152px),22vw,22dvh); transform:translateX(-18px); font-weight:500; font-variant-numeric:tabular-nums; text-shadow:0 0 12px var(--tour-ring-color),0 0 32px var(--tour-ring-color); }
+.tour-loading-label { margin:0; text-shadow:0 0 10px var(--tour-ring-color); }
+.tour-loading-actions { display:flex; gap:22px; }
+.tour-loading-actions button,.tour-loading-actions a { color:#bdefff; font:inherit; background:transparent; border:0; padding:8px; cursor:pointer; text-decoration:underline; text-underline-offset:4px; }
+.tour-entered .tour-status { opacity:0; scale:.92; pointer-events:none; }
+@media(prefers-reduced-motion:reduce) { .tour-world-frame,.tour-loading body > :is(main,section,header,footer),.tour-status,.tour-ring-progress { transition:none; } }
 
-/* Loading shows only the existing animated grid. Escape still cancels. */
-.tour-status:not(:focus-within) {
-    width:1px; height:1px; padding:0; border:0;
-    overflow:hidden; clip-path:inset(50%); white-space:nowrap;
-}
+/* Keep loading copy accessible without displaying text below the ring. */
+.tour-loading-label,.tour-loading-actions:not(:focus-within) { position:absolute; width:1px; height:1px; padding:0; margin:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+
+@media (max-width: 480px) { .tour-status { left:calc(50% - 16px); } .tour-progress { width:min(480px,78vw,78dvh); } }
