@@ -25,7 +25,7 @@
 
 // Palette and stops are refreshed from the pinned world's DayCycles.js at build time.
 // WORLD_DAY_CYCLE_START
-const worldDayCycle = { duration: 240, presets: {
+const worldDayCycle = { duration: 240, floorColor: '#1b191f', lightIntensities: { day: 1.2, dusk: 1.2, night: 3.8, dawn: 1.2 }, presets: {
     day: ['#ffd2c2', '#00ffff', '#9b89ff'],
     dusk: ['#ff8181', '#3e53ff', '#ff4ce4'],
     night: ['#3240ff', '#10266f', '#490a42'],
@@ -44,6 +44,7 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const linear = value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
     const srgb = value => value <= .0031308 ? value * 12.92 : 1.055 * value ** (1 / 2.4) - .055;
     const rgb = hex => hex.match(/[a-f0-9]{2}/gi).map(v => linear(parseInt(v, 16) / 255));
+    const floorColor = rgb(worldDayCycle.floorColor);
     const gridColor = rgb('#8d55ff');
     const lineColor = rgb('#675369'); // The world's major grid-line material.
     const presets = Object.fromEntries(Object.entries(worldDayCycle.presets).map(([key, colors]) => [key, colors.map(rgb)]));
@@ -54,13 +55,18 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         const [end, to] = worldDayCycle.stops[next];
         const t = (progress - start) / (end - start);
         const mix = t * t * (3 - 2 * t); // Same smoothstep and linear colour space as Three.js.
-        return presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix));
+        return {
+            colors: presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix)),
+            intensity: worldDayCycle.lightIntensities[from] + (worldDayCycle.lightIntensities[to] - worldDayCycle.lightIntensities[from]) * mix
+        };
     }
     const css = (color, strength = 1) => `rgb(${color.map(v => Math.round(srgb(v * strength) * 255)).join(',')})`;
     function draw() {
-        const [light] = palette(Date.now());
-        // Leave the site's solid navy background visible: no fog, tint, or colour wash.
-        ctx.clearRect(0, 0, width, height);
+        const { colors: [light], intensity } = palette(Date.now());
+        // Light the world's floor colour with the same sampled cycle as the marks.
+        // A uniform fill changes the base itself without adding a gradient wash.
+        ctx.fillStyle = css(light.map((value, i) => value * floorColor[i]), intensity);
+        ctx.fillRect(0, 0, width, height);
         const color = light.map((value, i) => value * gridColor[i]);
         // Sample the cycle once: lines and plus signs share the same light and brightness.
         const strength = .8 / Math.max(...color);
