@@ -43,7 +43,8 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     let width, height, animationFrame;
     let backgroundLayer, gridLayer, gridPattern, pixelRatio;
     let lastColorFrame = -Infinity, lastScrollOffset = NaN;
-    const gridPeriod = 112 * 8;
+    let gridScale = 1;
+    let gridPeriod = 112 * 8;
     const cycleLeadMs = 4000; // Anticipate a few seconds of loading when entering the world.
     const colorInterval = 1000 / 30;
     const linear = value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
@@ -85,16 +86,16 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         backgroundCtx.fillRect(0, 0, 1, 1);
 
         const gridCtx = gridLayer.getContext('2d');
-        gridCtx.clearRect(0, 0, gridPeriod, gridPeriod);
+        gridCtx.clearRect(0, 0, 112 * 8, 112 * 8);
         const color = light.map((value, i) => value * gridColor[i]);
         const strength = .8 / Math.max(...color);
         gridCtx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
         gridCtx.lineWidth = 3;
         gridCtx.lineCap = 'square';
         gridCtx.beginPath();
-        for (const edge of [.5, gridPeriod + .5]) {
-            gridCtx.moveTo(edge, 0); gridCtx.lineTo(edge, gridPeriod);
-            gridCtx.moveTo(0, edge); gridCtx.lineTo(gridPeriod, edge);
+        for (const edge of [.5, 112 * 8 + .5]) {
+            gridCtx.moveTo(edge, 0); gridCtx.lineTo(edge, 112 * 8);
+            gridCtx.moveTo(0, edge); gridCtx.lineTo(112 * 8, edge);
         }
         gridCtx.stroke();
         gridCtx.strokeStyle = css(color, strength);
@@ -113,7 +114,7 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         }
         gridCtx.stroke();
         gridPattern = ctx.createPattern(gridLayer, 'repeat');
-        gridPattern.setTransform(new DOMMatrix().scale(1 / pixelRatio));
+        gridPattern.setTransform(new DOMMatrix().scale(gridScale / pixelRatio));
     }
     function gridOffset() {
         // Keep the loader aligned even when focus or history changes the page scroll.
@@ -134,6 +135,8 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     function resize() {
         const w = Math.ceil(canvas.clientWidth), h = Math.ceil(canvas.clientHeight);
         const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        gridScale = Math.min(w, h) <= 600 ? .25 : 1;
+        gridPeriod = 112 * 8 * gridScale;
         if (!w || !h || (w === width && h === height && ratio === pixelRatio)) return;
         width = w; height = h; pixelRatio = ratio;
         canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
@@ -141,7 +144,7 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         backgroundLayer = document.createElement('canvas');
         backgroundLayer.width = canvas.width; backgroundLayer.height = canvas.height;
         gridLayer = document.createElement('canvas');
-        gridLayer.width = gridLayer.height = Math.round(gridPeriod * ratio);
+        gridLayer.width = gridLayer.height = Math.round(112 * 8 * ratio);
         gridLayer.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
         updateLayers();
         draw(gridOffset());
