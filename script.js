@@ -41,9 +41,11 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (!ctx) return;
     canvas.setAttribute('aria-hidden', 'true');
     let width, height, animationFrame;
+    let backgroundLayer, gridLayer, gridPattern, pixelRatio;
+    let lastColorFrame = -Infinity, lastScrollOffset = NaN;
+    const gridPeriod = 112 * 8;
     const cycleLeadMs = 4000; // Anticipate a few seconds of loading when entering the world.
-    const frameInterval = 1000 / 30;
-    let lastFrame = -Infinity;
+    const colorInterval = 1000 / 30;
     const linear = value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
     const srgb = value => value <= .0031308 ? value * 12.92 : 1.055 * value ** (1 / 2.4) - .055;
     const rgb = hex => hex.match(/[a-f0-9]{2}/gi).map(v => linear(parseInt(v, 16) / 255));
@@ -65,94 +67,98 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         };
     }
     const css = (color, strength = 1) => `rgb(${color.map(v => (srgb(v * strength) * 255).toFixed(2)).join(',')})`;
-    function draw() {
+    // Cache colors and grid geometry; scrolling only composites the two layers.
+    function updateLayers() {
         const { colors: [light, fogA, fogB], intensity, fogRange: [near, far] } = palette(Date.now());
         const litFloor = light.map((value, i) => value * floorColor[i] * intensity);
-        // The world's night palette includes radial blue/purple fog as well as blue light.
-        // Adapt its near-plane fog strength to the flat floor, in linear colour space.
         const fogStrength = Math.max(0, Math.min(1, -near / (far - near)));
-        ctx.save();
-        ctx.scale(width, height); // Match the world's normalized viewport UV coordinates.
-        const background = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+        const backgroundCtx = backgroundLayer.getContext('2d');
+        backgroundCtx.setTransform(backgroundLayer.width, 0, 0, backgroundLayer.height, 0, 0);
+        const background = backgroundCtx.createRadialGradient(0, 0, 0, 0, 0, 1);
         for (let step = 0; step <= 16; step++) {
             const position = step / 16;
             const blend = position * position * (3 - 2 * position);
             const fog = fogA.map((value, i) => value + (fogB[i] - value) * blend);
-            const shadedFloor = litFloor.map((value, i) => value + (fog[i] - value) * fogStrength);
-            background.addColorStop(position, css(shadedFloor));
+            background.addColorStop(position, css(litFloor.map((value, i) => value + (fog[i] - value) * fogStrength)));
         }
-        ctx.fillStyle = background;
-        ctx.fillRect(0, 0, 1, 1);
-        ctx.restore();
+        backgroundCtx.fillStyle = background;
+        backgroundCtx.fillRect(0, 0, 1, 1);
+
+        const gridCtx = gridLayer.getContext('2d');
+        gridCtx.clearRect(0, 0, gridPeriod, gridPeriod);
         const color = light.map((value, i) => value * gridColor[i]);
-        // Sample the cycle once: lines and plus signs share the same light and brightness.
         const strength = .8 / Math.max(...color);
-        const spacingX = 112, spacingY = 112;
-        const majorEvery = 8;
-        const origin = 32.5; // Align odd-width strokes to pixel centers.
-        // The fixed canvas drifts down as the document content travels up.
-        const majorSpacingY = spacingY * majorEvery;
-        const scrollOffset = motionPreference.matches ? 0 : window.scrollY * .6;
-        const originY = origin + (scrollOffset % majorSpacingY);
-
-        // Sparse major grid lines stay flat and run through the repeating plus lattice.
-        ctx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
-        ctx.globalAlpha = 1;
-        ctx.lineWidth = 3;
-        ctx.lineCap = 'square';
-        ctx.beginPath();
-        for (let x = origin; x < width; x += spacingX * majorEvery) {
-            ctx.moveTo(x, 0); ctx.lineTo(x, height);
+        gridCtx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
+        gridCtx.lineWidth = 3;
+        gridCtx.lineCap = 'square';
+        gridCtx.beginPath();
+        for (const edge of [.5, gridPeriod + .5]) {
+            gridCtx.moveTo(edge, 0); gridCtx.lineTo(edge, gridPeriod);
+            gridCtx.moveTo(0, edge); gridCtx.lineTo(gridPeriod, edge);
         }
-        for (let y = originY - majorSpacingY; y < height; y += majorSpacingY) {
-            ctx.moveTo(0, y); ctx.lineTo(width, y);
-        }
-        ctx.stroke();
-
-        // Bold upright pluses fill the cells; major lines carry perpendicular dashes.
-        ctx.strokeStyle = css(color, strength);
-        ctx.globalAlpha = 1;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        for (let row = -majorEvery, y = originY - majorSpacingY; y < height + 12; row++, y += spacingY) {
-            for (let x = origin; x < width + 8; x += spacingX) {
-                const onVerticalLine = (x - origin) % (spacingX * majorEvery) === 0;
-                const onHorizontalLine = row % majorEvery === 0;
-                // Keep major-line intersections clear. On a line, only the arm
-                // crossing it is bold; the other arm remains the continuous grid line.
-                if (!onHorizontalLine) {
-                    ctx.moveTo(Math.round(x) - 9, Math.round(y)); ctx.lineTo(Math.round(x) + 9, Math.round(y));
+        gridCtx.stroke();
+        gridCtx.strokeStyle = css(color, strength);
+        gridCtx.lineWidth = 2;
+        gridCtx.beginPath();
+        for (let row = 0; row <= 8; row++) {
+            for (let column = 0; column <= 8; column++) {
+                const x = column * 112 + 1, y = row * 112 + 1;
+                if (row % 8 !== 0) {
+                    gridCtx.moveTo(x - 9, y); gridCtx.lineTo(x + 9, y);
                 }
-                if (!onVerticalLine) {
-                    ctx.moveTo(Math.round(x), Math.round(y) - 9); ctx.lineTo(Math.round(x), Math.round(y) + 9);
+                if (column % 8 !== 0) {
+                    gridCtx.moveTo(x, y - 9); gridCtx.lineTo(x, y + 9);
                 }
             }
         }
-        ctx.stroke();
-        ctx.globalAlpha = 1;
+        gridCtx.stroke();
+        gridPattern = ctx.createPattern(gridLayer, 'repeat');
+        gridPattern.setTransform(new DOMMatrix().scale(1 / pixelRatio));
+    }
+    function draw(scrollOffset) {
+        ctx.drawImage(backgroundLayer, 0, 0, width, height);
+        ctx.save();
+        // Subpixel translation avoids snapping the pattern to whole pixels while scrolling.
+        const offsetY = 32 + scrollOffset % gridPeriod;
+        ctx.translate(32, offsetY);
+        ctx.fillStyle = gridPattern;
+        ctx.fillRect(-32, -offsetY, width, height);
+        ctx.restore();
+        lastScrollOffset = scrollOffset;
     }
     function resize() {
         const w = Math.ceil(canvas.clientWidth), h = Math.ceil(canvas.clientHeight);
-        if (!w || !h || (w === width && h === height)) return;
-        width = w; height = h;
         const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        if (!w || !h || (w === width && h === height && ratio === pixelRatio)) return;
+        width = w; height = h; pixelRatio = ratio;
         canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-        draw();
+        backgroundLayer = document.createElement('canvas');
+        backgroundLayer.width = canvas.width; backgroundLayer.height = canvas.height;
+        gridLayer = document.createElement('canvas');
+        gridLayer.width = gridLayer.height = Math.round(gridPeriod * ratio);
+        gridLayer.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+        updateLayers();
+        draw(motionPreference.matches ? 0 : window.scrollY * .6);
+        lastColorFrame = performance.now();
     }
     function animate(timestamp) {
         if (document.hidden || motionPreference.matches) return;
-        if (timestamp - lastFrame >= frameInterval) {
-            draw();
-            lastFrame = timestamp;
+        const scrollOffset = window.scrollY * .6;
+        const colorsChanged = timestamp - lastColorFrame >= colorInterval;
+        if (colorsChanged) {
+            updateLayers();
+            lastColorFrame = timestamp;
         }
+        if (colorsChanged || scrollOffset !== lastScrollOffset) draw(scrollOffset);
         animationFrame = requestAnimationFrame(animate);
     }
     function updateAnimation() {
         cancelAnimationFrame(animationFrame);
-        lastFrame = -Infinity;
+        lastColorFrame = -Infinity;
         if (!document.hidden) {
-            draw();
+            updateLayers();
+            draw(motionPreference.matches ? 0 : window.scrollY * .6);
             if (!motionPreference.matches) animationFrame = requestAnimationFrame(animate);
         }
     }
