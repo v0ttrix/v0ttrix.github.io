@@ -388,3 +388,44 @@ document.addEventListener('DOMContentLoaded', () => {
     new ResizeObserver(layout).observe(grid);
     window.addEventListener('resize', layout);
 });
+
+// Open the resume in a modal viewer without leaving the homepage.
+(() => {
+    const trigger = document.querySelector('.home-page a[href="resume.pdf"]');
+    if (!trigger || typeof HTMLDialogElement === 'undefined') return;
+    const viewer = document.createElement('dialog');
+    viewer.id = 'resume-viewer';
+    viewer.className = 'resume-viewer';
+    viewer.setAttribute('aria-labelledby', 'resume-viewer-title');
+    viewer.innerHTML = '<div class="resume-viewer-header"><h2 id="resume-viewer-title">My r&eacute;sum&eacute;</h2><a class="resume-open" target="_blank" rel="noopener noreferrer">Open PDF</a><a class="resume-download" download>Download</a><button class="resume-viewer-close" type="button" aria-label="Close resume viewer">&times;</button></div><iframe title="Resume PDF"></iframe>';
+    const url = trigger.href;
+    viewer.querySelector('.resume-open').href = url;
+    viewer.querySelector('.resume-download').href = url;
+    const frame = viewer.querySelector('iframe');
+    const closeButton = viewer.querySelector('button');
+    document.body.append(viewer);
+    trigger.setAttribute('aria-haspopup', 'dialog');
+    trigger.setAttribute('aria-controls', viewer.id);
+    let overflow;
+    trigger.addEventListener('click', event => {
+        if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        if (viewer.open) return;
+        overflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        frame.src = url;
+        viewer.showModal();
+        closeButton.focus();
+    });
+    closeButton.addEventListener('click', () => viewer.close());
+    viewer.addEventListener('click', event => {
+        if (event.target !== viewer) return;
+        const bounds = viewer.getBoundingClientRect();
+        if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) viewer.close();
+    });
+    viewer.addEventListener('close', () => {
+        document.body.style.overflow = overflow;
+        frame.removeAttribute('src');
+        trigger.focus({ preventScroll: true });
+    });
+})();

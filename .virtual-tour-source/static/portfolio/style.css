@@ -1303,3 +1303,46 @@ body .back-btn:active,
 .home-page .cta-buttons a[href="resume.pdf"]:active {
     transform: translateY(2px) scale(.98);
 }
+
+/* Expanded resume stays above a blurred homepage. */
+.resume-viewer {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(1080px, calc(100vw - 48px));
+    height: min(92dvh, 1200px);
+    max-width: none;
+    max-height: none;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 20px;
+    background: #171719;
+    color: var(--text-primary);
+    box-shadow: 0 24px 100px rgba(0, 0, 0, .55);
+    overflow: hidden;
+}
+.resume-viewer[open] { display: flex; flex-direction: column; animation: resume-expand .25s ease-out; }
+.resume-viewer::backdrop {
+    background: rgba(0, 0, 0, .42);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+.resume-viewer-header { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; padding: 14px 20px; border-bottom: 1px solid rgba(255, 255, 255, .16); }
+.resume-viewer-header h2 { margin: 0; font: 600 1rem/1.5 system-ui, sans-serif; }
+.resume-viewer-header a { color: var(--accent-cyan); font-size: .85rem; }
+.resume-viewer-close { margin-inline-start: auto; border: 1px solid rgba(255, 255, 255, .25); border-radius: 50%; width: 36px; height: 36px; background: transparent; color: white; font: 24px/1 system-ui, sans-serif; cursor: pointer; }
+.resume-viewer iframe { flex: 1; min-height: 0; width: 100%; border: 0; background: #303033; }
+@keyframes resume-expand { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: none; } }
+@media (max-width: 600px) {
+    .resume-viewer { width: calc(100vw - 20px); height: 94dvh; border-radius: 14px; }
+    .resume-viewer-header { gap: 12px; padding: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .resume-viewer[open] { animation: none; } }
+
+/* Expanded certificates keep the surrounding page softly visible. */
+.certifications-page .image-viewer { background: rgba(0, 0, 0, .4); }
+.certifications-page .image-viewer::backdrop {
+    background: transparent;
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+}
