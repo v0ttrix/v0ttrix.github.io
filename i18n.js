@@ -6,8 +6,26 @@
     const ignored = 'script, style, pre, code, svg, kbd, samp, noscript, [data-no-translate]';
     const attributes = ['alt', 'title', 'aria-label', 'placeholder'];
     const normalize = value => value.replace(/\s+/g, ' ').trim();
+    const supported = ['en', 'ar', 'fr', 'zh-CN', 'ru', 'de', 'nl', 'es', 'it', 'pt'];
+    const assetRoot = new URL('.', document.currentScript.src);
+    const loadedLanguages = new Map();
+    function loadLanguage(code) {
+        if (code === 'en' || code === 'ar') return Promise.resolve();
+        if (!loadedLanguages.has(code)) loadedLanguages.set(code, new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = new URL('locale-' + code + '.js', assetRoot).href;
+            script.onload = resolve;
+            script.onerror = () => { loadedLanguages.delete(code); script.remove(); reject(new Error('Language could not be loaded')); };
+            document.head.append(script);
+        }));
+        return loadedLanguages.get(code);
+    }
+    function translate(source) {
+        if (language === 'ar') return arabic(source);
+        return window.PORTFOLIO_LOCALES?.[language]?.[normalize(source)] || source;
+    }
     let language = 'en';
-    try { if (localStorage.getItem('portfolio-language') === 'ar') language = 'ar'; } catch {}
+    try { const saved = localStorage.getItem('portfolio-language'); if (supported.includes(saved)) language = saved; } catch {}
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
 
@@ -37,9 +55,9 @@
         }
         const source = record.source;
         let result = source;
-        if (language === 'ar') {
+        if (language !== 'en') {
             const key = normalize(source);
-            const translated = key === 'References' && node.parentElement.classList.contains('meta-tag') ? 'المراجع' : arabic(key);
+            const translated = language === 'ar' && key === 'References' && node.parentElement.classList.contains('meta-tag') ? 'المراجع' : translate(key);
             result = source.match(/^\s*/)[0] + translated + source.match(/\s*$/)[0];
         }
         if (node.nodeValue !== result) node.nodeValue = result;
@@ -55,7 +73,7 @@
             if (!value) return;
             let record = records[name];
             if (!record || value !== record.rendered) record = records[name] = { source: value, rendered: value };
-            const next = language === 'ar' ? arabic(record.source) : record.source;
+            const next = language === 'en' ? record.source : translate(record.source);
             if (value !== next) element.setAttribute(name, next);
             record.rendered = next;
         });
@@ -71,22 +89,40 @@
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         while (walker.nextNode()) translateText(walker.currentNode);
         document.body.querySelectorAll('[alt], [title], [aria-label], [placeholder]').forEach(translateAttributes);
-        document.title = language === 'ar' ? arabic(originalTitle) : originalTitle;
-        const button = document.getElementById('language-switch');
-        if (button) {
-            button.setAttribute('aria-pressed', String(language === 'ar'));
-            button.setAttribute('aria-label', language === 'ar' ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic');
-            button.title = language === 'ar' ? 'التبديل إلى الإنجليزية' : 'Switch to Arabic';
-        }
+        document.title = language === 'en' ? originalTitle : translate(originalTitle);
+        const select = document.getElementById('language-switch');
+        select?.querySelectorAll('[data-language]').forEach(option => {
+            option.setAttribute('aria-pressed', String(option.dataset.language === language));
+        });
         observer?.observe(document.body, { subtree: true, childList: true, characterData: true });
     }
 
-    function initialize() {
-        document.getElementById('language-switch')?.addEventListener('click', () => {
-            language = language === 'en' ? 'ar' : 'en';
-            try { localStorage.setItem('portfolio-language', language); } catch {}
-            applyLanguage();
+    async function initialize() {
+        const select = document.getElementById('language-switch');
+        const status = document.querySelector('.language-options small');
+        let selection = 0;
+        select?.addEventListener('click', async event => {
+            const option = event.target.closest('[data-language]');
+            if (!option || !select.contains(option)) return;
+            const selected = option.dataset.language;
+            if (!supported.includes(selected)) return;
+            const request = ++selection;
+            select.querySelectorAll('button').forEach(button => button.disabled = true);
+            if (status) status.textContent = 'Loading language...';
+            try {
+                await loadLanguage(selected);
+                if (request !== selection) return;
+                language = selected;
+                try { localStorage.setItem('portfolio-language', language); } catch {}
+                applyLanguage();
+                document.querySelector('.language-menu').open = false;
+                if (status) status.textContent = 'Choose your language.';
+            } catch {
+                applyLanguage();
+                if (status) status.textContent = 'Could not load this language. Please try again.';
+            } finally { select.querySelectorAll('button').forEach(button => button.disabled = false); }
         });
+        try { await loadLanguage(language); } catch { language = 'en'; }
         observer = new MutationObserver(() => {
             if (scheduled) return;
             scheduled = true;

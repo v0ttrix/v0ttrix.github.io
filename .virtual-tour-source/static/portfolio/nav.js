@@ -21,15 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
         <header class="site-header"><div class="container nav-inner">
             <a class="wordmark" href="${archiveRoot}/" aria-label="Jaden Mardini, home">jm<span>.</span></a>
             <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation">Menu <span aria-hidden="true">+</span></button>
-            <nav id="site-navigation" class="site-navigation" aria-label="Main navigation">${navigation}</nav>
-            <button id="language-switch" class="language-switch" type="button" dir="ltr" data-no-translate aria-label="Switch to Arabic" aria-pressed="false"><span lang="en" data-language="en">Eng</span><span aria-hidden="true">/</span><span lang="ar" data-language="ar">Ar</span></button>
+            <div class="nav-strip"><button class="nav-scroll-arrow nav-scroll-prev" type="button" aria-label="Scroll navigation left" data-no-translate>&lsaquo;</button><nav id="site-navigation" class="site-navigation" aria-label="Main navigation">${navigation}</nav><button class="nav-scroll-arrow nav-scroll-next" type="button" aria-label="Scroll navigation right" data-no-translate>&rsaquo;</button></div>
+            <details class="language-menu" data-no-translate dir="ltr"><summary class="language-switch" aria-label="Choose language"><span aria-hidden="true">A &#8644; &#23383;</span><span class="language-caret" aria-hidden="true">&#9662;</span></summary><div class="language-options"><div id="language-switch" role="group" aria-label="Choose language"><button type="button" class="language-option" data-language="en" lang="en">English</button><button type="button" class="language-option" data-language="ar" lang="ar">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</button><button type="button" class="language-option" data-language="fr" lang="fr">Fran&#231;ais</button><button type="button" class="language-option" data-language="zh-CN" lang="zh-CN">&#31616;&#20307;&#20013;&#25991; (Mandarin)</button><button type="button" class="language-option" data-language="ru" lang="ru">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</button><button type="button" class="language-option" data-language="de" lang="de">Deutsch</button><button type="button" class="language-option" data-language="nl" lang="nl">Nederlands</button><button type="button" class="language-option" data-language="es" lang="es">Espa&#241;ol</button><button type="button" class="language-option" data-language="it" lang="it">Italiano</button><button type="button" class="language-option" data-language="pt" lang="pt">Portugu&#234;s</button></div><small>Choose your language.</small></div></details>
         </div></header>`);
     if (!document.getElementById('main')) {
         const content = document.querySelector('section, .contact-page');
         if (content) { content.id ||= 'main'; document.querySelector('.skip-link').href = `#${content.id}`; }
     }
+    const languageMenu = document.querySelector('.language-menu');
+    document.addEventListener('click', event => { if (!languageMenu.contains(event.target)) languageMenu.open = false; });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && languageMenu.open) { languageMenu.open = false; languageMenu.querySelector('summary').focus(); } });
     const toggle = document.querySelector('.nav-toggle');
     const nav = document.getElementById('site-navigation');
+    document.querySelector('.nav-scroll-prev').addEventListener('click', () => nav.scrollBy({ left: -180, behavior: 'smooth' }));
+    document.querySelector('.nav-scroll-next').addEventListener('click', () => nav.scrollBy({ left: 180, behavior: 'smooth' }));
+    // Bring the current tab into view when arriving on a phone or tablet page.
+    if (window.matchMedia('(max-width: 1280px)').matches) {
+        const current = nav.querySelector('[aria-current="page"]');
+        if (current) nav.scrollLeft = current.offsetLeft - nav.offsetLeft - (nav.clientWidth - current.offsetWidth) / 2;
+    }
     const close = () => { toggle.setAttribute('aria-expanded', 'false'); nav.classList.remove('is-open'); };
     toggle.addEventListener('click', () => {
         const open = toggle.getAttribute('aria-expanded') !== 'true';

@@ -347,9 +347,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     function highlight() {
         const query = search.value.trim().toLocaleLowerCase();
-        const arabic = document.documentElement.lang === 'ar';
+        const arabic = document.documentElement.lang !== 'en';
+        const locale = document.documentElement.lang === 'ar' ? window.PORTFOLIO_AR : window.PORTFOLIO_LOCALES?.[document.documentElement.lang];
         skills.forEach(({ element, label, source }) => {
-            const name = arabic ? (window.PORTFOLIO_AR?.[source] || source) : source;
+            const name = arabic ? (locale?.[source] || source) : source;
             const normalized = name.toLocaleLowerCase();
             const exact = !!query && normalized === query;
             element.hidden = !!query && !normalized.includes(query);
@@ -402,12 +403,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     function highlightProjects() {
         const query = search.value.trim().toLocaleLowerCase();
-        const arabic = document.documentElement.lang === 'ar';
+        const arabic = document.documentElement.lang !== 'en';
+        const locale = document.documentElement.lang === 'ar' ? window.PORTFOLIO_AR : window.PORTFOLIO_LOCALES?.[document.documentElement.lang];
         cards.forEach(({ element, labels }) => {
             let matches = !query;
             let exactTitle = false;
             labels.forEach(({ source, label, title }) => {
-                const name = arabic ? (window.PORTFOLIO_AR?.[source.trim()] || source) : source;
+                const name = arabic ? (locale?.[source.trim()] || source) : source;
                 const normalized = name.toLocaleLowerCase();
                 const exact = !!query && normalized.trim() === query;
                 if (query && normalized.includes(query)) matches = true;
