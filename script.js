@@ -40,7 +40,10 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const ctx = canvas?.getContext('2d');
     if (!ctx) return;
     canvas.setAttribute('aria-hidden', 'true');
-    let width, height, timer;
+    let width, height, animationFrame;
+    const cycleLeadMs = 4000; // Anticipate a few seconds of loading when entering the world.
+    const frameInterval = 1000 / 30;
+    let lastFrame = -Infinity;
     const linear = value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
     const srgb = value => value <= .0031308 ? value * 12.92 : 1.055 * value ** (1 / 2.4) - .055;
     const rgb = hex => hex.match(/[a-f0-9]{2}/gi).map(v => linear(parseInt(v, 16) / 255));
@@ -49,7 +52,7 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const lineColor = rgb('#675369'); // The world's major grid-line material.
     const presets = Object.fromEntries(Object.entries(worldDayCycle.presets).map(([key, colors]) => [key, colors.map(rgb)]));
     function palette(now) {
-        const progress = (now / 1000 / worldDayCycle.duration) % 1;
+        const progress = ((now + cycleLeadMs) / 1000 / worldDayCycle.duration) % 1;
         const next = worldDayCycle.stops.findIndex(stop => stop[0] > progress);
         const [start, from] = worldDayCycle.stops[next - 1];
         const [end, to] = worldDayCycle.stops[next];
@@ -61,7 +64,7 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
             fogRange: worldDayCycle.fogRanges[from].map((v, i) => v + (worldDayCycle.fogRanges[to][i] - v) * mix)
         };
     }
-    const css = (color, strength = 1) => `rgb(${color.map(v => Math.round(srgb(v * strength) * 255)).join(',')})`;
+    const css = (color, strength = 1) => `rgb(${color.map(v => (srgb(v * strength) * 255).toFixed(2)).join(',')})`;
     function draw() {
         const { colors: [light, fogA, fogB], intensity, fogRange: [near, far] } = palette(Date.now());
         const litFloor = light.map((value, i) => value * floorColor[i] * intensity);
@@ -84,39 +87,44 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         const color = light.map((value, i) => value * gridColor[i]);
         // Sample the cycle once: lines and plus signs share the same light and brightness.
         const strength = .8 / Math.max(...color);
-        const spacingX = 80, spacingY = 80;
+        const spacingX = 112, spacingY = 112;
         const majorEvery = 8;
-        const origin = 32;
+        const origin = 32.5; // Align odd-width strokes to pixel centers.
+        // The fixed canvas drifts down as the document content travels up.
+        const majorSpacingY = spacingY * majorEvery;
+        const scrollOffset = motionPreference.matches ? 0 : window.scrollY * .6;
+        const originY = origin + (scrollOffset % majorSpacingY);
 
         // Sparse major grid lines stay flat and run through the repeating plus lattice.
         ctx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
-        ctx.globalAlpha = .7;
-        ctx.lineWidth = 2;
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'square';
         ctx.beginPath();
         for (let x = origin; x < width; x += spacingX * majorEvery) {
             ctx.moveTo(x, 0); ctx.lineTo(x, height);
         }
-        for (let y = origin; y < height; y += spacingY * majorEvery) {
+        for (let y = originY - majorSpacingY; y < height; y += majorSpacingY) {
             ctx.moveTo(0, y); ctx.lineTo(width, y);
         }
         ctx.stroke();
 
         // Bold upright pluses fill the cells; major lines carry perpendicular dashes.
         ctx.strokeStyle = css(color, strength);
-        ctx.globalAlpha = .8;
-        ctx.lineWidth = 3;
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        for (let row = 0, y = origin; y < height + 8; row++, y += spacingY) {
+        for (let row = -majorEvery, y = originY - majorSpacingY; y < height + 12; row++, y += spacingY) {
             for (let x = origin; x < width + 8; x += spacingX) {
                 const onVerticalLine = (x - origin) % (spacingX * majorEvery) === 0;
                 const onHorizontalLine = row % majorEvery === 0;
                 // Keep major-line intersections clear. On a line, only the arm
                 // crossing it is bold; the other arm remains the continuous grid line.
                 if (!onHorizontalLine) {
-                    ctx.moveTo(x - 7, y); ctx.lineTo(x + 7, y);
+                    ctx.moveTo(Math.round(x) - 9, Math.round(y)); ctx.lineTo(Math.round(x) + 9, Math.round(y));
                 }
                 if (!onVerticalLine) {
-                    ctx.moveTo(x, y - 7); ctx.lineTo(x, y + 7);
+                    ctx.moveTo(Math.round(x), Math.round(y) - 9); ctx.lineTo(Math.round(x), Math.round(y) + 9);
                 }
             }
         }
@@ -132,11 +140,20 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
         draw();
     }
+    function animate(timestamp) {
+        if (document.hidden || motionPreference.matches) return;
+        if (timestamp - lastFrame >= frameInterval) {
+            draw();
+            lastFrame = timestamp;
+        }
+        animationFrame = requestAnimationFrame(animate);
+    }
     function updateAnimation() {
-        clearInterval(timer);
+        cancelAnimationFrame(animationFrame);
+        lastFrame = -Infinity;
         if (!document.hidden) {
             draw();
-            if (!motionPreference.matches) timer = setInterval(draw, 250);
+            if (!motionPreference.matches) animationFrame = requestAnimationFrame(animate);
         }
     }
     resize();

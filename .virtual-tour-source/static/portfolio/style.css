@@ -7,8 +7,8 @@
 :root {
     --bg-dark: #0a0e27;
     --bg-card: #111827;
-    --accent-cyan: #00f0ff;
-    --accent-green: #00ff88;
+    --accent-cyan: #ff8a1f;
+    --accent-green: #ff3344;
     --text-primary: #e5e7eb;
     --text-secondary: #9ca3af;
     --border-color: #1f2937;
@@ -45,7 +45,7 @@ body {
 
 .menu-btn:hover {
     border-color: var(--accent-green);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.3);
 }
 
 .menu-btn span {
@@ -113,7 +113,7 @@ body {
     color: var(--accent-green);
     border-left-color: var(--accent-green);
     padding-left: 20px;
-    background: rgba(0, 255, 136, 0.1);
+    background: rgba(255, 51, 68, 0.1);
 }
 
 #matrix {
@@ -153,7 +153,7 @@ section {
     font-weight: 700;
     margin-bottom: 20px;
     color: var(--accent-cyan);
-    text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    text-shadow: 0 0 20px rgba(255, 138, 31, 0.5);
     white-space: nowrap;
 }
 
@@ -307,7 +307,7 @@ section {
 
 .skill-category:hover {
     border-color: var(--accent-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.2);
     transform: translateY(-5px);
 }
 
@@ -355,7 +355,7 @@ section {
 
 .project-card:hover {
     border-color: var(--accent-green);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+    box-shadow: 0 0 20px rgba(255, 51, 68, 0.2);
     transform: translateY(-5px);
 }
 
@@ -397,7 +397,7 @@ section {
 }
 
 .experience-card:hover {
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.2);
     transform: translateX(5px);
 }
 
@@ -466,7 +466,7 @@ section {
 
 .cert-card:hover {
     border-color: var(--accent-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.2);
     transform: scale(1.05);
 }
 
@@ -503,7 +503,7 @@ section {
 
 .reference-card:hover {
     border-color: var(--accent-cyan);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 20px rgba(255, 138, 31, 0.2);
     transform: translateY(-5px);
 }
 
@@ -762,7 +762,7 @@ body { isolation: isolate; }
 .home-page h2 { font-size: clamp(2rem,3.7vw,3rem); letter-spacing: -.04em; line-height: 1.2; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 40px; }
 .text-link { color: var(--accent-cyan); font-size: .95rem; }
-.featured-project { display: grid; grid-template-columns: 1.1fr 1fr; border-top: 1px solid var(--border-color); padding: 40px 0; gap: 45px; align-items: center; }
+.featured-project { display: grid; grid-template-columns: 1.1fr 1fr; padding: 40px 0; gap: 45px; align-items: center; }
 .project-media { min-width: 0; display: block; overflow: hidden; background: #050916; border-radius: 8px; }
 .project-media img, .project-media video { width: 100%; height: 330px; display: block; object-fit: cover; }
 .project-media video { object-fit: contain; }
@@ -799,64 +799,7 @@ body { isolation: isolate; }
 @media (max-width: 768px) {
     body { padding-top: 70px; }
     .nav-inner { min-height: 70px; }
-    .nav-toggle { display: flex; gap: 18px; align-items: center; color: var(--text-primary); border: 1px solid var(--border-color); background: var(--bg-card); padding: 9px 15px; border-radius: 5px; font: inherit; cursor: pointer; }
-    .nav-toggle[aria-expanded="true"] span { transform: rotate(45deg); }
-    .site-navigation { display: none; position: absolute; inset: 70px 0 auto; background: var(--bg-card); padding: 15px 24px 24px; border-bottom: 1px solid var(--border-color); }
-    .site-navigation.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 2px; }
-    .site-navigation a { padding: 12px 0; }
-    .hero-layout, .featured-project, .about-layout { grid-template-columns: 1fr; }
-    .home-page #hero { padding: 55px 0 40px; }
-    .home-page #hero h1 { font-size: clamp(2.6rem,10vw,4rem) !important; line-height: 1.1; }
-    .home-page .cta-buttons { flex-direction: row; align-items: stretch; }
-    .home-page .cta-buttons .btn { width: auto; }
-    .hero-photo img { height: 300px; }
-    .proof-strip { grid-template-columns: 1fr; gap: 0; padding-top: 4px; padding-bottom: 4px; }
-    .proof-strip a { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 20px 4px; align-items: start; }
-    .proof-strip strong { font-size: 1.6rem; line-height: 1.2; }
-    .proof-strip span { max-width: 34ch; font-size: .9rem; line-height: 1.6; }
-    .section-heading { align-items: flex-start; flex-direction: column; }
-    .featured-project { gap: 25px; padding: 30px 0; }
-    .project-media img, .project-media video { height: 280px; }
-    .about-layout { gap: 30px; }
-    .project-header h1 { font-size: clamp(2rem,8vw,3rem) !important; overflow-wrap: anywhere; }
-    .home-contact .btn { width: auto; max-width: 100%; font-size: .85rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-    /* The grid stays still when reduced motion is requested. */
-}
-
-section, main { scroll-margin-top: 100px; }
-[hidden] { display: none !important; }
-.section-content { max-height: none; }
-.project-link { display: inline-block; padding: 6px 0; }
-
-.hero-photo img { object-fit: contain; background: #202033; }
-.featured-project:nth-of-type(2) .project-media img { object-fit: contain; background: #202033; }
-
-.project-meta { gap: 10px; }
-.meta-tag { font-size: .85rem; overflow-wrap: anywhere; }
-.project-content p, .project-content li { overflow-wrap: anywhere; }
-.project-content pre { white-space: pre; overflow-x: auto; }
-
-/* Keep mixed portrait photos and wide diagrams together without empty grid rows. */
-.flora-gallery { columns: 280px 3; column-gap: 15px; margin-top: 10px; }
-.flora-gallery a { display: block; break-inside: avoid; margin: 0 0 15px; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
-.flora-gallery img { display: block; width: 100%; height: auto; }
-
-/* Full-screen image viewer, shared by every page. */
-.expandable-image { cursor: zoom-in; }
-.image-viewer { position: fixed; inset: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(0,0,0,.9); color: white; cursor: zoom-out; overflow: hidden; }
-.image-viewer[open] { display: flex; align-items: center; justify-content: center; }
-.image-viewer::backdrop { background: transparent; }
-.image-viewer .image-viewer-image { display: block; width: auto; height: auto; max-width: 90vw; max-height: 90dvh; object-fit: contain; border-radius: 8px; box-shadow: 0 0 40px rgba(0,240,255,.3); }
-.image-viewer-close { position: absolute; top: 12px; right: 16px; width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; color: white; background: rgba(0,0,0,.6); font: 30px/1 sans-serif; cursor: pointer; }
-
-/* Robot photos retain their proportions without stretching grid rows. */
-.coil-gallery { columns: 280px 2; column-gap: 15px; margin-top: 10px; }
-.coil-gallery img { display: block; width: 100%; height: auto; break-inside: avoid; margin: 0 0 15px; border: 1px solid var(--border-color); border-radius: 8px; }
-
-/* Phone app listings use the same cards as the project catalogue. */
+    .nav-toggle { display: flex; gap: 18px; align-items: center; color: var(--text-primary); border: 1px solid var(--border-color); backge same cards as the project catalogue. */
 .app-icon { display: block; width: 80px; height: 80px; object-fit: contain; border-radius: 18px; margin-bottom: 18px; }
 .app-status { color: var(--accent-green); font-size: .85rem; margin-bottom: 16px; }
 .phone-app-card .app-status { color: var(--accent-green); margin-bottom: 10px; }
@@ -898,7 +841,7 @@ section, main { scroll-margin-top: 100px; }
     .phone-apps-page .phone-app-card > .project-link { align-self: start; margin-top: 18px; }
 }
 
-.driving-app-icon { display: grid; place-items: center; background: rgba(0, 240, 255, .08); border: 1px solid var(--border-color); font-size: 2.5rem; }
+.driving-app-icon { display: grid; place-items: center; background: rgba(255, 138, 31, .08); border: 1px solid var(--border-color); font-size: 2.5rem; }
 @media (min-width: 769px) { .phone-apps-page .phone-app-card { margin-top: 0; margin-bottom: 30px; } }
 
 .phone-app-card .flora-title { flex-wrap: nowrap; min-width: 0; }
@@ -988,13 +931,13 @@ section, main { scroll-margin-top: 100px; }
 .skill-search::placeholder { color: var(--text-secondary); opacity: 1; }
 .skill-search:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 3px; }
 .skills-page .skill-search-label { color: inherit; font: inherit; }
-.skill-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(0,240,255,.85); }
-.skills-page .skill-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(0,255,136,.25); }
-.skill-exact-match .skill-search-label { color: var(--accent-green); text-shadow: 0 0 9px rgba(0,255,136,.8); }
+.skill-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(255, 138, 31,.85); }
+.skills-page .skill-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(255, 51, 68,.25); }
+.skill-exact-match .skill-search-label { color: var(--accent-green); text-shadow: 0 0 9px rgba(255, 51, 68,.8); }
 .projects-toolbar .section-title { margin: 0; }
-.project-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(0,240,255,.85); }
-.project-search-label.project-exact-match { color: var(--accent-green); text-shadow: 0 0 9px rgba(0,255,136,.8); }
-.project-card.project-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(0,255,136,.25); }
+.project-search-label mark { background: transparent; color: var(--accent-cyan); text-shadow: 0 0 8px rgba(255, 138, 31,.85); }
+.project-search-label.project-exact-match { color: var(--accent-green); text-shadow: 0 0 9px rgba(255, 51, 68,.8); }
+.project-card.project-exact-match { border-color: var(--accent-green); box-shadow: 0 0 14px rgba(255, 51, 68,.25); }
 @media (max-width: 768px) {
     .skills-toolbar { align-items: stretch; flex-direction: column; }
     .skill-search { width: 100%; box-sizing: border-box; }
@@ -1005,7 +948,7 @@ section, main { scroll-margin-top: 100px; }
 .skill-project-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .skill-project-link { display: inline-flex; align-items: center; gap: 9px; max-width: 100%; padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary); text-decoration: none; font-size: .9rem; line-height: 1.5; overflow-wrap: anywhere; }
 .skill-project-link span { color: var(--accent-cyan); font-size: .85rem; }
-.skill-project-link:hover, .skill-project-link:focus-visible { color: var(--accent-green); border-color: var(--accent-green); background: rgba(0,255,136,.04); }
+.skill-project-link:hover, .skill-project-link:focus-visible { color: var(--accent-green); border-color: var(--accent-green); background: rgba(255, 51, 68,.04); }
 .additional-skills { padding: 0; margin-top: 45px; }
 .additional-skills h2 { font-size: 1.4rem; margin-bottom: 12px; }
 .additional-skills > p { color: var(--text-secondary); margin-bottom: 20px; }
@@ -1059,21 +1002,558 @@ html[dir="rtl"] .skill-project-link { text-align: right; }
     html[dir="rtl"] .home-page #hero h1 { line-height: 1.25; }
 }
 
-/* A light content-wide shade runs from the introduction through the footer. */
-.home-page { position: relative; }
-.home-page::after {
-    content: '';
-    position: absolute;
-    inset-block: 80px 0;
-    inset-inline: 0;
-    margin-inline: auto;
-    width: min(100%, 1280px);
-    z-index: -1;
-    pointer-events: none;
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, .25) 6%, rgba(0, 0, 0, .25) 94%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 64px, #000 calc(100% - 48px), transparent);
+/* Rounded glass panels keep text readable with a defined edge. */
+.home-page .hero-layout > div,
+.home-page .proof-strip,
+.home-page .section-heading,
+.home-page .featured-copy,
+.home-page .home-about .container,
+.home-page .home-contact .container,
+.about-page #about > .container {
+    background: rgba(0, 0, 0, .28);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .06);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+.home-page .hero-layout > div,
+.home-page .featured-copy { min-width: 0; }
+.home-page .home-about { background: transparent; border: 0; }
+.home-page .hero-intro,
+.home-page .hero-socials a,
+.home-page .proof-strip span,
+.home-page .featured-copy p:not(.eyebrow),
+.home-page .about-layout p:not(.eyebrow),
+.home-page .home-contact p:not(.eyebrow) { color: #d1d1d6; }
+@media (max-width: 768px) {
+    .home-page .hero-layout > div,
+    .home-page .proof-strip,
+    .home-page .section-heading,
+    .home-page .featured-copy,
+    .home-page .home-about .container,
+    .home-page .home-contact .container,
+    .about-page #about > .container { padding: 22px; border-radius: 20px; }
 }
 
-/* Neon orange accents for the homepage. */
-.home-page { --accent-cyan: #ff8a1f; }
-.home-page .image-viewer .image-viewer-image { box-shadow: 0 0 40px rgba(255, 138, 31, .3); }
+/* Use the same transparent panels throughout the portfolio. */
+body .experience-card,
+body .skill-category,
+body .project-card,
+body .cert-card,
+body .references-grid .reference-card,
+body .project-content,
+body .contact-container,
+body .hero-photo,
+body .business-intro,
+body .additional-skills {
+    background: rgba(0, 0, 0, .28);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 24px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .06);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+body .business-intro,
+body .additional-skills { padding: 28px; }
+/* Nested labels stay light so transparency does not stack into a solid fill. */
+body .email-item,
+body .skill-project-link,
+body .skill-tags > span,
+body .meta-tag,
+body .impact-stat,
+body .pattern-card,
+body .arch-diagram,
+body .project-content pre {
+    background: rgba(0, 0, 0, .12);
+    border-radius: 12px;
+}
+body .email-item { border-color: rgba(255, 255, 255, .16); }
+@media (max-width: 768px) {
+    body .experience-card,
+    body .skill-category,
+    body .project-card,
+    body .cert-card,
+    body .references-grid .reference-card,
+    body .project-content,
+    body .contact-container,
+    body .hero-photo,
+    body .business-intro,
+    body .additional-skills { border-radius: 20px; }
+    body .business-intro,
+    body .additional-skills,
+    body .contact-container { padding: 22px; }
+}
+
+/* Transparent black navigation matches the content panels. */
+body .site-header {
+    background: rgba(0, 0, 0, .28);
+    border-bottom-color: rgba(255, 255, 255, .16);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+body .nav-toggle,
+body .language-switch,
+body .virtual-tour {
+    background: rgba(0, 0, 0, .28);
+    border-color: rgba(255, 255, 255, .16);
+    border-radius: 12px;
+}
+@media (max-width: 1280px) {
+    body .site-navigation {
+        background: rgba(0, 0, 0, .28);
+        border: 1px solid rgba(255, 255, 255, .16);
+        border-radius: 0 0 20px 20px;
+        -webkit-backdrop-filter: blur(2px);
+        backdrop-filter: blur(2px);
+    }
+}
+
+/* Center the footer content on a transparent black surface. */
+body footer {
+    background: rgba(0, 0, 0, .28);
+    border-top: 1px solid rgba(255, 255, 255, .16);
+    text-align: center;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+body footer .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+}
+
+/* Transparent search fields match the surrounding panels. */
+body #skill-search,
+body #project-search {
+    background: rgba(0, 0, 0, .28);
+    border-color: rgba(255, 255, 255, .16);
+    border-radius: 12px;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+/* Certification panels fit their contents without extra vertical space. */
+body .cert-grid { align-items: start; }
+body .cert-card {
+    min-height: 0;
+    padding: 18px 24px;
+    justify-content: flex-start;
+}
+body .cert-card .cert-icon { margin-bottom: 8px; font-size: 2.4rem; }
+body .cert-card h3 { min-height: 0; }
+@media (max-width: 768px) {
+    body .cert-card { padding: 16px 20px; }
+}
+
+/* Keep the References footer at the viewport bottom on short pages. */
+body.references-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+.references-page > #references { flex: 1 0 auto; }
+.references-page > footer { margin-top: auto; flex-shrink: 0; }
+
+/* Every portfolio page keeps its footer below the content and at least screen height. */
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+body > main,
+body > section,
+body > .contact-page { flex: 1 0 auto; }
+body > .contact-page { min-height: 0; }
+body > footer { margin-top: auto; flex-shrink: 0; width: 100%; }
+
+/* Standalone back buttons keep their natural width in the page's flex layout. */
+body > .back-btn { align-self: flex-start; }
+
+/* Orange back buttons glow on hover and depress on activation. */
+body .back-btn {
+    background: var(--accent-cyan);
+    color: #0a0e27;
+    border-color: var(--accent-cyan);
+    transition: transform .15s ease, box-shadow .2s ease;
+}
+body .back-btn:hover {
+    background: var(--accent-cyan);
+    color: #0a0e27;
+    box-shadow: 0 0 12px rgba(255, 138, 31, .65), 0 0 28px rgba(255, 138, 31, .35);
+    transform: translateY( selected.href;
+    link.textContent = 'View project ' + String.fromCodePoint(0x2197);
+    try { sessionStorage.setItem('hero-project', selected.id); } catch {}
+})();
+
+// Palette and stops are refreshed from the pinned world's DayCycles.js at build time.
+// WORLD_DAY_CYCLE_START
+const worldDayCycle = { duration: 240, floorColor: '#1b191f', lightIntensities: { day: 1.2, dusk: 1.2, night: 3.8, dawn: 1.2 }, fogRanges: { day: [.315, 1.25], dusk: [0, 1.25], night: [-.85, 1], dawn: [.3, 1.25] }, presets: {
+    day: ['#ffd2c2', '#00ffff', '#9b89ff'],
+    dusk: ['#ff8181', '#3e53ff', '#ff4ce4'],
+    night: ['#3240ff', '#10266f', '#490a42'],
+    dawn: ['#ffa882', '#f885ff', '#ff7d24']
+}, stops: [[0, 'day'], [.15, 'day'], [.25, 'dusk'], [.35, 'night'], [.6, 'night'], [.8, 'dawn'], [.9, 'day'], [1, 'day']] };
+// WORLD_DAY_CYCLE_END
+
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+(() => {
+    // Keep the existing canvas ID so every portfolio page gets the same background.
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas?.getContext('2d');
+    if (!ctx) return;
+    canvas.setAttribute('aria-hidden', 'true');
+    let width, height, animationFrame;
+    const cycleLeadMs = 4000; // Anticipate a few seconds of loading when entering the world.
+    const frameInterval = 1000 / 30;
+    let lastFrame = -Infinity;
+    const linear = value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4;
+    const srgb = value => value <= .0031308 ? value * 12.92 : 1.055 * value ** (1 / 2.4) - .055;
+    const rgb = hex => hex.match(/[a-f0-9]{2}/gi).map(v => linear(parseInt(v, 16) / 255));
+    const floorColor = rgb(worldDayCycle.floorColor);
+    const gridColor = rgb('#8d55ff');
+    const lineColor = rgb('#675369'); // The world's major grid-line material.
+    const presets = Object.fromEntries(Object.entries(worldDayCycle.presets).map(([key, colors]) => [key, colors.map(rgb)]));
+    function palette(now) {
+        const progress = ((now + cycleLeadMs) / 1000 / worldDayCycle.duration) % 1;
+        const next = worldDayCycle.stops.findIndex(stop => stop[0] > progress);
+        const [start, from] = worldDayCycle.stops[next - 1];
+        const [end, to] = worldDayCycle.stops[next];
+        const t = (progress - start) / (end - start);
+        const mix = t * t * (3 - 2 * t); // Same smoothstep and linear colour space as Three.js.
+        return {
+            colors: presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix)),
+            intensity: worldDayCycle.lightIntensities[from] + (worldDayCycle.lightIntensities[to] - worldDayCycle.lightIntensities[from]) * mix,
+            fogRange: worldDayCycle.fogRanges[from].map((v, i) => v + (worldDayCycle.fogRanges[to][i] - v) * mix)
+        };
+    }
+    const css = (color, strength = 1) => `rgb(${color.map(v => (srgb(v * strength) * 255).toFixed(2)).join(',')})`;
+    function draw() {
+        const { colors: [light, fogA, fogB], intensity, fogRange: [near, far] } = palette(Date.now());
+        const litFloor = light.map((value, i) => value * floorColor[i] * intensity);
+        // The world's night palette includes radial blue/purple fog as well as blue light.
+        // Adapt its near-plane fog strength to the flat floor, in linear colour space.
+        const fogStrength = Math.max(0, Math.min(1, -near / (far - near)));
+        ctx.save();
+        ctx.scale(width, height); // Match the world's normalized viewport UV coordinates.
+        const background = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+        for (let step = 0; step <= 16; step++) {
+            const position = step / 16;
+            const blend = position * position * (3 - 2 * position);
+            const fog = fogA.map((value, i) => value + (fogB[i] - value) * blend);
+            const shadedFloor = litFloor.map((value, i) => value + (fog[i] - value) * fogStrength);
+            background.addColorStop(position, css(shadedFloor));
+        }
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, 1, 1);
+        ctx.restore();
+        const color = light.map((value, i) => value * gridColor[i]);
+        // Sample the cycle once: lines and plus signs share the same light and brightness.
+        const strength = .8 / Math.max(...color);
+        const spacingX = 112, spacingY = 112;
+        const majorEvery = 8;
+        const origin = 32.5; // Align odd-width strokes to pixel centers.
+        // The fixed canvas drifts down as the document content travels up.
+        const majorSpacingY = spacingY * majorEvery;
+        const scrollOffset = motionPreference.matches ? 0 : window.scrollY * .6;
+        const originY = origin + (scrollOffset % majorSpacingY);
+
+        // Sparse major grid lines stay flat and run through the repeating plus lattice.
+        ctx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'square';
+        ctx.beginPath();
+        for (let x = origin; x < width; x += spacingX * majorEvery) {
+            ctx.moveTo(x, 0); ctx.lineTo(x, height);
+        }
+        for (let y = originY - majorSpacingY; y < height; y += majorSpacingY) {
+            ctx.moveTo(0, y); ctx.lineTo(width, y);
+        }
+        ctx.stroke();
+
+        // Bold upright pluses fill the cells; major lines carry perpendicular dashes.
+        ctx.strokeStyle = css(color, strength);
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let row = -majorEvery, y = originY - majorSpacingY; y < height + 12; row++, y += spacingY) {
+            for (let x = origin; x < width + 8; x += spacingX) {
+                const onVerticalLine = (x - origin) % (spacingX * majorEvery) === 0;
+                const onHorizontalLine = row % majorEvery === 0;
+                // Keep major-line intersections clear. On a line, only the arm
+                // crossing it is bold; the other arm remains the continuous grid line.
+                if (!onHorizontalLine) {
+                    ctx.moveTo(Math.round(x) - 9, Math.round(y)); ctx.lineTo(Math.round(x) + 9, Math.round(y));
+                }
+                if (!onVerticalLine) {
+                    ctx.moveTo(Math.round(x), Math.round(y) - 9); ctx.lineTo(Math.round(x), Math.round(y) + 9);
+                }
+            }
+        }
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+    }
+    function resize() {
+        const w = Math.ceil(canvas.clientWidth), h = Math.ceil(canvas.clientHeight);
+        if (!w || !h || (w === width && h === height)) return;
+        width = w; height = h;
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        draw();
+    }
+    function animate(timestamp) {
+        if (document.hidden || motionPreference.matches) return;
+        if (timestamp - lastFrame >= frameInterval) {
+            draw();
+            lastFrame = timestamp;
+        }
+        animationFrame = requestAnimationFrame(animate);
+    }
+    function updateAnimation() {
+        cancelAnimationFrame(animationFrame);
+        lastFrame = -Infinity;
+        if (!document.hidden) {
+            draw();
+            if (!motionPreference.matches) animationFrame = requestAnimationFrame(animate);
+        }
+    }
+    resize();
+    updateAnimation();
+    window.addEventListener('resize', resize);
+    window.addEventListener('pageshow', updateAnimation);
+    motionPreference.addEventListener('change', updateAnimation);
+    document.addEventListener('visibilitychange', updateAnimation);
+})();
+
+// Respect the visitor's motion preference for in-page links too.
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', event => {
+        const id = anchor.getAttribute('href').slice(1);
+        const target = id && document.getElementById(id);
+        if (target) {
+            event.preventDefault();
+            target.scrollIntoView({ behavior: motionPreference.matches ? 'instant' : 'smooth', block: 'start' });
+            history.replaceState(null, '', `#${id}`);
+        }
+    });
+});
+
+// Project details remain readable without JavaScript. Overview and demos start open.
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[onclick="toggleSection(this)"], [onclick="toggleMainSection(this)"]').forEach((header, index) => {
+        const content = header.nextElementSibling;
+        if (!content) return;
+        const open = /overview|demo|photos|screenshots/i.test(header.textContent) || header.classList.contains('collapsible-section');
+        content.id ||= `project-section-${index}`;
+        header.removeAttribute('onclick');
+        header.setAttribute('role', 'button');
+        header.setAttribute('tabindex', '0');
+        header.setAttribute('aria-controls', content.id);
+        const setOpen = expanded => {
+            header.classList.toggle('collapsed', !expanded);
+            header.setAttribute('aria-expanded', String(expanded));
+            content.hidden = !expanded;
+            content.classList.toggle('expanded', expanded);
+        };
+        setOpen(open);
+        const toggle = () => setOpen(header.getAttribute('aria-expanded') !== 'true');
+        header.addEventListener('click', toggle);
+        header.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); }
+        });
+    });
+});
+
+// One image viewer for the whole site, matching the COIL photo overlay.
+document.addEventListener('DOMContentLoaded', () => {
+    const images = [...document.querySelectorAll('img')];
+    if (!images.length) return;
+    const viewer = document.createElement('dialog');
+    viewer.className = 'image-viewer';
+    viewer.setAttribute('aria-label', 'Full-size image');
+    viewer.innerHTML = '<button class="image-viewer-close" type="button" aria-label="Close image viewer">×</button><img class="image-viewer-image" alt="">';
+    document.body.append(viewer);
+    const expandedImage = viewer.querySelector('img');
+    const closeButton = viewer.querySelector('button');
+    let opener;
+    let previousOverflow;
+    const open = (image, trigger) => {
+        opener = trigger;
+        expandedImage.src = image.currentSrc || image.src;
+        expandedImage.alt = image.alt;
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        viewer.showModal();
+        closeButton.focus();
+    };
+    viewer.addEventListener('click', () => viewer.close());
+    viewer.addEventListener('close', () => {
+        document.body.style.overflow = previousOverflow;
+        expandedImage.removeAttribute('src');
+        opener?.focus({ preventScroll: true });
+    });
+    images.forEach(image => {
+        const anchor = image.closest('a');
+        const imageOnlyLink = anchor && anchor.children.length === 1 && anchor.firstElementChild === image && !anchor.textContent.trim();
+        const trigger = imageOnlyLink ? anchor : image;
+        if (!imageOnlyLink) trigger.tabIndex = 0;
+        trigger.setAttribute('role', 'button');
+        trigger.setAttribute('aria-haspopup', 'dialog');
+        trigger.setAttribute('aria-label', `Enlarge image: ${image.alt || 'Photo'}`);
+        image.classList.add('expandable-image');
+        trigger.addEventListener('click', event => {
+            event.preventDefault();
+            event.stopPropagation();
+            open(image, trigger);
+        });
+        trigger.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                event.stopPropagation();
+                open(image, trigger);
+            }
+        });
+    });
+});
+
+// Filter skills and highlight matches while preserving project links.
+document.addEventListener('DOMContentLoaded', () => {
+    const search = document.getElementById('skill-search');
+    if (!search) return;
+    const skills = [...document.querySelectorAll('.skill-project-link, .additional-skills .skill-tags > span')].map(element => {
+        const text = [...element.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+        const source = text?.textContent.trim() || '';
+        const label = document.createElement('span');
+        label.className = 'skill-search-label';
+        label.setAttribute('data-no-translate', '');
+        text?.replaceWith(label);
+        return { element, label, source };
+    });
+    function highlight() {
+        const query = search.value.trim().toLocaleLowerCase();
+        const arabic = document.documentElement.lang === 'ar';
+        skills.forEach(({ element, label, source }) => {
+            const name = arabic ? (window.PORTFOLIO_AR?.[source] || source) : source;
+            const normalized = name.toLocaleLowerCase();
+            const exact = !!query && normalized === query;
+            element.hidden = !!query && !normalized.includes(query);
+            element.classList.toggle('skill-exact-match', exact);
+            label.replaceChildren();
+            let offset = 0;
+            let index = query && !exact ? normalized.indexOf(query) : -1;
+            while (index !== -1) {
+                label.append(document.createTextNode(name.slice(offset, index)));
+                const mark = document.createElement('mark');
+                mark.textContent = name.slice(index, index + query.length);
+                label.append(mark);
+                offset = index + query.length;
+                index = normalized.indexOf(query, offset);
+            }
+            label.append(document.createTextNode(name.slice(offset)));
+        });
+    }
+    search.addEventListener('input', highlight);
+    let lastLanguage = document.documentElement.lang;
+    new MutationObserver(() => {
+        const language = document.documentElement.lang;
+        if (language === lastLanguage) return;
+        lastLanguage = language;
+        highlight();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    highlight();
+});
+
+// Project search includes titles, awards and descriptions, preserving their markup.
+document.addEventListener('DOMContentLoaded', () => {
+    const search = document.getElementById('project-search');
+    if (!search) return;
+    const cards = [...document.querySelectorAll('#projects .project-card')].map(element => {
+        const labels = [];
+        element.querySelectorAll('h3, p').forEach(container => {
+            const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+            const nodes = [];
+            while (walker.nextNode()) if (walker.currentNode.textContent.trim()) nodes.push(walker.currentNode);
+            nodes.forEach(node => {
+                const source = node.textContent;
+                const label = document.createElement('span');
+                label.className = 'project-search-label';
+                label.setAttribute('data-no-translate', '');
+                node.replaceWith(label);
+                labels.push({ source, label, title: container.tagName === 'H3' });
+            });
+        });
+        return { element, labels };
+    });
+    function highlightProjects() {
+        const query = search.value.trim().toLocaleLowerCase();
+        const arabic = document.documentElement.lang === 'ar';
+        cards.forEach(({ element, labels }) => {
+            let matches = !query;
+            let exactTitle = false;
+            labels.forEach(({ source, label, title }) => {
+                const name = arabic ? (window.PORTFOLIO_AR?.[source.trim()] || source) : source;
+                const normalized = name.toLocaleLowerCase();
+                const exact = !!query && normalized.trim() === query;
+                if (query && normalized.includes(query)) matches = true;
+                if (exact && title) exactTitle = true;
+                label.classList.toggle('project-exact-match', exact);
+                label.replaceChildren();
+                let offset = 0;
+                let index = query && !exact ? normalized.indexOf(query) : -1;
+                while (index !== -1) {
+                    label.append(document.createTextNode(name.slice(offset, index)));
+                    const mark = document.createElement('mark');
+                    mark.textContent = name.slice(index, index + query.length);
+                    label.append(mark);
+                    offset = index + query.length;
+                    index = normalized.indexOf(query, offset);
+                }
+                label.append(document.createTextNode(name.slice(offset)));
+            });
+            element.hidden = !matches;
+            element.classList.toggle('project-exact-match', exactTitle);
+        });
+    }
+    search.addEventListener('input', highlightProjects);
+    let lastLanguage = document.documentElement.lang;
+    new MutationObserver(() => {
+        const language = document.documentElement.lang;
+        if (language === lastLanguage) return;
+        lastLanguage = language;
+        highlightProjects();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    highlightProjects();
+});
+
+// Independent reference columns: opening a quote only pushes down its own column.
+document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.querySelector('.references-grid');
+    if (!grid) return;
+    const cards = [...grid.querySelectorAll(':scope > .reference-card')];
+    if (!cards.length) return;
+    let currentColumns = 0;
+    const layout = () => {
+        const count = window.innerWidth <= 768 ? 1 : Math.max(1, Math.min(3, Math.floor((grid.clientWidth + 24) / 324)));
+        if (count === currentColumns) return;
+        currentColumns = count;
+        const columns = Array.from({ length: count }, () => {
+            const column = document.createElement('div');
+            column.className = 'reference-column';
+            return column;
+        });
+        cards.forEach((card, index) => columns[index % count].append(card));
+        grid.replaceChildren(...columns);
+        grid.style.gridTemplateColumns = `repeat(${count}, minmax(0, 1fr))`;
+    };
+    layout();
+    new ResizeObserver(layout).observe(grid);
+    window.addEventListener('resize', layout);
+});
