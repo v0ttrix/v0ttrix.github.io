@@ -5,13 +5,17 @@ function syncBackground(worldRoot, siteRoot) {
     const source = fs.readFileSync(path.join(worldRoot, 'sources/Game/Cycles/DayCycles.js'), 'utf8');
     const presets = {};
     const lightIntensities = {};
+    const fogRanges = {};
     for (const match of source.matchAll(/(\w+):\s*\{([^}]+)\}/g)) {
         const colors = ['lightColor', 'fogColorA', 'fogColorB'].map(key =>
             match[2].match(new RegExp(key + ": new THREE\\.Color\\('([^']+)'\\)"))?.[1]);
         const intensity = match[2].match(/lightIntensity: ([\d.]+)/);
-        if (colors.every(Boolean) && intensity) {
+        const fogNear = match[2].match(/fogNearRatio: (-?[\d.]+)/);
+        const fogFar = match[2].match(/fogFarRatio: (-?[\d.]+)/);
+        if (colors.every(Boolean) && intensity && fogNear && fogFar && Number(fogFar[1]) > Number(fogNear[1])) {
             presets[match[1]] = colors;
             lightIntensities[match[1]] = Number(intensity[1]);
+            fogRanges[match[1]] = [Number(fogNear[1]), Number(fogFar[1])];
         }
     }
     const stops = [...source.matchAll(/properties: presets\.(\w+), stop: ([\d.]+)/g)].map(m => [Number(m[2]), m[1]]);
@@ -21,7 +25,7 @@ function syncBackground(worldRoot, siteRoot) {
     const grid = fs.readFileSync(path.join(worldRoot, 'sources/Game/World/Grid.js'), 'utf8');
     const floor = grid.match(/color:\s*0x([a-f0-9]{6})/i);
     if (!floor) throw new Error('World floor colour format changed; update background sync.');
-    const config = { duration: Number(duration[1]) * Number(duration[2]), floorColor: '#' + floor[1], lightIntensities, presets, stops };
+    const config = { duration: Number(duration[1]) * Number(duration[2]), floorColor: '#' + floor[1], lightIntensities, fogRanges, presets, stops };
     for (const file of ['script.js', 'virtual-tour/portfolio/script.js']) {
         const target = path.join(siteRoot, file);
         if (!fs.existsSync(target)) continue;

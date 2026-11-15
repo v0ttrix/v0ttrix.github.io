@@ -25,7 +25,7 @@
 
 // Palette and stops are refreshed from the pinned world's DayCycles.js at build time.
 // WORLD_DAY_CYCLE_START
-const worldDayCycle = { duration: 240, floorColor: '#1b191f', lightIntensities: { day: 1.2, dusk: 1.2, night: 3.8, dawn: 1.2 }, presets: {
+const worldDayCycle = { duration: 240, floorColor: '#1b191f', lightIntensities: { day: 1.2, dusk: 1.2, night: 3.8, dawn: 1.2 }, fogRanges: { day: [.315, 1.25], dusk: [0, 1.25], night: [-.85, 1], dawn: [.3, 1.25] }, presets: {
     day: ['#ffd2c2', '#00ffff', '#9b89ff'],
     dusk: ['#ff8181', '#3e53ff', '#ff4ce4'],
     night: ['#3240ff', '#10266f', '#490a42'],
@@ -57,16 +57,30 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         const mix = t * t * (3 - 2 * t); // Same smoothstep and linear colour space as Three.js.
         return {
             colors: presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix)),
-            intensity: worldDayCycle.lightIntensities[from] + (worldDayCycle.lightIntensities[to] - worldDayCycle.lightIntensities[from]) * mix
+            intensity: worldDayCycle.lightIntensities[from] + (worldDayCycle.lightIntensities[to] - worldDayCycle.lightIntensities[from]) * mix,
+            fogRange: worldDayCycle.fogRanges[from].map((v, i) => v + (worldDayCycle.fogRanges[to][i] - v) * mix)
         };
     }
     const css = (color, strength = 1) => `rgb(${color.map(v => Math.round(srgb(v * strength) * 255)).join(',')})`;
     function draw() {
-        const { colors: [light], intensity } = palette(Date.now());
-        // Light the world's floor colour with the same sampled cycle as the marks.
-        // A uniform fill changes the base itself without adding a gradient wash.
-        ctx.fillStyle = css(light.map((value, i) => value * floorColor[i]), intensity);
-        ctx.fillRect(0, 0, width, height);
+        const { colors: [light, fogA, fogB], intensity, fogRange: [near, far] } = palette(Date.now());
+        const litFloor = light.map((value, i) => value * floorColor[i] * intensity);
+        // The world's night palette includes radial blue/purple fog as well as blue light.
+        // Adapt its near-plane fog strength to the flat floor, in linear colour space.
+        const fogStrength = Math.max(0, Math.min(1, -near / (far - near)));
+        ctx.save();
+        ctx.scale(width, height); // Match the world's normalized viewport UV coordinates.
+        const background = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+        for (let step = 0; step <= 16; step++) {
+            const position = step / 16;
+            const blend = position * position * (3 - 2 * position);
+            const fog = fogA.map((value, i) => value + (fogB[i] - value) * blend);
+            const shadedFloor = litFloor.map((value, i) => value + (fog[i] - value) * fogStrength);
+            background.addColorStop(position, css(shadedFloor));
+        }
+        ctx.fillStyle = background;
+        ctx.fillRect(0, 0, 1, 1);
+        ctx.restore();
         const color = light.map((value, i) => value * gridColor[i]);
         // Sample the cycle once: lines and plus signs share the same light and brightness.
         const strength = .8 / Math.max(...color);
