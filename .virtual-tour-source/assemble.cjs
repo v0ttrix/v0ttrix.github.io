@@ -15,3 +15,26 @@ html = html.replace(/<body([^>]*)>/, '<body$1>\n<a class="portfolio-return" href
 html = html.replace('rel="canonical" href="https://v0ttrix.github.io/"', 'rel="canonical" href="https://v0ttrix.github.io/virtual-tour/"');
 fs.writeFileSync(index, html);
 require('./sync-background.cjs').syncBackground('.world-build', '_site');
+
+// Give each generated background script its own URL. Otherwise a browser can
+// keep showing an older palette after rebuilding or switching preview branches.
+const { createHash } = require('node:crypto');
+function versionScripts(directory) {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+        const file = path.join(directory, entry.name);
+        if (entry.isDirectory()) {
+            versionScripts(file);
+        } else if (entry.name.endsWith('.html')) {
+            const html = fs.readFileSync(file, 'utf8');
+            const versioned = html.replace(/(<script\b[^>]*\bsrc=["'])([^"'?]*\bscript\.js)(?:\?[^"']*)?(["'])/g, (match, prefix, src, quote) => {
+                if (/^(?:[a-z]+:)?\/\//i.test(src)) return match;
+                const target = src.startsWith('/') ? path.join('_site', src) : path.resolve(path.dirname(file), src);
+                if (!fs.existsSync(target)) return match;
+                const hash = createHash('sha256').update(fs.readFileSync(target)).digest('hex').slice(0, 12);
+                return `${prefix}${src}?v=${hash}${quote}`;
+            });
+            if (versioned !== html) fs.writeFileSync(file, versioned);
+        }
+    }
+}
+versionScripts('_site');
