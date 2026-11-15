@@ -1,6 +1,9 @@
 // Display the world's real loading progress above the portfolio grid.
 (() => {
- if (window.parent !== window) {
+ // Only the world frame relays events. A portfolio inside a preview iframe
+ // still needs its own click handler and loading screen.
+ const isWorldFrame = window.parent !== window && new URLSearchParams(location.search).get('embedded') === '1' && /^\/virtual-tour\/(?:index\.html)?$/.test(location.pathname);
+ if (isWorldFrame) {
   window.addEventListener('portfolio-world-ring-color', event => parent.postMessage({type:'portfolio-world-ring-color', color:event.detail.color}, location.origin));
   window.addEventListener('portfolio-world-progress', event => parent.postMessage({type:'portfolio-world-progress', progress:event.detail.progress}, location.origin));
   window.addEventListener('portfolio-world-ready', () => parent.postMessage({type:'portfolio-world-ready'}, location.origin));
