@@ -1073,3 +1073,7 @@ html[dir="rtl"] .skill-project-link { text-align: right; }
     background: linear-gradient(90deg, transparent, rgba(0, 0, 0, .25) 6%, rgba(0, 0, 0, .25) 94%, transparent);
     mask-image: linear-gradient(to bottom, transparent, #000 64px, #000 calc(100% - 48px), transparent);
 }
+
+/* Neon orange accents for the homepage. */
+.home-page { --accent-cyan: #ff8a1f; }
+.home-page .image-viewer .image-viewer-image { box-shadow: 0 0 40px rgba(255, 138, 31, .3); }
