@@ -1,7 +1,9 @@
 name: Deploy portfolio and virtual tour
 
 on:
-  push:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -44,7 +46,10 @@ jobs:
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: portfolio-pages-${{ github.run_id }}-${{ github.run_attempt }}
           path: _site
       - name: Publish GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: portfolio-pages-${{ github.run_id }}-${{ github.run_attempt }}
