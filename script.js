@@ -25,12 +25,7 @@
 
 // Palette and stops are refreshed from the pinned world's DayCycles.js at build time.
 // WORLD_DAY_CYCLE_START
-const worldDayCycle = { duration: 240, floorColor: '#1b191f', lightIntensities: { day: 1.2, dusk: 1.2, night: 3.8, dawn: 1.2 }, fogRanges: { day: [.315, 1.25], dusk: [0, 1.25], night: [-.85, 1], dawn: [.3, 1.25] }, presets: {
-    day: ['#ffd2c2', '#00ffff', '#9b89ff'],
-    dusk: ['#ff8181', '#3e53ff', '#ff4ce4'],
-    night: ['#3240ff', '#10266f', '#490a42'],
-    dawn: ['#ffa882', '#f885ff', '#ff7d24']
-}, stops: [[0, 'day'], [.15, 'day'], [.25, 'dusk'], [.35, 'night'], [.6, 'night'], [.8, 'dawn'], [.9, 'day'], [1, 'day']] };
+const worldDayCycle = {"duration":240,"floorColor":"#1b191f","markColor":"#8d55ff","lineColor":"#675369","rendering":{"fov":25,"cameraPhiHigh":0.9738937226128359,"cameraPhiLow":0.8482300164692442,"radiusMin":15,"radiusMax":30,"radiusOverflow":9,"optimalScale":1.4,"idealAspect":1.7777777777777777,"introZoom":0.3,"lightPhi":0.63,"lightAmplitude":0.62,"lightOffset":0.5625,"shadowLow":-0.25,"shadowHigh":1},"lightIntensities":{"day":1.2,"dusk":1.2,"night":3.8,"dawn":1.2},"fogRanges":{"day":[0.315,1.25],"dusk":[0,1.25],"night":[-0.85,1],"dawn":[0.3,1.25]},"presets":{"day":["#ffd2c2","#00ffff","#9b89ff","#6d3fff"],"dusk":["#ff8181","#3e53ff","#ff4ce4","#4e009c"],"night":["#3240ff","#10266f","#490a42","#2f00db"],"dawn":["#ffa882","#f885ff","#ff7d24","#db004f"]},"stops":[[0,"day"],[0.15,"day"],[0.25,"dusk"],[0.35,"night"],[0.6,"night"],[0.8,"dawn"],[0.9,"day"],[1,"day"]]};
 // WORLD_DAY_CYCLE_END
 
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -41,7 +36,8 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (!ctx) return;
     canvas.setAttribute('aria-hidden', 'true');
     let width, height, animationFrame;
-    let backgroundLayer, gridLayer, gridPattern, pixelRatio;
+    let backgroundLayer, gridLayer, lineLayer, gridPattern, linePattern, pixelRatio;
+    let markTint, lineTint, paintLayer;
     let lastColorFrame = -Infinity, lastScrollOffset = NaN;
     let gridScale = 1;
     let gridPeriod = 112 * 8;
@@ -51,8 +47,8 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
     const srgb = value => value <= .0031308 ? value * 12.92 : 1.055 * value ** (1 / 2.4) - .055;
     const rgb = hex => hex.match(/[a-f0-9]{2}/gi).map(v => linear(parseInt(v, 16) / 255));
     const floorColor = rgb(worldDayCycle.floorColor);
-    const gridColor = rgb('#8d55ff');
-    const lineColor = rgb('#675369'); // The world's major grid-line material.
+    const gridColor = rgb(worldDayCycle.markColor);
+    const lineColor = rgb(worldDayCycle.lineColor); // The world's major grid-line material.
     const presets = Object.fromEntries(Object.entries(worldDayCycle.presets).map(([key, colors]) => [key, colors.map(rgb)]));
     function palette(now) {
         const progress = ((now + cycleLeadMs) / 1000 / worldDayCycle.duration) % 1;
@@ -62,44 +58,87 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         const t = (progress - start) / (end - start);
         const mix = t * t * (3 - 2 * t); // Same smoothstep and linear colour space as Three.js.
         return {
+            progress,
             colors: presets[from].map((color, i) => color.map((v, c) => v + (presets[to][i][c] - v) * mix)),
             intensity: worldDayCycle.lightIntensities[from] + (worldDayCycle.lightIntensities[to] - worldDayCycle.lightIntensities[from]) * mix,
             fogRange: worldDayCycle.fogRanges[from].map((v, i) => v + (worldDayCycle.fogRanges[to][i] - v) * mix)
         };
     }
-    const css = (color, strength = 1) => `rgb(${color.map(v => (srgb(v * strength) * 255).toFixed(2)).join(',')})`;
-    // Cache colors and grid geometry; scrolling only composites the two layers.
+    const smoothstep = (low, high, value) => {
+        const t = Math.max(0, Math.min(1, (value - low) / (high - low)));
+        return t * t * (3 - 2 * t);
+    };
+    function renderView(progress) {
+        const model = worldDayCycle.rendering;
+        const mobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const phi = mobile ? model.cameraPhiLow : model.cameraPhiHigh;
+        const tangent = Math.tan(model.fov * Math.PI / 360);
+        const cosine = Math.cos(phi), sine = Math.sin(phi);
+        const maxRadius = model.radiusMax + Math.max(0, model.idealAspect / (width / height) - 1) * model.radiusOverflow;
+        const optimalRadius = maxRadius * (mobile ? 1 : model.optimalScale);
+        const rayLength = Math.sqrt(1 + tangent * tangent);
+        const nearDistance = optimalRadius * cosine / (cosine + tangent * sine) * rayLength;
+        const farDistance = optimalRadius * cosine / (cosine - tangent * sine) * rayLength;
+        const radius = model.radiusMin + (maxRadius - model.radiusMin) * (1 - model.introZoom);
+        const lightPhi = model.lightPhi + Math.cos(-(progress + model.lightOffset) * Math.PI * 2) * .5 * model.lightAmplitude;
+        return { tangent, cosine, sine, radius, nearDistance, farDistance,
+            shadow: smoothstep(model.shadowHigh, model.shadowLow, Math.cos(lightPhi)) };
+    }
+    // Same material sequence as MeshDefaultMaterial: light, core shadow, then depth fog.
+    function surfaceColor(base, x, y, state, view) {
+        const [light, fogA, fogB, shadow] = state.colors;
+        const core = base.map((value, i) => {
+            const lit = value * light[i] * state.intensity;
+            return lit + (value * shadow[i] - lit) * view.shadow;
+        });
+        const amplitude = view.farDistance - view.nearDistance;
+        const near = view.nearDistance + state.fogRange[0] * amplitude;
+        const far = view.nearDistance + state.fogRange[1] * amplitude;
+        const depth = view.radius * view.cosine / (view.cosine - (1 - 2 * y) * view.tangent * view.sine);
+        const strength = smoothstep(near, far, depth);
+        const blend = smoothstep(0, 1, Math.hypot(x, y));
+        return core.map((value, i) => {
+            const fog = fogA[i] + (fogB[i] - fogA[i]) * blend;
+            return value + (fog - value) * strength;
+        });
+    }
+    function tintLayer(layer, base, state, view) {
+        const target = layer.getContext('2d');
+        const data = target.createImageData(layer.width, layer.height);
+        for (let y = 0; y < layer.height; y++) {
+            for (let x = 0; x < layer.width; x++) {
+                const color = surfaceColor(base, (x + .5) / layer.width, (y + .5) / layer.height, state, view);
+                const offset = (y * layer.width + x) * 4;
+                for (let i = 0; i < 3; i++) data.data[offset + i] = srgb(Math.max(0, color[i])) * 255;
+                data.data[offset + 3] = 255;
+            }
+        }
+        target.putImageData(data, 0, 0);
+    }
     function updateLayers() {
-        const { colors: [light, fogA, fogB], intensity, fogRange: [near, far] } = palette(Date.now());
-        const litFloor = light.map((value, i) => value * floorColor[i] * intensity);
-        const fogStrength = Math.max(0, Math.min(1, -near / (far - near)));
-        const backgroundCtx = backgroundLayer.getContext('2d');
-        backgroundCtx.setTransform(backgroundLayer.width, 0, 0, backgroundLayer.height, 0, 0);
-        const background = backgroundCtx.createRadialGradient(0, 0, 0, 0, 0, 1);
-        for (let step = 0; step <= 16; step++) {
-            const position = step / 16;
-            const blend = position * position * (3 - 2 * position);
-            const fog = fogA.map((value, i) => value + (fogB[i] - value) * blend);
-            background.addColorStop(position, css(litFloor.map((value, i) => value + (fog[i] - value) * fogStrength)));
-        }
-        backgroundCtx.fillStyle = background;
-        backgroundCtx.fillRect(0, 0, 1, 1);
-
-        const gridCtx = gridLayer.getContext('2d');
-        gridCtx.clearRect(0, 0, 112 * 8, 112 * 8);
-        const color = light.map((value, i) => value * gridColor[i]);
-        const strength = .8 / Math.max(...color);
-        gridCtx.strokeStyle = css(light.map((value, i) => value * lineColor[i]), strength);
-        gridCtx.lineWidth = 3;
-        gridCtx.lineCap = 'square';
-        gridCtx.beginPath();
+        const state = palette(Date.now());
+        const view = renderView(state.progress);
+        tintLayer(backgroundLayer, floorColor, state, view);
+        tintLayer(markTint, gridColor, state, view);
+        tintLayer(lineTint, lineColor, state, view);
+    }
+    // Cache geometry separately: the source materials colour both lines and marks,
+    // without the old brightness normalization that muted the blue phase.
+    function buildGrid() {
+        const major = lineLayer.getContext('2d');
+        major.strokeStyle = '#fff';
+        major.lineWidth = 3;
+        major.lineCap = 'square';
+        major.beginPath();
         for (const edge of [.5, 112 * 8 + .5]) {
-            gridCtx.moveTo(edge, 0); gridCtx.lineTo(edge, 112 * 8);
-            gridCtx.moveTo(0, edge); gridCtx.lineTo(112 * 8, edge);
+            major.moveTo(edge, 0); major.lineTo(edge, 112 * 8);
+            major.moveTo(0, edge); major.lineTo(112 * 8, edge);
         }
-        gridCtx.stroke();
-        gridCtx.strokeStyle = css(color, strength);
+        major.stroke();
+        const gridCtx = gridLayer.getContext('2d');
+        gridCtx.strokeStyle = '#fff';
         gridCtx.lineWidth = 2;
+        gridCtx.lineCap = 'square';
         gridCtx.beginPath();
         for (let row = 0; row <= 8; row++) {
             for (let column = 0; column <= 8; column++) {
@@ -114,22 +153,32 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         }
         gridCtx.stroke();
         gridPattern = ctx.createPattern(gridLayer, 'repeat');
-        gridPattern.setTransform(new DOMMatrix().scale(gridScale / pixelRatio));
+        linePattern = ctx.createPattern(lineLayer, 'repeat');
+        for (const pattern of [gridPattern, linePattern]) pattern.setTransform(new DOMMatrix().scale(gridScale / pixelRatio));
     }
     function gridOffset() {
         // Keep the loader aligned even when focus or history changes the page scroll.
         if (document.documentElement.classList.contains('tour-loading')) return -334;
         return motionPreference.matches ? 0 : window.scrollY * .6;
     }
+    function paintPattern(pattern, tint, offsetY) {
+        const paint = paintLayer.getContext('2d');
+        paint.globalCompositeOperation = 'source-over';
+        paint.clearRect(0, 0, width, height);
+        paint.save();
+        paint.translate(32, offsetY);
+        paint.fillStyle = pattern;
+        paint.fillRect(-32, -offsetY, width, height);
+        paint.restore();
+        paint.globalCompositeOperation = 'source-in';
+        paint.drawImage(tint, 0, 0, width, height);
+        ctx.drawImage(paintLayer, 0, 0, width, height);
+    }
     function draw(scrollOffset) {
         ctx.drawImage(backgroundLayer, 0, 0, width, height);
-        ctx.save();
-        // Subpixel translation avoids snapping the pattern to whole pixels while scrolling.
         const offsetY = 32 + scrollOffset % gridPeriod;
-        ctx.translate(32, offsetY);
-        ctx.fillStyle = gridPattern;
-        ctx.fillRect(-32, -offsetY, width, height);
-        ctx.restore();
+        paintPattern(linePattern, lineTint, offsetY);
+        paintPattern(gridPattern, markTint, offsetY);
         lastScrollOffset = scrollOffset;
     }
     function resize() {
@@ -141,11 +190,21 @@ const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
         width = w; height = h; pixelRatio = ratio;
         canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-        backgroundLayer = document.createElement('canvas');
-        backgroundLayer.width = canvas.width; backgroundLayer.height = canvas.height;
-        gridLayer = document.createElement('canvas');
-        gridLayer.width = gridLayer.height = Math.round(112 * 8 * ratio);
-        gridLayer.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+        const colorLayer = () => {
+            const layer = document.createElement('canvas');
+            layer.width = layer.height = 64;
+            return layer;
+        };
+        backgroundLayer = colorLayer(); markTint = colorLayer(); lineTint = colorLayer();
+        gridLayer = document.createElement('canvas'); lineLayer = document.createElement('canvas');
+        for (const layer of [gridLayer, lineLayer]) {
+            layer.width = layer.height = Math.round(112 * 8 * ratio);
+            layer.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+        }
+        paintLayer = document.createElement('canvas');
+        paintLayer.width = canvas.width; paintLayer.height = canvas.height;
+        paintLayer.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+        buildGrid();
         updateLayers();
         draw(gridOffset());
         lastColorFrame = performance.now();

@@ -7,7 +7,7 @@ function syncBackground(worldRoot, siteRoot) {
     const lightIntensities = {};
     const fogRanges = {};
     for (const match of source.matchAll(/(\w+):\s*\{([^}]+)\}/g)) {
-        const colors = ['lightColor', 'fogColorA', 'fogColorB'].map(key =>
+        const colors = ['lightColor', 'fogColorA', 'fogColorB', 'shadowColor'].map(key =>
             match[2].match(new RegExp(key + ": new THREE\\.Color\\('([^']+)'\\)"))?.[1]);
         const intensity = match[2].match(/lightIntensity: ([\d.]+)/);
         const fogNear = match[2].match(/fogNearRatio: (-?[\d.]+)/);
@@ -25,7 +25,35 @@ function syncBackground(worldRoot, siteRoot) {
     const grid = fs.readFileSync(path.join(worldRoot, 'sources/Game/World/Grid.js'), 'utf8');
     const floor = grid.match(/color:\s*0x([a-f0-9]{6})/i);
     if (!floor) throw new Error('World floor colour format changed; update background sync.');
-    const config = { duration: Number(duration[1]) * Number(duration[2]), floorColor: '#' + floor[1], lightIntensities, fogRanges, presets, stops };
+    const view = fs.readFileSync(path.join(worldRoot, 'sources/Game/View.js'), 'utf8');
+    const lighting = fs.readFileSync(path.join(worldRoot, 'sources/Game/Ligthing.js'), 'utf8');
+    const reveal = fs.readFileSync(path.join(worldRoot, 'sources/Game/Reveal.js'), 'utf8');
+    const value = (text, pattern, label, group = 1) => {
+        const match = text.match(pattern);
+        if (!match) throw new Error('World ' + label + ' format changed; update background sync.');
+        const number = Number(match[group].replace(/\s/g, ''));
+        if (!Number.isFinite(number)) throw new Error('Invalid world ' + label);
+        return number;
+    };
+    const rendering = {
+        fov: value(view, /new THREE\.PerspectiveCamera\(([\d.]+)/, 'camera FOV'),
+        cameraPhiHigh: Math.PI * value(view, /this\.spherical\.phi = Math\.PI \* \(this\.game\.quality\.level === 0 \? ([\d.]+) : ([\d.]+)/, 'camera angle'),
+        cameraPhiLow: Math.PI * value(view, /this\.spherical\.phi = Math\.PI \* \(this\.game\.quality\.level === 0 \? ([\d.]+) : ([\d.]+)/, 'camera angle', 2),
+        radiusMin: value(view, /radius\.edges = \{ min: ([\d.]+), max: ([\d.]+)/, 'camera radius'),
+        radiusMax: value(view, /radius\.edges = \{ min: ([\d.]+), max: ([\d.]+)/, 'camera radius', 2),
+        radiusOverflow: value(view, /radius\.nonIdealRatioOffset = ([\d.]+)/, 'camera aspect offset'),
+        optimalScale: 1 - value(view, /zoom\.speedAmplitude = (-?\s*[\d.]+)/, 'camera zoom amplitude'),
+        idealAspect: value(view, /constructor\(idealRatio = ([\d.]+) \/ ([\d.]+)/, 'ideal aspect') / value(view, /constructor\(idealRatio = ([\d.]+) \/ ([\d.]+)/, 'ideal aspect', 2),
+        introZoom: value(reveal, /baseRatio: ([\d.]+)/, 'intro zoom'),
+        lightPhi: value(lighting, /this\.phi = ([\d.]+)/, 'light angle'),
+        lightAmplitude: value(lighting, /this\.phiAmplitude = ([\d.]+)/, 'light angle amplitude'),
+        lightOffset: value(lighting, /progressOffset = ([\d.]+)\/([\d.]+)/, 'light phase') / value(lighting, /progressOffset = ([\d.]+)\/([\d.]+)/, 'light phase', 2),
+        shadowLow: value(lighting, /coreShadowEdgeLow = uniform\(float\((-?[\d.]+)/, 'shadow range'),
+        shadowHigh: value(lighting, /coreShadowEdgeHigh = uniform\(float\((-?[\d.]+)/, 'shadow range')
+    };
+    const gridLines = [...grid.replace(/\/\/[^\n]*/g, '').matchAll(/new MeshGridMaterialLine\('([^']+)'/g)];
+    if (gridLines.length < 2) throw new Error('World grid colours changed; update background sync.');
+    const config = { duration: Number(duration[1]) * Number(duration[2]), floorColor: '#' + floor[1], markColor: gridLines[0][1], lineColor: gridLines[1][1], rendering, lightIntensities, fogRanges, presets, stops };
     for (const file of ['script.js', 'virtual-tour/portfolio/script.js']) {
         const target = path.join(siteRoot, file);
         if (!fs.existsSync(target)) continue;
