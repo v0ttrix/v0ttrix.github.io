@@ -45,6 +45,9 @@ jobs:
       - name: Install world dependencies
         working-directory: .world-build
         run: npm ci
+      - name: Check screen camera framing
+        working-directory: .world-build
+        run: npm run test:screen-cameras
       - name: Build world
         working-directory: .world-build
         env:

@@ -3,6 +3,7 @@ import { Area } from './Area.js'
 import { InteractivePoints } from '../../InteractivePoints.js'
 import certificates from '../../../data/certificates.js'
 import gsap from 'gsap'
+import { getScreenCinematic } from '../../utilities/screenCinematic.js'
 
 // Reuse the former time machine as a certificate display, with no external link.
 export class TimeMachineArea extends Area
@@ -130,31 +131,7 @@ export class TimeMachineArea extends Area
 
     getCinematic()
     {
-        // Frame the actual screen, even if the physical TV has been moved.
-        this.screen.updateWorldMatrix(true, false)
-        const bounds = new THREE.Box3().setFromObject(this.screen)
-        const target = bounds.getCenter(new THREE.Vector3())
-        const normals = this.screen.geometry.attributes.normal
-        const normal = new THREE.Vector3()
-        const sample = new THREE.Vector3()
-        for(let i = 0; i < normals.count; i++)
-            normal.add(sample.fromBufferAttribute(normals, i))
-        normal.applyNormalMatrix(new THREE.Matrix3().getNormalMatrix(this.screen.matrixWorld)).normalize()
-        const right = new THREE.Vector3(0, 1, 0).cross(normal)
-        if(right.lengthSq() < 0.001)
-            right.set(0, 0, 1).cross(normal)
-        right.normalize()
-        const up = normal.clone().cross(right).normalize()
-        const halfSize = bounds.getSize(new THREE.Vector3()).multiplyScalar(0.5)
-        const projectedHalfSize = axis => Math.abs(axis.x) * halfSize.x + Math.abs(axis.y) * halfSize.y + Math.abs(axis.z) * halfSize.z
-        const camera = this.game.view.camera
-        const verticalFov = THREE.MathUtils.degToRad(camera.fov)
-        const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * camera.aspect)
-        const distance = 1.12 * Math.max(
-            projectedHalfSize(up) / Math.tan(verticalFov / 2),
-            projectedHalfSize(right) / Math.tan(horizontalFov / 2)
-        ) + projectedHalfSize(normal)
-        return { target, position: target.clone().addScaledVector(normal, distance) }
+        return getScreenCinematic(this.game.view.camera, [this.screen])
     }
 
     open()
@@ -168,7 +145,7 @@ export class TimeMachineArea extends Area
         const cinematic = this.getCinematic()
         this.game.inputs.filters.delete('wandering')
         this.game.inputs.filters.add('cinematic')
-        this.game.view.cinematic.start(cinematic.position, cinematic.target)
+        this.game.view.cinematic.start(cinematic.position, cinematic.target, () => this.getCinematic())
         this.game.interactivePoints.temporaryHide()
         this.game.physicalVehicle.deactivate()
         this.game.inputs.interactiveButtons.clearItems()

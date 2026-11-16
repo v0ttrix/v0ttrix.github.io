@@ -9,6 +9,7 @@ import { Inputs } from '../../Inputs/Inputs.js'
 import { MeshDefaultMaterial } from '../../Materials/MeshDefaultMaterial.js'
 import { Area } from './Area.js'
 import { createScreenTexture } from '../../utilities/screenTexture.js'
+import { getScreenCinematic } from '../../utilities/screenCinematic.js'
 
 export class ProjectsArea extends Area
 {
@@ -1317,7 +1318,16 @@ export class ProjectsArea extends Area
         this.game.inputs.filters.add('cinematic')
 
         // View cinematic
-        this.game.view.cinematic.start(this.cinematic.position, this.cinematic.target)
+        this.game.view.cinematic.start(this.cinematic.position, this.cinematic.target, () =>
+        {
+            if(this.game.view.camera.aspect >= 1.4)
+                return this.cinematic
+            return getScreenCinematic(this.game.view.camera, [
+                this.images.mesh,
+                this.references.items.get('title')?.[0],
+                this.references.items.get('url')?.[0]
+            ])
+        })
 
         // Interactive point
         this.game.interactivePoints.temporaryHide()
