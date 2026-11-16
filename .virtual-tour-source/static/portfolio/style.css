@@ -1394,3 +1394,17 @@ body .back-btn:active,
 .language-option:hover, .language-option:focus-visible { background: rgba(255,255,255,.08); }
 .language-option[aria-pressed="true"] { color: var(--accent-cyan); border-color: rgba(255,138,31,.4); background: rgba(255,138,31,.1); }
 .language-option:disabled { opacity: .6; cursor: wait; }
+
+/* Keep the home results panel aligned and compact on phones. */
+@media (max-width: 600px) {
+    .home-page .proof-strip {
+        width: calc(100% - 30px);
+        min-width: 0;
+        padding: 12px 22px;
+    }
+    .home-page .proof-strip a {
+        min-width: 0;
+        padding: 10px 0;
+        gap: 3px;
+    }
+}
