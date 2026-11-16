@@ -11,7 +11,7 @@ fs.copyFileSync('.virtual-tour-source/portfolio-return.css', '_site/virtual-tour
 const index = '_site/virtual-tour/index.html';
 let html = fs.readFileSync(index, 'utf8');
 html = html.replace('<head>', '<head>\n<link rel="stylesheet" href="./portfolio-return.css">\n<link rel="stylesheet" href="/tour-transition.css">\n<script src="/tour-transition.js?v=homepage-loader-2"></script>');
-html = html.replace(/<body([^>]*)>/, '<body$1>\n<a class="portfolio-return" href="/">Back to portfolio</a>');
+html = html.replace(/<body([^>]*)>/, '<body$1>\n<a class="portfolio-return" href="/" aria-label="Back to portfolio"><span class="portfolio-return__inner"><span class="portfolio-return__icon" aria-hidden="true">&#x2190;</span></span></a>');
 html = html.replace('rel="canonical" href="https://v0ttrix.github.io/"', 'rel="canonical" href="https://v0ttrix.github.io/virtual-tour/"');
 fs.writeFileSync(index, html);
 require('./sync-background.cjs').syncBackground('.world-build', '_site');
