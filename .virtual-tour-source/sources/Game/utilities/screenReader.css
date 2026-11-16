@@ -1,0 +1,43 @@
+.world-screen-reader[hidden] { display: none !important; }
+.world-screen-reader [hidden] { display: none !important; }
+.world-screen-reader {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    background: #191621;
+    color: #f7f6fa;
+    font: 16px/1.6 system-ui, sans-serif;
+    text-align: left;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    touch-action: pan-y pinch-zoom;
+}
+.world-screen-reader__header,
+.world-screen-reader__navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 18px;
+    background: #25202f;
+}
+.world-screen-reader__section { color: #b7ee97; font-weight: 700; }
+.world-screen-reader__content {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.world-screen-reader__title { font: 700 clamp(22px, 4vw, 32px)/1.25 system-ui, sans-serif; margin: 0 0 20px; }
+.world-screen-reader__image { display: block; width: 100%; height: auto; max-height: 60svh; object-fit: contain; background: #fff; border-radius: 8px; }
+.world-screen-reader__description { margin: 20px 0; font: inherit; white-space: pre-line; }
+.world-screen-reader__link { display: inline-block; margin: 16px 0; color: #b7ee97; text-decoration: underline; }
+.world-screen-reader__button { min-height: 44px; padding: 10px 18px; border: 1px solid #82798e; border-radius: 8px; background: #393141; color: #fff; font: 600 16px/1.2 system-ui, sans-serif; cursor: pointer; }
+.world-screen-reader__button:focus-visible,
+.world-screen-reader__link:focus-visible { outline: 3px solid #b7ee97; outline-offset: 3px; }
+.world-screen-reader__counter { font-variant-numeric: tabular-nums; }
+.is-screen-reader-open .js-touch-buttons { visibility: hidden; }

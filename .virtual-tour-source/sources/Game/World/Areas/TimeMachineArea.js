@@ -4,6 +4,7 @@ import { InteractivePoints } from '../../InteractivePoints.js'
 import certificates from '../../../data/certificates.js'
 import gsap from 'gsap'
 import { getScreenCinematic } from '../../utilities/screenCinematic.js'
+import { createScreenReader } from '../../utilities/screenReader.js'
 
 // Reuse the former time machine as a certificate display, with no external link.
 export class TimeMachineArea extends Area
@@ -38,6 +39,7 @@ export class TimeMachineArea extends Area
 
         this.showCertificate = () =>
         {
+            this.screenReader?.refresh()
             const index = this.certificateIndex
             const certificate = certificates[index]
             context.fillStyle = '#251f2b'
@@ -150,6 +152,20 @@ export class TimeMachineArea extends Area
         this.game.physicalVehicle.deactivate()
         this.game.inputs.interactiveButtons.clearItems()
         this.game.inputs.interactiveButtons.addItems(['previous', 'next', 'open', 'close'])
+        this.screenReader ??= createScreenReader({
+            title: 'Certificates',
+            getContent: () => ({
+                ...certificates[this.certificateIndex],
+                url: certificates[this.certificateIndex].image,
+                urlLabel: 'Open full-size certificate',
+                counter: `${this.certificateIndex + 1} / ${certificates.length}`
+            }),
+            previous: () => this.previousCertificate(),
+            next: () => this.nextCertificate(),
+            close: () => this.close()
+        })
+        this.screenReader.show()
+
         this.showCertificate()
     }
 
@@ -163,6 +179,7 @@ export class TimeMachineArea extends Area
         if(!this.isViewing)
             return
         this.isViewing = false
+        this.screenReader?.hide()
         this.game.inputs.filters.delete('cinematic')
         this.game.inputs.filters.add('wandering')
         this.game.view.cinematic.end()

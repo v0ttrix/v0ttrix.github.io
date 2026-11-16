@@ -11,6 +11,7 @@ import { MeshDefaultMaterial } from '../../Materials/MeshDefaultMaterial.js'
 import { Area } from './Area.js'
 import { createScreenTexture } from '../../utilities/screenTexture.js'
 import { getScreenCinematic } from '../../utilities/screenCinematic.js'
+import { createScreenReader } from '../../utilities/screenReader.js'
 
 export class LabArea extends Area
 {
@@ -1334,6 +1335,25 @@ export class LabArea extends Area
         // Buttons
         this.game.inputs.interactiveButtons.clearItems()
         this.game.inputs.interactiveButtons.addItems(['previous', 'next', 'open', 'close'])
+        this.screenReader ??= createScreenReader({
+            title: 'Apps & Websites',
+            getContent: () => {
+                const item = this.navigation.current
+                return {
+                    title: item.title,
+                    description: item.description,
+                    image: 'lab/images/' + item.image,
+                    url: item.url,
+                    urlLabel: item.urlLabel || 'View details',
+                    counter: `${this.navigation.index + 1} / ${labData.length}`
+                }
+            },
+            previous: () => this.previous(),
+            next: () => this.next(),
+            close: () => this.close()
+        })
+        this.screenReader.show()
+
 
         // Sound
         const sound = this.game.audio.groups.get('click')
@@ -1350,6 +1370,7 @@ export class LabArea extends Area
             return
 
         // State
+        this.screenReader?.hide()
         this.state = LabArea.STATE_CLOSING
 
         if(this.stateTransition)
@@ -1439,6 +1460,7 @@ export class LabArea extends Area
         this.navigation.previous = labData[(this.navigation.index - 1) < 0 ? labData.length - 1 : this.navigation.index - 1]
         this.navigation.next = labData[(this.navigation.index + 1) % labData.length]
         this.navigation.direction = direction
+        this.screenReader?.refresh()
 
         // Update components
         this.title.update(direction)

@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test:screen-cameras": "node --test tests/screen-cinematic.test.js",
+    "test:screen-cameras": "node --test tests/*.test.js",
     "dev": "vite --mode development",
     "build": "vite build --mode production",
     "preview": "vite preview",
