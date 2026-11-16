@@ -25,9 +25,13 @@ The world needs the WebSocket URL, with `wss://` and `/websocket`:
 wss://mardinis-world-server.YOUR-SUBDOMAIN.workers.dev/websocket
 ```
 
-In the portfolio GitHub repository, open **Settings → Secrets and variables → Actions → Variables** and create a repository variable named `WORLD_SERVER_URL` containing that URL. The Pages workflow passes it to Vite during the world build. Run the deployment workflow again after the source changes are pushed.
+The frontend now defaults to the deployed backend at `wss://mardinis-world-server.jaden-mardini.workers.dev/websocket`. No GitHub variable is required for that deployment.
 
-For the existing local preview, set `VITE_SERVER_URL` to the same value in the local world's `.env.local`, then rebuild and assemble the portfolio. The public WebSocket URL is configuration, not a secret. Never put a Cloudflare API token in the website.
+To use a different backend, open the portfolio repository's **Settings → Secrets and variables → Actions → Variables** and set `WORLD_SERVER_URL` to its WebSocket URL. The Pages workflow passes this optional override to Vite during the world build. Remove any stale override to use the checked-in default. Run the deployment workflow again after changing an override.
+
+The local world uses the same default. An optional `VITE_SERVER_URL` in `.env.local` overrides it. Rebuild and assemble the portfolio to apply changes. The public WebSocket URL is configuration, not a secret. Never put a Cloudflare API token in the website.
+
+The game uses WebSockets, not cross-origin HTTP API calls. The Worker validates the WebSocket `Origin` against `ALLOWED_ORIGINS`; an HTTP CORS wildcard or OPTIONS handler is not needed for this connection. Add any future custom portfolio domain explicitly to the allowlist.
 
 `GET /health` returns an OK JSON response. The website origin must be in `ALLOWED_ORIGINS` in `wrangler.jsonc`; the GitHub Pages origin and current local preview ports are already configured.
 
