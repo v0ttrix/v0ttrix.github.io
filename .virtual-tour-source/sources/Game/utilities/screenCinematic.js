@@ -2,7 +2,7 @@ import * as THREE from 'three/webgpu'
 
 // Fit the display itself, rather than adding a large world-camera offset on
 // narrow screens. Explicit geometry bounds also work before images are visible.
-export function getScreenCinematic(camera, meshes, padding = 1.18)
+export function getScreenCinematic(camera, meshes, padding = 1.18, viewDirection = null)
 {
     const corners = []
     const bounds = new THREE.Box3()
@@ -34,6 +34,8 @@ export function getScreenCinematic(camera, meshes, padding = 1.18)
     for(let i = 0; i < normals.count; i++)
         normal.add(sample.fromBufferAttribute(normals, i))
     normal.applyNormalMatrix(new THREE.Matrix3().getNormalMatrix(screen.matrixWorld)).normalize()
+    // Preserve the desktop viewing angle while fitting a narrower viewport.
+    if(viewDirection) normal.copy(viewDirection).normalize()
     const right = new THREE.Vector3(0, 1, 0).cross(normal)
     if(right.lengthSq() < 0.001)
         right.set(0, 0, 1).cross(normal)

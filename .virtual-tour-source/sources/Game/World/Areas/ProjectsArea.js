@@ -1,3 +1,4 @@
+import { hideVehicleForScreen } from '../../utilities/screenVehicle.js'
 import * as THREE from 'three/webgpu'
 import { Game } from '../../Game.js'
 import { InteractivePoints } from '../../InteractivePoints.js'
@@ -1327,7 +1328,7 @@ export class ProjectsArea extends Area
                 this.images.mesh,
                 this.references.items.get('title')?.[0],
                 this.references.items.get('url')?.[0]
-            ])
+            ], 1.12, this.cinematic.position.clone().sub(this.cinematic.target))
         })
 
         // Interactive point
@@ -1355,6 +1356,7 @@ export class ProjectsArea extends Area
         this.url.intersect.active = true
 
         // Deactivate physical vehicle
+        this.restoreScreenVehicle = hideVehicleForScreen(this.game)
         this.game.physicalVehicle.deactivate()
 
         // Buttons
@@ -1377,7 +1379,7 @@ export class ProjectsArea extends Area
             next: () => this.next(),
             close: () => this.close()
         })
-        this.screenReader.show()
+        // Keep the display in the 3D world on touch devices too.
 
 
         // Sound
@@ -1413,6 +1415,8 @@ export class ProjectsArea extends Area
 
         // View cinematic
         this.game.view.cinematic.end()
+        this.restoreScreenVehicle?.()
+        this.restoreScreenVehicle = null
 
         // Shade mix
         gsap.to(this.shadeMix.images.mixUniform, { value: this.shadeMix.images.min, duration: 1.5, ease: 'power2.inOut', overwrite: true })

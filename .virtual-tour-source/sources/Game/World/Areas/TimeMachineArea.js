@@ -1,3 +1,4 @@
+import { hideVehicleForScreen } from '../../utilities/screenVehicle.js'
 ﻿import * as THREE from 'three/webgpu'
 import { Area } from './Area.js'
 import { InteractivePoints } from '../../InteractivePoints.js'
@@ -133,7 +134,7 @@ export class TimeMachineArea extends Area
 
     getCinematic()
     {
-        return getScreenCinematic(this.game.view.camera, [this.screen])
+        return getScreenCinematic(this.game.view.camera, [this.screen], 1.06)
     }
 
     open()
@@ -143,12 +144,20 @@ export class TimeMachineArea extends Area
         this.recoverTransition?.kill()
         this.recoverTransition = null
         this.isViewing = true
+        // The low table/stool directly in front of the TV obscures its screen.
+        this.screenObstructions = this.objects.items
+            .map(object => object.visual?.object3D)
+            .filter(object => object && /^stool/i.test(object.name))
+            .map(object => ({ object, visible: object.visible }))
+        for(const { object } of this.screenObstructions)
+            object.visible = false
         this.navigationReadyAt = this.game.ticker.elapsed + 1.5
         const cinematic = this.getCinematic()
         this.game.inputs.filters.delete('wandering')
         this.game.inputs.filters.add('cinematic')
         this.game.view.cinematic.start(cinematic.position, cinematic.target, () => this.getCinematic())
         this.game.interactivePoints.temporaryHide()
+        this.restoreScreenVehicle = hideVehicleForScreen(this.game)
         this.game.physicalVehicle.deactivate()
         this.game.inputs.interactiveButtons.clearItems()
         this.game.inputs.interactiveButtons.addItems(['previous', 'next', 'open', 'close'])
@@ -164,7 +173,7 @@ export class TimeMachineArea extends Area
             next: () => this.nextCertificate(),
             close: () => this.close()
         })
-        this.screenReader.show()
+        // Keep the display in the 3D world on touch devices too.
 
         this.showCertificate()
     }
@@ -179,10 +188,15 @@ export class TimeMachineArea extends Area
         if(!this.isViewing)
             return
         this.isViewing = false
+        for(const { object, visible } of this.screenObstructions || [])
+            object.visible = visible
+        this.screenObstructions = null
         this.screenReader?.hide()
         this.game.inputs.filters.delete('cinematic')
         this.game.inputs.filters.add('wandering')
         this.game.view.cinematic.end()
+        this.restoreScreenVehicle?.()
+        this.restoreScreenVehicle = null
         this.game.physicalVehicle.activate()
         this.game.inputs.interactiveButtons.clearItems()
         this.recoverTransition = gsap.delayedCall(1, () =>
