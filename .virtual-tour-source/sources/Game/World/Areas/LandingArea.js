@@ -51,7 +51,7 @@ export class LandingArea extends Area
         this.letters = []
         // Two short rows keep the complete name inside the welcome view.
         const letters = [
-            ...createLetterBlocks("Mardini's", 0.18).map(letter => ({ ...letter, z: -1.2 })),
+            ...createLetterBlocks("Mardini's", 0.18).map(letter => ({ ...letter, x: letter.x - 2, z: -1.2 })),
             ...createLetterBlocks('World', 0.18).map(letter => ({ ...letter, z: 1.2 }))
         ]
         for(const letter of letters)
@@ -59,7 +59,7 @@ export class LandingArea extends Area
             const mesh = new THREE.Mesh(letter.geometry, material)
             mesh.name = 'welcomeLetter-' + letter.character
             const position = new THREE.Vector3(letter.x, 0, letter.z).applyQuaternion(rotation).add(center)
-            position.y = bounds.min.y + letter.height / 2 + 0.03
+            position.y = bounds.min.y + letter.elevation + letter.height / 2 + 0.03
             const object = this.game.objects.add(
                 { model: mesh, updateMaterials: false },
                 {

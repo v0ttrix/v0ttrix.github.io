@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mardinis-world-server",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-16",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "vars": {
+    "ALLOWED_ORIGINS": "https://v0ttrix.github.io,http://localhost:4181,http://127.0.0.1:4181,http://localhost:4180,http://127.0.0.1:4180"
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "WORLD", "class_name": "WorldRoom" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["WorldRoom"] }]
+}

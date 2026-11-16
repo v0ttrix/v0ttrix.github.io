@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const excluded = new Set(['.git', '.github', '.virtual-tour-source', '.world-build', '_site', 'virtual-tour']);
+const excluded = new Set(['.git', '.github', '.virtual-tour-source', '.world-build', '.world-server', '_site', 'virtual-tour']);
 fs.mkdirSync('_site', { recursive: true });
 for (const entry of fs.readdirSync('.')) {
     if (!excluded.has(entry)) fs.cpSync(entry, path.join('_site', entry), { recursive: true });

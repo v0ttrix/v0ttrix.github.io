@@ -2,6 +2,7 @@
 import { Area } from './Area.js'
 import { InteractivePoints } from '../../InteractivePoints.js'
 import certificates from '../../../data/certificates.js'
+import gsap from 'gsap'
 
 // Reuse the former time machine as a certificate display, with no external link.
 export class TimeMachineArea extends Area
@@ -9,8 +10,11 @@ export class TimeMachineArea extends Area
     constructor(model)
     {
         super(model)
+        this.isViewing = false
+        this.recoverTransition = null
         this.setTV()
         this.setInteractivePoint()
+        this.setInputs()
         this.events.on('boundingIn', () =>
         {
             this.game.achievements.setProgress('areas', 'timeMachine')
@@ -28,6 +32,7 @@ export class TimeMachineArea extends Area
         texture.colorSpace = THREE.SRGBColorSpace
         texture.flipY = false
         const screen = this.references.items.get('screen')[0]
+        this.screen = screen
         screen.material = new THREE.MeshBasicNodeMaterial({ map: texture })
 
         this.showCertificate = () =>
@@ -41,14 +46,15 @@ export class TimeMachineArea extends Area
             context.font = 'bold 42px sans-serif'
             context.fillText(certificate.title, 800, 65, 1500)
             context.font = '30px sans-serif'
-            context.fillText(`${index + 1} / ${certificates.length} - Interact for next certificate`, 800, 860)
+            const hint = this.isViewing ? 'Previous / Next to browse - Open image for full size' : 'Interact to view certificates'
+            context.fillText(`${index + 1} / ${certificates.length} - ${hint}`, 800, 860)
             texture.needsUpdate = true
             const image = new Image()
             image.onload = () =>
             {
                 if(index !== this.certificateIndex)
                     return
-                const scale = Math.min(1040 / image.naturalWidth, 500 / image.naturalHeight)
+                const scale = Math.min(1480 / image.naturalWidth, 680 / image.naturalHeight)
                 const width = image.naturalWidth * scale
                 const height = image.naturalHeight * scale
                 context.drawImage(image, (1600 - width) / 2, 110 + (690 - height) / 2, width, height)
@@ -62,10 +68,15 @@ export class TimeMachineArea extends Area
             this.certificateIndex = (this.certificateIndex + 1) % certificates.length
             this.showCertificate()
         }
+        this.previousCertificate = () =>
+        {
+            this.certificateIndex = (this.certificateIndex - 1 + certificates.length) % certificates.length
+            this.showCertificate()
+        }
         let lastCollision = -Infinity
         this.references.items.get('tv')[0].userData.object.physical.onCollision = () =>
         {
-            if(this.game.ticker.elapsed - lastCollision < 1)
+            if(this.isViewing || this.game.ticker.elapsed - lastCollision < 1)
                 return
             lastCollision = this.game.ticker.elapsed
             this.nextCertificate()
@@ -76,13 +87,115 @@ export class TimeMachineArea extends Area
     {
         this.interactivePoint = this.game.interactivePoints.create(
             this.references.items.get('interactivePoint')[0].position,
-            'Next certificate',
+            'View certificates',
             InteractivePoints.ALIGN_RIGHT,
             InteractivePoints.STATE_CONCEALED,
-            () => this.nextCertificate(),
+            () => this.open(),
             () => this.game.inputs.interactiveButtons.addItems(['interact']),
             () => this.game.inputs.interactiveButtons.removeItems(['interact']),
             () => this.game.inputs.interactiveButtons.removeItems(['interact'])
         )
+    }
+
+    setInputs()
+    {
+        const browse = (action, direction) =>
+        {
+            if(this.isViewing && action.active && this.game.ticker.elapsed >= this.navigationReadyAt)
+                direction < 0 ? this.previousCertificate() : this.nextCertificate()
+        }
+        this.game.inputs.events.on('left', action => browse(action, -1))
+        this.game.inputs.events.on('right', action => browse(action, 1))
+        this.game.inputs.events.on('forward', action =>
+        {
+            if(!action.activeKeys.has('Gamepad.r2'))
+                browse(action, -1)
+        })
+        this.game.inputs.events.on('backward', action =>
+        {
+            if(!action.activeKeys.has('Gamepad.l2'))
+                browse(action, 1)
+        })
+        this.game.inputs.events.on('interact', action =>
+        {
+            if(this.isViewing && !action.active && this.game.ticker.elapsed >= this.navigationReadyAt)
+                this.openImage()
+        })
+        const buttons = this.game.inputs.interactiveButtons
+        buttons.events.on('previous', () => { if(this.isViewing) this.previousCertificate() })
+        buttons.events.on('next', () => { if(this.isViewing) this.nextCertificate() })
+        buttons.events.on('open', () => { if(this.isViewing) this.openImage() })
+        buttons.events.on('close', () => this.close())
+    }
+
+    getCinematic()
+    {
+        // Frame the actual screen, even if the physical TV has been moved.
+        this.screen.updateWorldMatrix(true, false)
+        const bounds = new THREE.Box3().setFromObject(this.screen)
+        const target = bounds.getCenter(new THREE.Vector3())
+        const normals = this.screen.geometry.attributes.normal
+        const normal = new THREE.Vector3()
+        const sample = new THREE.Vector3()
+        for(let i = 0; i < normals.count; i++)
+            normal.add(sample.fromBufferAttribute(normals, i))
+        normal.applyNormalMatrix(new THREE.Matrix3().getNormalMatrix(this.screen.matrixWorld)).normalize()
+        const right = new THREE.Vector3(0, 1, 0).cross(normal)
+        if(right.lengthSq() < 0.001)
+            right.set(0, 0, 1).cross(normal)
+        right.normalize()
+        const up = normal.clone().cross(right).normalize()
+        const halfSize = bounds.getSize(new THREE.Vector3()).multiplyScalar(0.5)
+        const projectedHalfSize = axis => Math.abs(axis.x) * halfSize.x + Math.abs(axis.y) * halfSize.y + Math.abs(axis.z) * halfSize.z
+        const camera = this.game.view.camera
+        const verticalFov = THREE.MathUtils.degToRad(camera.fov)
+        const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * camera.aspect)
+        const distance = 1.12 * Math.max(
+            projectedHalfSize(up) / Math.tan(verticalFov / 2),
+            projectedHalfSize(right) / Math.tan(horizontalFov / 2)
+        ) + projectedHalfSize(normal)
+        return { target, position: target.clone().addScaledVector(normal, distance) }
+    }
+
+    open()
+    {
+        if(this.isViewing)
+            return
+        this.recoverTransition?.kill()
+        this.recoverTransition = null
+        this.isViewing = true
+        this.navigationReadyAt = this.game.ticker.elapsed + 1.5
+        const cinematic = this.getCinematic()
+        this.game.inputs.filters.delete('wandering')
+        this.game.inputs.filters.add('cinematic')
+        this.game.view.cinematic.start(cinematic.position, cinematic.target)
+        this.game.interactivePoints.temporaryHide()
+        this.game.physicalVehicle.deactivate()
+        this.game.inputs.interactiveButtons.clearItems()
+        this.game.inputs.interactiveButtons.addItems(['previous', 'next', 'open', 'close'])
+        this.showCertificate()
+    }
+
+    openImage()
+    {
+        window.open(certificates[this.certificateIndex].image, '_blank', 'noopener,noreferrer')
+    }
+
+    close()
+    {
+        if(!this.isViewing)
+            return
+        this.isViewing = false
+        this.game.inputs.filters.delete('cinematic')
+        this.game.inputs.filters.add('wandering')
+        this.game.view.cinematic.end()
+        this.game.physicalVehicle.activate()
+        this.game.inputs.interactiveButtons.clearItems()
+        this.recoverTransition = gsap.delayedCall(1, () =>
+        {
+            this.game.interactivePoints.recover()
+            this.recoverTransition = null
+        })
+        this.showCertificate()
     }
 }

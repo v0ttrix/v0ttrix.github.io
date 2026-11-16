@@ -1,4 +1,4 @@
-// Imported from the local portfolio with scripts/import-portfolio.mjs.
+// Apps and websites shown on the 3D display. Certificates are on the TV.
 export default [
     {
         "title": "Arqam",
@@ -55,37 +55,5 @@ export default [
         "urlLabel": "Explore the business",
         "image": "portfolio-ushayat.png",
         "imageMini": "portfolio-ushayat.png"
-    },
-    {
-        "title": "Advanced Diploma Computer Engineering Technology",
-        "category": "certificate",
-        "url": "portfolio/pages/certifications.html",
-        "urlLabel": "View certificates",
-        "image": "../../portfolio/images/AdvancedDiploma.jpeg",
-        "imageMini": "../../portfolio/images/AdvancedDiploma.jpeg"
-    },
-    {
-        "title": "Google Cybersecurity Professional Certificate",
-        "category": "certificate",
-        "url": "portfolio/pages/certifications.html",
-        "urlLabel": "View certificates",
-        "image": "../../portfolio/images/cert-google.jpg",
-        "imageMini": "../../portfolio/images/cert-google.jpg"
-    },
-    {
-        "title": "TryHackMe: Introduction to Cyber Security",
-        "category": "certificate",
-        "url": "portfolio/pages/certifications.html",
-        "urlLabel": "View certificates",
-        "image": "../../portfolio/images/cert-tryhackme.jpg",
-        "imageMini": "../../portfolio/images/cert-tryhackme.jpg"
-    },
-    {
-        "title": "Web-Dev CEC (Canada Gov)",
-        "category": "certificate",
-        "url": "portfolio/pages/certifications.html",
-        "urlLabel": "View certificates",
-        "image": "../../portfolio/images/cert-waterloo.jpg",
-        "imageMini": "../../portfolio/images/cert-waterloo.jpg"
     }
 ]

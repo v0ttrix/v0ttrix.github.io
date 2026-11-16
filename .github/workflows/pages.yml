@@ -47,6 +47,8 @@ jobs:
         run: npm ci
       - name: Build world
         working-directory: .world-build
+        env:
+          VITE_SERVER_URL: ${{ vars.WORLD_SERVER_URL }}
         run: npm run build
       - name: Assemble website
         run: node .virtual-tour-source/assemble.cjs

@@ -1,3 +1,7 @@
 
 # Local APK previews; public builds are hosted separately.
 /downloads/*.apk
+
+# Local world build and assembled preview.
+/.world-build/
+/_site/
