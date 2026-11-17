@@ -52,3 +52,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.addEventListener('click', event => { if (!event.target.closest('.site-header')) close(); });
 });
+
+// Legal links belong in portfolio footers, outside the world canvas.
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.js-game')) return;
+    let footer = document.querySelector('footer');
+    if (!footer) {
+        footer = document.createElement('footer');
+        document.body.append(footer);
+    }
+    if (footer.querySelector('.footer-legal')) return;
+    const links = document.createElement('nav');
+    links.className = 'footer-legal';
+    links.setAttribute('aria-label', 'Legal');
+    links.innerHTML = '<a href="/pages/privacy-policy.html">Privacy Policy</a><a href="/pages/terms-of-service.html">Terms of Service</a>';
+    footer.append(links);
+});

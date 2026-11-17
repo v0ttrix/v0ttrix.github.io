@@ -1427,3 +1427,14 @@ body .back-btn:active,
 @media (min-width: 601px) and (max-width: 768px) {
     .home-page .proof-strip { width: calc(100% - 30px); }
 }
+
+.footer-legal { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; margin: 14px 20px 0; }
+.footer-legal a { color: var(--text-secondary); font-size: .85rem; text-decoration: none; padding: 8px 0; }
+.footer-legal a:hover { color: var(--accent-cyan); text-decoration: underline; }
+.footer-legal a:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 4px; }
+.legal-page .legal-content { max-width: 860px; margin-inline: auto; padding: 28px; border: 1px solid var(--border-color); border-radius: 20px; background: rgba(0,0,0,.28); overflow-wrap: anywhere; }
+.legal-content h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.2; margin-bottom: 16px; }
+.legal-content h2 { font-size: 1.35rem; margin: 28px 0 10px; }
+.legal-content p { margin-bottom: 16px; }
+.legal-content a { color: var(--accent-cyan); }
+@media (max-width: 600px) { .legal-page .legal-content { padding: 22px; } }
